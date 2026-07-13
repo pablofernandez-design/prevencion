@@ -318,7 +318,7 @@
     render(
       '<div class="screen photo"><div class="bg"></div>' +
         '<div class="radial"><svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' + sectors + '</svg></div>' +
-        gameHead("¿Dónde estaba el objeto?") +
+        gameHead("¿Dónde está la estrella?") +
       '</div>'
     );
     // La grid no se dibuja (sólo el fondo con blur). Desktop: hover blanco 50% + pressed.
