@@ -96,7 +96,7 @@
   .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   .meta .k{font-size:11px;letter-spacing:.4px;color:var(--n700);text-transform:uppercase;margin-bottom:6px}
   .meta .v{font-size:15px;font-weight:600;color:var(--n900)}
-  .chip{display:inline-flex;align-items:center;gap:6px;background:var(--success-50);color:var(--success-700);font-size:13px;font-weight:500;padding:5px 10px;border-radius:8px}
+  .chip{display:inline-flex;align-items:center;gap:8px;background:var(--n200);color:var(--n900);font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
 
   .previewcard{padding:20px 24px 24px}
   .pv-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:16px}
@@ -191,13 +191,26 @@
   .adjust input{flex:1;border:none;outline:none;font:inherit;font-size:14px;background:transparent}
   .adjust .send{width:34px;height:34px;border-radius:7px;border:none;background:#EEF0F2;color:#AEB4BB;display:flex;align-items:center;justify-content:center;transition:.12s}
   .adjust .send.active{background:var(--green);color:#fff;cursor:pointer}
-  /* objetivos: días de la semana */
+  /* objetivos: selección de frecuencia (pills) — estados hover/pressed/focus */
   .freqrow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-  .freq{border:1.5px solid var(--green);background:#fff;color:var(--green);border-radius:24px;height:44px;padding:0 22px;font-size:15px;font-weight:500;cursor:pointer}
+  .freq{border:1.5px solid var(--green);background:#fff;color:var(--green);border-radius:24px;height:44px;padding:0 22px;font-size:15px;font-weight:500;cursor:pointer;transition:background .1s,box-shadow .1s}
+  .freq:hover{background:#EAF1EE}
+  .freq:active{background:#D9E5E0}
+  .freq:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(0,64,57,.25)}
   .freq.sel{background:var(--green);color:#fff}
+  .freq.sel:hover{background:#013128}
+  .freq.sel:active{background:#00251f}
+  .freq.sel:focus-visible{box-shadow:0 0 0 3px rgba(0,64,57,.3)}
+  /* objetivos: días de la semana (chips) — clicables con estados */
   .dayrow{display:flex;gap:12px;flex-wrap:wrap}
-  .day{border:1px solid var(--n300);background:#fff;color:var(--n900);border-radius:8px;height:40px;padding:0 18px;font-size:14px;cursor:pointer}
-  .day.on{background:#A9BEB6;border-color:#A9BEB6;color:#123}
+  .day{border:1px solid var(--n300);background:#fff;color:var(--n900);border-radius:8px;height:40px;padding:0 18px;font-size:14px;cursor:pointer;transition:background .1s,box-shadow .1s,border-color .1s}
+  .day:hover{background:#EFF2F1}
+  .day:active{background:#DFE8E4}
+  .day:focus-visible{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(0,64,57,.2)}
+  .day.on{background:#A9BEB6;border-color:#A9BEB6;color:#12302A}
+  .day.on:hover{background:#95AEA3}
+  .day.on:active{background:var(--green);border-color:var(--green);color:#fff}
+  .day.on:focus-visible{border-color:var(--green);box-shadow:0 0 0 3px rgba(0,64,57,.3)}
   /* objetivos: lista de objetivos con radios + subobjetivos */
   .objopt{display:flex;gap:12px;padding:14px 4px}
   .objopt.selbg{background:#EEF3F1;border-radius:12px;padding:16px}
@@ -761,13 +774,14 @@ const OBJ_DATA={
     {t:'Mejora de la flexibilidad y movilidad articular', d:'Enfocado en favorecer la amplitud de movimiento mediante ejercicios de estiramiento y movilidad articular, contribuyendo a la reducción de la rigidez, la prevención de lesiones y la mejora del bienestar físico y postural en el día a día.'},
   ],
 };
-let objState={ freq:{Nutricional:'lv',Cognitivo:'lv',Físico:'lv'}, obj:{Nutricional:0,Cognitivo:0,Físico:0}, sub:{Nutricional:0,Cognitivo:0,Físico:0} };
+let objState={ freq:{Nutricional:'lv',Cognitivo:'lv',Físico:'lv'}, days:{Nutricional:daysOn('lv'),Cognitivo:daysOn('lv'),Físico:daysOn('lv')}, obj:{Nutricional:0,Cognitivo:0,Físico:0}, sub:{Nutricional:0,Cognitivo:0,Físico:0} };
+function matchPreset(days){ for(const [k] of FREQS){ if(daysOn(k).join('')===days.join('')) return k; } return 'custom'; }
 function objContent(sec){
-  const freq=objState.freq[sec], on=daysOn(freq);
+  const freq=objState.freq[sec], on=objState.days[sec];
   const dias=`<div class="subcard">
       <h4>Días de la semana</h4>
       <div class="freqrow">${FREQS.map(f=>`<button class="freq ${f[0]===freq?'sel':''}" onclick="setObjFreq('${sec}','${f[0]}')">${f[1]}</button>`).join('')}</div>
-      <div class="dayrow">${DIAS.map((d,i)=>`<span class="day ${on[i]?'on':''}">${d}</span>`).join('')}</div>
+      <div class="dayrow">${DIAS.map((d,i)=>`<button class="day ${on[i]?'on':''}" onclick="toggleDay('${sec}',${i})">${d}</button>`).join('')}</div>
     </div>`;
   const list=OBJ_DATA[sec], selIdx=objState.obj[sec];
   const objetivos=`<div class="subcard">
@@ -806,7 +820,8 @@ function openObjetivos(active){
 }
 // mantener la sección activa al re-renderizar
 function currentObjSec(){ const a=document.querySelector('.sidecol .vmenu button.active span'); return a?a.textContent:'Nutricional'; }
-function setObjFreq(sec,f){ objState.freq[sec]=f; openObjetivos(sec); }
+function setObjFreq(sec,f){ objState.freq[sec]=f; objState.days[sec]=daysOn(f); openObjetivos(sec); }
+function toggleDay(sec,i){ const d=objState.days[sec].slice(); d[i]=d[i]?0:1; objState.days[sec]=d; objState.freq[sec]=matchPreset(d); openObjetivos(sec); }
 function setObj(sec,i){ objState.obj[sec]=i; openObjetivos(sec); }
 function setObjSub(sec,j){ objState.sub[sec]=j; openObjetivos(sec); }
 function saveObjetivos(){ state.done.objetivos=true; state.tActualizacion=new Date(); renderLanding(); }
