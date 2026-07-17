@@ -6,6 +6,7 @@
     --green:#004039;
     --green-dark:#002b26;
     --green-card:#013a33;
+    --primary50:#E6ECEB;
     --brown:#6B3A27;
     --bg:#F6F7F9;
     --white:#fff;
@@ -15,7 +16,7 @@
     --n900:#333;
     --success-50:#E8F8EF;
     --success-100:#B6E9CD;
-    --success-700:#1c7a54;
+    --success-700:#0E8343;
     --pending-bg:#FBEFC9;
     --pending-fg:#8A6B18;
     --radius:12px;
@@ -41,6 +42,7 @@
     display:flex;align-items:center;justify-content:space-between;padding:0 40px;
   }
   .logo{font-size:30px;color:var(--green);letter-spacing:.5px}
+  .logo-svg{height:30px;width:auto;display:block;flex-shrink:0}
   .nav{display:flex;align-items:center;gap:28px;font-size:15px;color:var(--green)}
   .nav a{color:var(--green);text-decoration:none;font-weight:500}
   .nav a.active{font-weight:700}
@@ -72,17 +74,16 @@
   .landing{display:grid;grid-template-columns:224px 1fr;gap:16px;align-items:start}
   .side{display:flex;flex-direction:column;gap:14px}
   .navcard{
-    background:var(--green-card);color:#fff;border-radius:var(--radius);padding:16px 16px 14px;
-    min-height:112px;display:flex;flex-direction:column;justify-content:space-between;
+    background:var(--green);color:#fff;border-radius:var(--radius);padding:16px;
+    min-height:112px;display:flex;flex-direction:column;gap:8px;
     text-align:left;border:none;width:100%;position:relative;transition:transform .08s;
   }
   .navcard:hover{transform:translateY(-1px)}
-  .navcard.first{background:var(--green-dark)}
   .navcard .top{display:flex;align-items:flex-start;justify-content:space-between}
   .navcard .ci{width:24px;height:24px;opacity:.95}
-  .navcard .badge{background:#F1EEE4;color:#3d3d3d;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px}
-  .navcard h3{margin:14px 0 0;font-size:20px;font-weight:500}
-  .navcard .arrow{align-self:flex-start;margin-top:8px;opacity:.9}
+  .navcard .badge{background:var(--success-50);color:var(--n900);font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
+  .navcard h3{margin:0;font-size:22px;font-weight:500}
+  .navcard .arrow{align-self:flex-end;margin-top:auto;opacity:.95}
 
   .main{display:flex;flex-direction:column;gap:16px}
   .card{background:var(--white);border:1px solid var(--n200);border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -124,19 +125,28 @@
   .subhead .back:hover{background:#ececec}
   .subhead h1{font-size:24px;font-weight:400;margin:0}
 
-  .three{display:grid;grid-template-columns:262px 1fr 300px;gap:16px;align-items:start}
-  .patient{background:var(--white);border:1px solid var(--n200);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  .patient .pa{width:38px;height:38px;border-radius:50%;background:#eef1f0;color:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+  /* workspace: columna lateral (primary/50) PEGADA al contenido + columna derecha opcional */
+  .three{display:flex;gap:0;align-items:stretch}
+  .sidecol{background:var(--primary50);border-radius:12px 0 0 12px;padding:16px;width:264px;flex:0 0 264px;display:flex;flex-direction:column;transition:flex-basis .15s,width .15s}
+  .sidecol.collapsed{width:76px;flex-basis:76px}
+  .sidecol .vmenu{flex:1}
+  .side-toggle{align-self:flex-end;margin-top:12px;border:none;background:transparent;color:var(--green);cursor:pointer;padding:4px;display:flex}
+  .sidecol.collapsed .side-toggle{align-self:center}
+  .patient{background:var(--white);border:1px solid var(--n200);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .patient .pa{width:38px;height:38px;border-radius:50%;background:#eef1f0;color:var(--green);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
   .patient b{display:block;font-size:15px}
   .patient span{font-size:12px;color:var(--n700)}
-  .vmenu{display:flex;flex-direction:column;gap:2px}
-  .vmenu button{display:flex;align-items:center;gap:12px;background:transparent;border:none;text-align:left;padding:12px 14px;border-radius:8px;font-size:15px;color:var(--n900)}
-  .vmenu button:hover{background:#eef1f0}
+  .vmenu{display:flex;flex-direction:column;gap:4px}
+  .vmenu button{display:flex;align-items:center;gap:12px;background:transparent;border:none;text-align:left;padding:11px 14px;border-radius:10px;font-size:15px;color:var(--green);width:100%;cursor:pointer}
+  .vmenu button:hover{background:#DCE6E3}
   .vmenu button.active{background:var(--green);color:#fff}
   .vmenu button.active svg{color:#fff}
-  .vmenu svg{width:18px;height:18px;color:var(--n700);flex-shrink:0}
+  .vmenu svg{width:20px;height:20px;color:var(--green);flex-shrink:0}
+  .sidecol.collapsed .vmenu button{justify-content:center;padding:11px 0}
+  .sidecol.collapsed .vmenu button span{display:none}
 
-  .panel{background:var(--white);border:1px solid var(--n200);border-radius:var(--radius);padding:22px 24px;min-height:560px}
+  .panel{background:var(--white);border:1px solid var(--n200);border-left:none;border-radius:0 var(--radius) var(--radius) 0;padding:22px 24px;min-height:560px;flex:1;min-width:0}
+  .rightcol{flex:0 0 300px;width:300px;margin-left:16px}
   .panel h2{font-size:20px;font-weight:500;margin:0 0 20px}
   .fieldgroup{background:#F8F9FB;border:1px solid var(--n200);border-radius:10px;padding:16px 18px;margin-bottom:16px}
   .fieldgroup label.q{display:block;font-size:14px;font-weight:500;margin-bottom:10px}
@@ -147,6 +157,8 @@
   .radios{display:flex;gap:28px;align-items:center}
   .radio{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer}
   .radio input{accent-color:var(--green);width:18px;height:18px}
+  .checkrow{display:flex;align-items:center;gap:10px;font-size:14px;background:#fff;border:1px solid var(--n300);border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer}
+  .checkrow input{accent-color:var(--green);width:16px;height:16px}
 
   .notespanel{background:var(--white);border:1px solid var(--n200);border-radius:var(--radius);padding:18px 20px}
   .notespanel h4{font-size:15px;font-weight:500;margin:0 0 12px}
@@ -154,16 +166,48 @@
 
   .subfoot{display:flex;justify-content:flex-end;margin-top:18px}
 
+  /* empty section state */
+  .empty-sec{background:#F8F9FB;border:1px dashed var(--n300);border-radius:10px;padding:28px;text-align:center;color:var(--n700);font-size:14px}
+
   /* resumen specifics */
   .valoracion{display:flex;gap:8px;flex-wrap:wrap}
-  .val{width:40px;height:40px;border-radius:8px;border:1px solid var(--n300);background:#fff;font-size:15px;font-weight:600;color:var(--n900)}
-  .val.sel{background:var(--green);border-color:var(--green);color:#fff}
+  .val{width:40px;height:40px;border-radius:8px;border:1px solid var(--green);background:#fff;font-size:20px;font-weight:500;color:var(--green);cursor:pointer;transition:transform .05s}
+  .val:hover{transform:translateY(-1px)}
+  .val.sel{color:#fff;border-color:transparent}
+  .val.low.sel{background:#C4362F}
+  .val.mid.sel{background:#D98E04}
+  .val.high.sel{background:#0E8343}
   .subcard{background:#F8F9FB;border:1px solid var(--n200);border-radius:10px;padding:16px 18px;margin-bottom:16px}
   .subcard h4{font-size:15px;font-weight:500;margin:0 0 12px}
-  .resumen-text{background:#fff;border:1px solid var(--n200);border-radius:8px;padding:14px;font-size:14px;line-height:1.55;color:#444}
+  .res-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+  .res-status{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--n700)}
+  .res-status svg{color:#0E8343;animation:pulse 1s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+  .res-ia{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#0E8343;font-weight:500}
+  .res-undo{border:none;background:transparent;color:var(--n700);cursor:pointer;padding:2px;vertical-align:middle}
+  .res-undo:hover{color:var(--n900)}
+  .resumen-text{background:#fff;border:1px solid var(--n200);border-radius:8px;padding:14px;font-size:14px;line-height:1.55;color:#444;min-height:96px;white-space:pre-line}
   .adjust{margin-top:12px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--n300);border-radius:8px;padding:6px 6px 6px 14px}
-  .adjust input{flex:1;border:none;outline:none;font:inherit;font-size:14px}
-  .adjust .send{width:34px;height:34px;border-radius:7px;border:none;background:#EEF0F2;color:#AEB4BB;display:flex;align-items:center;justify-content:center}
+  .adjust input{flex:1;border:none;outline:none;font:inherit;font-size:14px;background:transparent}
+  .adjust .send{width:34px;height:34px;border-radius:7px;border:none;background:#EEF0F2;color:#AEB4BB;display:flex;align-items:center;justify-content:center;transition:.12s}
+  .adjust .send.active{background:var(--green);color:#fff;cursor:pointer}
+  /* objetivos: días de la semana */
+  .freqrow{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+  .freq{border:1.5px solid var(--green);background:#fff;color:var(--green);border-radius:24px;height:44px;padding:0 22px;font-size:15px;font-weight:500;cursor:pointer}
+  .freq.sel{background:var(--green);color:#fff}
+  .dayrow{display:flex;gap:12px;flex-wrap:wrap}
+  .day{border:1px solid var(--n300);background:#fff;color:var(--n900);border-radius:8px;height:40px;padding:0 18px;font-size:14px;cursor:pointer}
+  .day.on{background:#A9BEB6;border-color:#A9BEB6;color:#123}
+  /* objetivos: lista de objetivos con radios + subobjetivos */
+  .objopt{display:flex;gap:12px;padding:14px 4px}
+  .objopt.selbg{background:#EEF3F1;border-radius:12px;padding:16px}
+  .objopt .rad{width:20px;height:20px;flex:0 0 20px;border-radius:50%;border:2px solid var(--n300);margin-top:2px;cursor:pointer;position:relative}
+  .objopt .rad.on{border-color:var(--green)}
+  .objopt .rad.on::after{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--green)}
+  .objopt .otxt b{display:block;font-size:15px;font-weight:500;margin-bottom:4px}
+  .objopt .otxt p{margin:0;font-size:13.5px;line-height:1.5;color:var(--n700)}
+  .subcardo{background:#fff;border:1px solid var(--n200);border-radius:12px;padding:16px 18px;margin-top:14px}
+  .subcardo .sublbl{font-size:11px;letter-spacing:.5px;color:var(--n700);text-transform:uppercase;margin-bottom:8px}
   .collap h4{display:flex;align-items:center;justify-content:space-between;cursor:pointer}
   .notes-body{font-size:13.5px;line-height:1.6;color:#555;white-space:pre-line;margin-top:6px}
   .metrics{background:#fff;border:1px solid var(--n200);border-radius:var(--radius);overflow:hidden}
@@ -184,6 +228,13 @@
   .opt{display:flex;align-items:center;gap:12px;padding:10px 0;font-size:15px;cursor:pointer}
   .opt input{accent-color:var(--green);width:18px;height:18px}
   .modal .mfoot{display:flex;justify-content:flex-end;gap:12px;margin-top:22px}
+  /* vista previa del informe */
+  .preview-modal{background:#fff;border-radius:14px;width:760px;max-width:94vw;max-height:90vh;overflow:auto;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+  .pm-head{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 24px;border-bottom:1px solid var(--n200);position:sticky;top:0;background:#fff}
+  .pm-head b{display:block;font-size:17px;font-weight:600}
+  .pm-head span{font-size:13px;color:var(--n700)}
+  .pm-head .x{border:none;background:transparent;color:var(--n700);width:28px;height:28px;cursor:pointer}
+  .pm-body{padding:24px}
 
   /* ---------- Prototype launcher ---------- */
   .menu{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:40px;background:var(--bg)}
@@ -201,7 +252,7 @@
   .list-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px}
   .list-head h2{font-size:18px;font-weight:500;margin:0}
   .tbl{width:100%;border-collapse:collapse}
-  .tbl thead th{font-size:11px;letter-spacing:.4px;color:var(--n700);text-transform:uppercase;font-weight:500;text-align:left;padding:8px 24px;border-top:1px solid var(--n200)}
+  .tbl thead th{font-size:11px;letter-spacing:.4px;color:var(--n700);text-transform:uppercase;font-weight:500;text-align:left;padding:8px 24px}
   .tbl tbody tr{border-top:1px solid var(--n200);cursor:pointer}
   .tbl tbody tr:hover{background:#fafbfc}
   .tbl td{padding:16px 24px;font-size:14px;color:var(--n900);vertical-align:middle}
@@ -219,8 +270,13 @@
 
 <!-- ============ APP ============ -->
 <div id="app" class="app">
-  <header class="topbar">
-    <div class="logo serif">Qida</div>
+  <header class="topbar" id="topbarPortal">
+    <svg class="logo-svg" viewBox="0 0 80 33.4311" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Qida">
+      <path d="M32.3479 5.28633C31.8965 4.85645 31.6601 4.3191 31.6601 3.67428C31.6601 3.02947 31.8965 2.49212 32.3479 2.06224C32.7993 1.61086 33.3581 1.39593 34.0029 1.39593C34.6478 1.39593 35.2066 1.61086 35.658 2.06224C36.1093 2.51361 36.3458 3.05096 36.3458 3.67428C36.3458 4.3191 36.1093 4.85645 35.658 5.28633C35.2066 5.71621 34.6478 5.93115 34.0029 5.93115C33.3581 5.93115 32.7993 5.71621 32.3479 5.28633ZM36.3028 25.985C36.3028 26.6298 36.4532 27.0812 36.7327 27.2961C37.0336 27.5326 37.7214 27.726 38.7961 27.855V28.7577H29.9621V27.855C31.0583 27.7045 31.7461 27.5326 32.0255 27.2961C32.3264 27.0597 32.4554 26.6298 32.4554 25.985V13.0456C32.4554 12.5298 32.3909 12.1859 32.2404 11.9924C32.09 11.799 31.7461 11.627 31.2087 11.4766L29.9406 11.1112V10.3159L36.2813 9.60661V25.985H36.3028Z" fill="#004039"/>
+      <path d="M45.2666 24.976C46.3413 26.4376 47.7169 27.1898 49.4149 27.1898C50.4466 27.1898 51.3279 26.9749 52.0587 26.5665C52.811 26.1581 53.3913 25.5778 53.8212 24.8255V13.0038C53.5203 12.3805 52.9829 11.8647 52.2306 11.4563C51.4783 11.0479 50.6186 10.833 49.6514 10.833C47.8674 10.833 46.4273 11.5852 45.3311 13.0683C44.2134 14.5514 43.676 16.5503 43.676 19.0651C43.6545 21.5369 44.1919 23.4929 45.2666 24.976ZM40.9033 14.2075C41.7201 12.7029 42.8163 11.5208 44.1919 10.6825C45.5675 9.84423 47.0936 9.43584 48.7916 9.43584C49.9308 9.43584 50.941 9.65078 51.8007 10.0592C52.6605 10.4676 53.3483 11.0264 53.8212 11.6927V3.48202C53.8212 2.96616 53.7567 2.60077 53.6277 2.40732C53.4988 2.21388 53.1549 2.04193 52.6175 1.89147L51.3279 1.54756V0.730794L57.6471 0V25.4918C57.6471 26.0077 57.7116 26.3731 57.862 26.5665C58.0125 26.76 58.3564 26.9319 58.9152 27.1039L60.1619 27.4263V28.2216L53.8857 28.9738V25.6423C53.3698 26.674 52.5315 27.5123 51.3709 28.1571C50.2102 28.8019 48.942 29.1243 47.5449 29.1243C46.1693 29.1243 44.8582 28.7374 43.676 27.9851C42.4724 27.2113 41.5051 26.1151 40.7744 24.6751C40.0436 23.235 39.6782 21.4939 39.6782 19.4305C39.6782 17.4746 40.0865 15.7121 40.9033 14.2075Z" fill="#004039"/>
+      <path d="M79.0113 27.5339C78.4309 27.5339 77.9366 27.3405 77.5282 26.9751C77.1198 26.6097 76.9264 25.9863 76.9264 25.1266V15.3038C76.9264 13.2619 76.2815 11.7788 74.9704 10.8546C73.6593 9.90886 71.9398 9.43599 69.7904 9.43599C68.3718 9.43599 67.1036 9.62944 65.9644 9.99484C64.8253 10.3602 63.9225 10.8761 63.2347 11.5209C62.5684 12.1657 62.2245 12.8965 62.2245 13.7348C62.2245 14.3366 62.4394 14.831 62.8478 15.2179C63.2562 15.6048 63.7506 15.7982 64.3309 15.7982C64.9112 15.7982 65.4056 15.6048 65.814 15.2179C66.2224 14.831 66.4158 14.3581 66.4158 13.7993C66.4158 13.2404 66.2224 12.7461 65.8355 12.3592C65.5346 12.0368 65.1692 11.8648 64.7608 11.8003C65.1262 11.5639 65.5131 11.3704 65.9859 11.1985C66.7167 10.9406 67.5335 10.8116 68.4148 10.8116C69.8548 10.8116 71.0155 11.177 71.8753 11.9078C72.7565 12.6386 73.1864 13.9067 73.1864 15.7337V17.6252L69.0596 18.5279C67.3186 18.8933 65.9 19.3662 64.8038 19.9035C63.7076 20.4409 62.9123 21.0857 62.3964 21.8165C61.9021 22.5473 61.6442 23.4286 61.6442 24.4173C61.6442 25.8359 62.1815 26.9751 63.2347 27.8563C64.2879 28.7376 65.6205 29.1674 67.1896 29.1674C68.5867 29.1674 69.8334 28.888 70.9295 28.3507C72.0257 27.7918 72.821 27.1255 73.2939 26.3302C73.4014 26.9321 73.6378 27.4264 73.9817 27.8348C74.3256 28.2432 74.734 28.5441 75.2498 28.7591C75.7657 28.974 76.3245 29.0815 76.9693 29.0815C77.6357 29.0815 78.216 28.9955 78.7533 28.8235C79.2907 28.6516 79.6991 28.4581 80 28.2432V27.4049C79.6776 27.4909 79.3767 27.5339 79.0113 27.5339ZM71.5529 26.8246C70.8651 27.1685 70.0913 27.319 69.21 27.319C68.1783 27.319 67.2971 26.9965 66.5878 26.3732C65.8785 25.7499 65.5131 24.8686 65.5131 23.7295C65.5131 22.6118 65.9 21.6875 66.6738 20.9782C67.4475 20.2689 68.8446 19.6886 70.8436 19.2587L73.1649 18.7429V25.363C72.778 26.0078 72.2407 26.4807 71.5529 26.8246Z" fill="#004039"/>
+      <path d="M22.3322 26.6531C22.9985 26.1587 23.6218 25.6214 24.2022 24.998C25.4488 23.6654 26.3946 22.1393 27.0394 20.3768C27.7057 18.6143 28.0281 16.7444 28.0281 14.7239C28.0281 12.4671 27.6412 10.4466 26.8459 8.68413C26.0722 6.90013 24.9975 5.39556 23.6863 4.14891C22.3537 2.90226 20.8491 1.93503 19.1726 1.26872C17.4961 0.602408 15.7766 0.258505 13.9926 0.258505C11.8647 0.258505 9.9517 0.623902 8.23218 1.37619C6.51267 2.12848 5.02958 3.16019 3.80443 4.49281C2.57927 5.82544 1.63354 7.373 0.988722 9.11401C0.322409 10.8765 0 12.7465 0 14.7669C0 17.0238 0.386891 19.0442 1.16067 20.8282C1.93446 22.6122 2.98766 24.1383 4.32028 25.3849C5.65291 26.6316 7.15748 27.5988 8.83401 28.2651C10.5105 28.9314 12.2301 29.2753 13.9926 29.2753C16.013 29.2753 17.84 28.9314 19.4735 28.2651C21.0856 30.7584 24.2022 33.5956 26.8889 33.4237C28.1786 33.3377 28.6299 33.1657 30.0056 32.8003L30.0485 32.3705C26.5665 32.091 24.1377 29.2753 22.3322 26.6531ZM10.2741 26.8895C9.09194 26.2017 8.08172 25.2345 7.24346 24.0093C6.4052 22.7842 5.76038 21.3441 5.3305 19.7105C4.90062 18.077 4.66419 16.3145 4.66419 14.423C4.66419 12.0372 4.9651 9.8663 5.58843 7.93184C6.21175 5.99739 7.20047 4.44982 8.5331 3.31064C9.86572 2.17147 11.6282 1.59113 13.7776 1.59113C15.2392 1.59113 16.5718 1.93503 17.7325 2.62284C18.9147 3.31065 19.9249 4.27787 20.7417 5.50303C21.5799 6.72818 22.2032 8.16828 22.6546 9.80182C23.0845 11.4354 23.3209 13.1979 23.3209 15.0678C23.3209 17.4537 23.02 19.6246 22.3967 21.559C22.0313 22.6982 21.5584 23.7084 20.9351 24.5682C20.4837 23.8804 20.0753 23.2785 19.6885 22.8486C17.2596 19.7105 12.1871 19.4741 8.98447 22.0749L9.32837 22.5692C13.1758 20.3124 16.5933 22.2683 18.6997 26.7605C17.4961 27.5343 15.9915 27.8997 14.229 27.8997C12.7674 27.9212 11.4563 27.5773 10.2741 26.8895Z" fill="#004039"/>
+    </svg>
     <nav class="nav">
       <a href="#" class="active">Clientes</a>
       <a href="#">Agenda</a>
@@ -273,35 +329,56 @@ const I = {
   m_act:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8v8M18 8v8M4 12h4M16 12h4M9 12h6"/></svg>',
   m_aud:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8a6 6 0 0 1 12 0c0 4-3 5-3 8a3 3 0 0 1-6 0"/></svg>',
   m_tab:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="10" width="18" height="5" rx="1"/><path d="M17 10V8M20 10V8"/></svg>',
+  m_seg:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-8"/><path d="M17 7h4v4"/></svg>',
+  sparkle:'<svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 2l1.6 5.2L19 9l-5.4 1.8L12 16l-1.6-5.2L5 9l5.4-1.8z"/></svg>',
+  undo:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-1"/></svg>',
+  trash:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',
+  m_pfeiffer:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.2 2.4c-.7.3-1.2.9-1.2 1.6v.3"/><path d="M12 16.5h.01"/></svg>',
+  bell:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  dots:'<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
+  sort:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M7 4 4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"/></svg>',
+  pencil:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
 };
 document.body.innerHTML = document.body.innerHTML
   .replaceAll('%ICON_PLUS%',I.plus).replaceAll('%ICON_CHART%',I.chart)
   .replaceAll('%ICON_REFRESH%',I.refresh).replaceAll('%ICON_CHATNAV%',I.chatnav)
-  .replaceAll('%ICON_CHEVDOWN%',I.chevdown).replaceAll('%ICON_HOME%',I.home);
+  .replaceAll('%ICON_CHEVDOWN%',I.chevdown).replaceAll('%ICON_HOME%',I.home)
+  .replaceAll('%ICON_BELL%',I.bell);
 
 /* ---------- State ---------- */
 let state = {};
-function fresh(){ return {title:'Informe inicial', done:{analisis:false,resumen:false,objetivos:false}, generated:false, metodo:null}; }
+function fresh(){ return {type:'inicial', title:'Informe inicial', done:{analisis:false,resumen:false,objetivos:false}, generated:false, metodo:null, notas:'', pautas:[], tCreacion:null, tActualizacion:null, tGeneracion:null}; }
 
 const DATA = {
   resumenText:'¡Enhorabuena! Sigues una dieta mediterránea con buenos hábitos nutricionales. Tu consumo de pescado, frutos secos, legumbres y verduras es adecuado, y mantienes una ingesta moderada de carnes rojas y productos ultraprocesados. Tu índice de masa corporal (IMC) es de 23.4, que se encuentra dentro del rango normal y saludable. Continúa manteniendo estos excelentes hábitos alimentarios que contribuyen positivamente a tu bienestar general. ¡Sigue así!',
   notas:'Mujer, 78 años. No antecedentes familiares de deterioro/demencia.\nSin enfermedades crónicas ni medicación relevante, dice encontrarse bien de salud.\nTotalmente autónoma, se maneja sola en el día a día, no necesita ayuda para nada.\nNo refiere fallos de memoria ni problemas para seguir la conversación; ánimo bueno y duerme bien.\nPesa 60 kg, mide 1,60.\nCome variado, dieta mediterránea, bastante pescado y verdura.\nEstudios medios, ahora no trabaja.\nLee a diario y sale, vida social activa.\nEn general muy buen estado.',
+  resumenTextIA:'Mantienes un patrón de alimentación mediterráneo excelente, con buena presencia de pescado, frutos secos, legumbres y verduras y un consumo moderado de carnes rojas y ultraprocesados. Tu IMC (23,4) está en rango saludable. Como objetivo sencillo, prioriza la hidratación a lo largo del día y añade una ración extra de verdura en la cena. ¡Vas muy bien!',
   metrics:[['IPAQ','2754'],['IMC','23,44'],['MEDAS','5/13'],['MEC de Lobo','-'],['Dibujo del Reloj','-'],['Goldberg - Ansiedad','0'],['Goldberg - Depresión','0'],['Fagerström','-'],['Richmont','-'],['AUDIT-C','0'],['Barthel','-'],['Lawton y Brody','-'],['Demencia','-13'],['ANU-ADRI','-3'],['VIG-Express','0'],['Pfeiffer','-']],
+  pautasOpts:['Ejercicios de atención y concentración','Rutina de actividad física diaria','Pauta de hidratación','Refuerzo de dieta mediterránea','Higiene del sueño','Actividades de socialización','Estimulación cognitiva','Control de tabaco y alcohol'],
 };
+
+/* ---------- Fechas: DD/MM/YYYY HH:MM (hora real) ---------- */
+function fmtDate(d){ if(!d) return '-'; const p=n=>String(n).padStart(2,'0'); return `${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`; }
+function parseDMY(s,time){ const [dd,mm,yy]=s.split('/').map(Number); const [h,m]=(time||'11:05').split(':').map(Number); return new Date(yy,mm-1,dd,h,m); }
 
 /* ---------- Navigation ---------- */
 const el = (id)=>document.getElementById(id);
+function useHeaderPortal(){ /* única cabecera del portal */ }
 function goList(){ el('fab').classList.remove('show'); renderList(); }
-function startNuevo(){ state=fresh(); el('fab').classList.add('show'); renderLanding(); }
-function startInicial(){ state={title:'Informe inicial', done:{analisis:true,resumen:true,objetivos:true}, generated:true, metodo:'ambos'}; el('fab').classList.add('show'); renderLanding(); }
-function startSeguimiento(){ state={title:'Informe de seguimiento', done:{analisis:true,resumen:true,objetivos:true}, generated:true, metodo:'ambos'}; el('fab').classList.add('show'); renderLanding(); }
+// Nuevo informe: arranca un informe inicial y va DIRECTO al Análisis inicial
+function startNuevo(){ const now=new Date(); state=fresh(); state.tCreacion=now; el('fab').classList.add('show'); openAnalisis(); }
+// Informe inicial ya generado (visto desde el histórico) — notas y fechas del histórico
+function startInicial(name,row){ const t=row?parseDMY(row.fecha):new Date(); state={type:'inicial', title:name||'Informe inicial', done:{analisis:true,resumen:true,objetivos:true}, generated:true, metodo:'ambos', notas:DATA.notas, tCreacion:t, tActualizacion:t, tGeneracion:t}; el('fab').classList.add('show'); renderLanding(); }
+// Informe de seguimiento ya generado — conserva el nombre completo del histórico
+function startSeguimiento(name,row){ const t=row?parseDMY(row.fecha):new Date(); state={type:'seguimiento', title:name||'Informe de seguimiento', done:{analisis:true,resumen:true,objetivos:true}, generated:true, metodo:'ambos', notas:DATA.notas, tCreacion:t, tActualizacion:t, tGeneracion:t}; el('fab').classList.add('show'); renderLanding(); }
 
 /* ---------- Histórico de análisis list (Cliente - Análisis) ---------- */
 const LIST_ROWS=[
-  {fecha:'14/07/2026', informe:'Informe de seguimiento 2 - 2026', metodo:'Correo electrónico y postal', open:'startSeguimiento()'},
-  {fecha:'14/07/2025', informe:'Informe de seguimiento 1 - 2026', metodo:'Correo electrónico y postal', open:'startSeguimiento()'},
-  {fecha:'14/07/2024', informe:'Informe inicial', metodo:'Correo electrónico y postal', open:'startInicial()'},
+  {fecha:'14/07/2026', informe:'Informe de seguimiento 2 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento'},
+  {fecha:'14/07/2025', informe:'Informe de seguimiento 1 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento'},
+  {fecha:'14/07/2024', informe:'Informe inicial', metodo:'Correo electrónico y postal', type:'inicial'},
 ];
+function openRow(i){ const r=LIST_ROWS[i]; r.type==='seguimiento' ? startSeguimiento(r.informe,r) : startInicial(r.informe,r); }
 function renderList(){
   el('view').innerHTML=`
   <div class="page">
@@ -319,12 +396,12 @@ function renderList(){
       <table class="tbl">
         <thead><tr><th>Fecha</th><th>Informe</th><th>Método de envío</th><th>Informe</th><th></th></tr></thead>
         <tbody>
-          ${LIST_ROWS.map(r=>`
-          <tr onclick="${r.open}">
+          ${LIST_ROWS.map((r,i)=>`
+          <tr onclick="openRow(${i})">
             <td class="date">${r.fecha}</td>
             <td>${r.informe}</td>
             <td>${r.metodo}</td>
-            <td><a class="pdf" onclick="event.stopPropagation()">informe.pdf</a></td>
+            <td><a class="pdf" onclick="event.stopPropagation();previewInforme(${i})">informe.pdf</a></td>
             <td class="chev">${I.chev}</td>
           </tr>`).join('')}
         </tbody>
@@ -339,19 +416,21 @@ function renderLanding(){
   const s=state;
   const allDone = s.done.analisis && s.done.resumen && s.done.objetivos;
   const gen = s.generated;
-  const generarOn = allDone || gen;
+  // Descargar y Generar se habilitan al completar los 3 pasos. Actualizar se deshabilita tras generar.
+  const ready = allDone;
+  const actualizarOn = allDone && !gen;
   const resultDone = allDone || gen;
   const showCover = allDone || gen;
-  const dateCreate='19 de mayo de 2026';
-  const dateUpd = resultDone ? '19 de mayo de 2026' : '-';
-  const dateGen = gen ? '19 de mayo de 2026' : '-';
+  const dateCreate=fmtDate(s.tCreacion);
+  const dateUpd = fmtDate(s.tActualizacion);
+  const dateGen = fmtDate(s.tGeneracion);
   let metodoCell='-';
   if(gen){
     const label = s.metodo==='ambos' ? 'Correo electrónico y postal' : 'Correo electrónico';
     metodoCell = `<span class="chip">${I.mail} ${label}</span>`;
   }
-  // cards: show badges only when done AND not yet in generated state (Figma 6/7 have no badges)
-  const badge = (k)=> (!gen && s.done[k]) ? '<span class="badge">Completado</span>' : '';
+  // cards: tag "Completado" (success/50) siempre que la sección esté hecha (incluido tras generar)
+  const badge = (k)=> s.done[k] ? '<span class="badge">Completado</span>' : '';
 
   const preview = showCover ? coverHTML() : '<div class="pv-empty"></div>';
 
@@ -366,17 +445,17 @@ function renderLanding(){
     <div class="pagehead">
       <h1>${s.title}</h1>
       <div class="actions">
-        <button class="btn" ${gen?'disabled':''}>${I.refresh} Actualizar informe</button>
-        <button class="btn">${I.download} Descargar PDF</button>
-        <button class="btn primary" ${generarOn?'':'disabled'} onclick="${generarOn?'openModal()':''}">${I.file} Generar informe</button>
+        <button class="btn" ${actualizarOn?'':'disabled'}>${I.refresh} Actualizar informe</button>
+        <button class="btn" ${ready?'':'disabled'}>${I.download} Descargar PDF</button>
+        <button class="btn primary" ${ready?'':'disabled'} onclick="${ready?'openModal()':''}">${I.file} Generar informe</button>
       </div>
     </div>
 
     <div class="landing">
       <div class="side">
-        <button class="navcard first" onclick="openAnalisis()">
+        <button class="navcard" onclick="${s.type==='seguimiento'?'openSeguimiento()':'openAnalisis()'}">
           <div class="top"><span class="ci">${I.chart}</span>${badge('analisis')}</div>
-          <h3>Análisis inicial</h3>
+          <h3>${s.type==='seguimiento'?'Análisis de seguimiento':'Análisis inicial'}</h3>
           <span class="arrow">${I.arrow}</span>
         </button>
         <button class="navcard" onclick="openResumen()">
@@ -384,7 +463,7 @@ function renderLanding(){
           <h3>Resumen Ejecutivo</h3>
           <span class="arrow">${I.arrow}</span>
         </button>
-        <button class="navcard" onclick="completeObjetivos()">
+        <button class="navcard" onclick="openObjetivos()">
           <div class="top"><span class="ci">${I.target}</span>${badge('objetivos')}</div>
           <h3>Objetivos</h3>
           <span class="arrow">${I.arrow}</span>
@@ -417,6 +496,15 @@ function renderLanding(){
   </div>`;
 }
 
+// Logo Qida reutilizable (para portada en blanco, etc.)
+const QIDA_PATHS=[
+  "M32.3479 5.28633C31.8965 4.85645 31.6601 4.3191 31.6601 3.67428C31.6601 3.02947 31.8965 2.49212 32.3479 2.06224C32.7993 1.61086 33.3581 1.39593 34.0029 1.39593C34.6478 1.39593 35.2066 1.61086 35.658 2.06224C36.1093 2.51361 36.3458 3.05096 36.3458 3.67428C36.3458 4.3191 36.1093 4.85645 35.658 5.28633C35.2066 5.71621 34.6478 5.93115 34.0029 5.93115C33.3581 5.93115 32.7993 5.71621 32.3479 5.28633ZM36.3028 25.985C36.3028 26.6298 36.4532 27.0812 36.7327 27.2961C37.0336 27.5326 37.7214 27.726 38.7961 27.855V28.7577H29.9621V27.855C31.0583 27.7045 31.7461 27.5326 32.0255 27.2961C32.3264 27.0597 32.4554 26.6298 32.4554 25.985V13.0456C32.4554 12.5298 32.3909 12.1859 32.2404 11.9924C32.09 11.799 31.7461 11.627 31.2087 11.4766L29.9406 11.1112V10.3159L36.2813 9.60661V25.985H36.3028Z",
+  "M45.2666 24.976C46.3413 26.4376 47.7169 27.1898 49.4149 27.1898C50.4466 27.1898 51.3279 26.9749 52.0587 26.5665C52.811 26.1581 53.3913 25.5778 53.8212 24.8255V13.0038C53.5203 12.3805 52.9829 11.8647 52.2306 11.4563C51.4783 11.0479 50.6186 10.833 49.6514 10.833C47.8674 10.833 46.4273 11.5852 45.3311 13.0683C44.2134 14.5514 43.676 16.5503 43.676 19.0651C43.6545 21.5369 44.1919 23.4929 45.2666 24.976ZM40.9033 14.2075C41.7201 12.7029 42.8163 11.5208 44.1919 10.6825C45.5675 9.84423 47.0936 9.43584 48.7916 9.43584C49.9308 9.43584 50.941 9.65078 51.8007 10.0592C52.6605 10.4676 53.3483 11.0264 53.8212 11.6927V3.48202C53.8212 2.96616 53.7567 2.60077 53.6277 2.40732C53.4988 2.21388 53.1549 2.04193 52.6175 1.89147L51.3279 1.54756V0.730794L57.6471 0V25.4918C57.6471 26.0077 57.7116 26.3731 57.862 26.5665C58.0125 26.76 58.3564 26.9319 58.9152 27.1039L60.1619 27.4263V28.2216L53.8857 28.9738V25.6423C53.3698 26.674 52.5315 27.5123 51.3709 28.1571C50.2102 28.8019 48.942 29.1243 47.5449 29.1243C46.1693 29.1243 44.8582 28.7374 43.676 27.9851C42.4724 27.2113 41.5051 26.1151 40.7744 24.6751C40.0436 23.235 39.6782 21.4939 39.6782 19.4305C39.6782 17.4746 40.0865 15.7121 40.9033 14.2075Z",
+  "M79.0113 27.5339C78.4309 27.5339 77.9366 27.3405 77.5282 26.9751C77.1198 26.6097 76.9264 25.9863 76.9264 25.1266V15.3038C76.9264 13.2619 76.2815 11.7788 74.9704 10.8546C73.6593 9.90886 71.9398 9.43599 69.7904 9.43599C68.3718 9.43599 67.1036 9.62944 65.9644 9.99484C64.8253 10.3602 63.9225 10.8761 63.2347 11.5209C62.5684 12.1657 62.2245 12.8965 62.2245 13.7348C62.2245 14.3366 62.4394 14.831 62.8478 15.2179C63.2562 15.6048 63.7506 15.7982 64.3309 15.7982C64.9112 15.7982 65.4056 15.6048 65.814 15.2179C66.2224 14.831 66.4158 14.3581 66.4158 13.7993C66.4158 13.2404 66.2224 12.7461 65.8355 12.3592C65.5346 12.0368 65.1692 11.8648 64.7608 11.8003C65.1262 11.5639 65.5131 11.3704 65.9859 11.1985C66.7167 10.9406 67.5335 10.8116 68.4148 10.8116C69.8548 10.8116 71.0155 11.177 71.8753 11.9078C72.7565 12.6386 73.1864 13.9067 73.1864 15.7337V17.6252L69.0596 18.5279C67.3186 18.8933 65.9 19.3662 64.8038 19.9035C63.7076 20.4409 62.9123 21.0857 62.3964 21.8165C61.9021 22.5473 61.6442 23.4286 61.6442 24.4173C61.6442 25.8359 62.1815 26.9751 63.2347 27.8563C64.2879 28.7376 65.6205 29.1674 67.1896 29.1674C68.5867 29.1674 69.8334 28.888 70.9295 28.3507C72.0257 27.7918 72.821 27.1255 73.2939 26.3302C73.4014 26.9321 73.6378 27.4264 73.9817 27.8348C74.3256 28.2432 74.734 28.5441 75.2498 28.7591C75.7657 28.974 76.3245 29.0815 76.9693 29.0815C77.6357 29.0815 78.216 28.9955 78.7533 28.8235C79.2907 28.6516 79.6991 28.4581 80 28.2432V27.4049C79.6776 27.4909 79.3767 27.5339 79.0113 27.5339ZM71.5529 26.8246C70.8651 27.1685 70.0913 27.319 69.21 27.319C68.1783 27.319 67.2971 26.9965 66.5878 26.3732C65.8785 25.7499 65.5131 24.8686 65.5131 23.7295C65.5131 22.6118 65.9 21.6875 66.6738 20.9782C67.4475 20.2689 68.8446 19.6886 70.8436 19.2587L73.1649 18.7429V25.363C72.778 26.0078 72.2407 26.4807 71.5529 26.8246Z",
+  "M22.3322 26.6531C22.9985 26.1587 23.6218 25.6214 24.2022 24.998C25.4488 23.6654 26.3946 22.1393 27.0394 20.3768C27.7057 18.6143 28.0281 16.7444 28.0281 14.7239C28.0281 12.4671 27.6412 10.4466 26.8459 8.68413C26.0722 6.90013 24.9975 5.39556 23.6863 4.14891C22.3537 2.90226 20.8491 1.93503 19.1726 1.26872C17.4961 0.602408 15.7766 0.258505 13.9926 0.258505C11.8647 0.258505 9.9517 0.623902 8.23218 1.37619C6.51267 2.12848 5.02958 3.16019 3.80443 4.49281C2.57927 5.82544 1.63354 7.373 0.988722 9.11401C0.322409 10.8765 0 12.7465 0 14.7669C0 17.0238 0.386891 19.0442 1.16067 20.8282C1.93446 22.6122 2.98766 24.1383 4.32028 25.3849C5.65291 26.6316 7.15748 27.5988 8.83401 28.2651C10.5105 28.9314 12.2301 29.2753 13.9926 29.2753C16.013 29.2753 17.84 28.9314 19.4735 28.2651C21.0856 30.7584 24.2022 33.5956 26.8889 33.4237C28.1786 33.3377 28.6299 33.1657 30.0056 32.8003L30.0485 32.3705C26.5665 32.091 24.1377 29.2753 22.3322 26.6531ZM10.2741 26.8895C9.09194 26.2017 8.08172 25.2345 7.24346 24.0093C6.4052 22.7842 5.76038 21.3441 5.3305 19.7105C4.90062 18.077 4.66419 16.3145 4.66419 14.423C4.66419 12.0372 4.9651 9.8663 5.58843 7.93184C6.21175 5.99739 7.20047 4.44982 8.5331 3.31064C9.86572 2.17147 11.6282 1.59113 13.7776 1.59113C15.2392 1.59113 16.5718 1.93503 17.7325 2.62284C18.9147 3.31065 19.9249 4.27787 20.7417 5.50303C21.5799 6.72818 22.2032 8.16828 22.6546 9.80182C23.0845 11.4354 23.3209 13.1979 23.3209 15.0678C23.3209 17.4537 23.02 19.6246 22.3967 21.559C22.0313 22.6982 21.5584 23.7084 20.9351 24.5682C20.4837 23.8804 20.0753 23.2785 19.6885 22.8486C17.2596 19.7105 12.1871 19.4741 8.98447 22.0749L9.32837 22.5692C13.1758 20.3124 16.5933 22.2683 18.6997 26.7605C17.4961 27.5343 15.9915 27.8997 14.229 27.8997C12.7674 27.9212 11.4563 27.5773 10.2741 26.8895Z"
+];
+function qidaLogoSVG(fill,height){ return `<svg viewBox="0 0 80 33.4311" height="${height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Qida" style="display:block">${QIDA_PATHS.map(d=>`<path d="${d}" fill="${fill}"/>`).join('')}</svg>`; }
+
 function coverHTML(){
   return `<div class="cover">
     <div class="cv-top"><span>Qida · Calidad de vida</span><span>16 de julio 2026</span></div>
@@ -425,37 +513,53 @@ function coverHTML(){
     <div class="cv-pill"><b>45%</b><span>de los casos de demencia podrían prevenirse actuando sobre el estilo de vida.</span></div>
     <div class="cv-line"></div>
     <div class="cv-foot">
-      <div><div class="k">Preparado para</div><div class="v">Caro Huet</div></div>
+      <div><div class="k">Preparado para</div><div class="v">Pablo Fernández</div></div>
       <div><div class="k">Fecha del plan</div><div class="v">16 de julio de 2026</div></div>
-      <div><div class="k">Realizado por</div><div class="v">Qida</div></div>
+      <div><div class="k">Realizado por</div><div class="v">${qidaLogoSVG('#ffffff',22)}</div></div>
     </div>
   </div>`;
 }
 
-/* ---------- Screen 1.1 : Análisis inicial (form) ---------- */
-function openAnalisis(){
-  const menu=[['m_ante','Antecedentes',true],['m_clin','Clínica'],['m_func','Funcional'],['m_cogn','Cognitiva'],['m_nutr','Nutricional'],['m_soc','Social']];
-  el('view').innerHTML=`
-  <div class="page">
-    <div class="subhead">
-      <button class="back" onclick="renderLanding()">${I.back}</button>
-      <h1>Análisis inicial</h1>
-    </div>
-    <div class="three">
-      <div>
+/* ---------- Helpers compartidos ---------- */
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+let sideCollapsed=false;
+// Columna lateral (fondo primary/50, pegada al contenido). toggle = colapsar/expandir (resumen/objetivos)
+function sidecolHTML(items, active, iconMap, fn, opts){
+  opts=opts||{};
+  const coll = opts.toggle && sideCollapsed;
+  const patient = opts.patient && !coll
+    ? `<div class="patient"><div class="pa">PF</div><div><b>Pablo Fernández</b><span>Póliza #VRMC018619GB19</span></div></div>` : '';
+  const menu = items.map(m=>`<button class="${m===active?'active':''}" onclick="${fn}('${m.replace(/'/g,"\\'")}')">${I[iconMap[m]]}<span>${m}</span></button>`).join('');
+  const toggle = opts.toggle
+    ? `<button class="side-toggle" onclick="sideCollapsed=!sideCollapsed;${fn}('${active.replace(/'/g,"\\'")}')" title="Colapsar / expandir">${I.collapse}</button>` : '';
+  return `<aside class="sidecol ${coll?'collapsed':''}">${patient}<div class="vmenu">${menu}</div>${toggle}</aside>`;
+}
+function rightNotes(){
+  return `<aside class="rightcol"><div class="notespanel">
+      <h4>Notas globales de la llamada</h4>
+      <textarea placeholder="Escribe aquí..." oninput="state.notas=this.value">${esc(state.notas)}</textarea>
+    </div></aside>`;
+}
+function rightKpi(){
+  return `<aside class="rightcol">
         <div class="patient"><div class="pa">PF</div><div><b>Pablo Fernández</b><span>Póliza #VRMC018619GB19</span></div></div>
-        <div class="vmenu">
-          ${menu.map(m=>`<button class="${m[2]?'active':''}">${I[m[0]]}<span>${m[1]}</span></button>`).join('')}
+        <div class="metrics">
+          ${DATA.metrics.map(m=>`<div class="row"><span class="k">${m[0]}</span><span class="v">${m[1]}</span></div>`).join('')}
         </div>
-      </div>
-      <div class="panel">
-        <h2>Antecedentes</h2>
+      </aside>`;
+}
+function emptySection(name){
+  return `<h2>${name}</h2><div class="empty-sec">Esta sección no tiene contenido todavía.</div>`;
+}
+
+/* ---------- Screen 1.1 : Análisis inicial (form) ---------- */
+const ANALISIS_MENU=['Antecedentes','Clínica','Funcional','Cognitiva','Nutricional','Social'];
+const ANALISIS_ICON={Antecedentes:'m_ante',Clínica:'m_clin',Funcional:'m_func',Cognitiva:'m_cogn',Nutricional:'m_nutr',Social:'m_soc'};
+function analisisContent(sec){
+  if(sec==='Antecedentes') return `<h2>Antecedentes</h2>
         <div class="fieldgroup">
           <label class="q">Biological Sex <span class="req">*</span></label>
-          <div class="selectbox">
-            <select><option>Woman</option><option>Man</option></select>
-            ${I.chevdown}
-          </div>
+          <div class="selectbox"><select><option>Woman</option><option>Man</option></select>${I.chevdown}</div>
         </div>
         <div class="fieldgroup">
           <label class="q">Do you have a family history of neurodegenerative diseases? <span class="req">*</span></label>
@@ -463,12 +567,21 @@ function openAnalisis(){
             <label class="radio"><input type="radio" name="fam"> Yes</label>
             <label class="radio"><input type="radio" name="fam" checked> No</label>
           </div>
-        </div>
-      </div>
-      <div class="notespanel">
-        <h4>Notas globales de la llamada</h4>
-        <textarea placeholder="Escribe aquí..."></textarea>
-      </div>
+        </div>`;
+  return emptySection(sec);
+}
+function openAnalisis(active){
+  active=active||'Antecedentes'; useHeaderPortal();
+  el('view').innerHTML=`
+  <div class="page">
+    <div class="subhead">
+      <button class="back" onclick="renderLanding()">${I.back}</button>
+      <h1>Análisis inicial</h1>
+    </div>
+    <div class="three">
+      ${sidecolHTML(ANALISIS_MENU,active,ANALISIS_ICON,'openAnalisis',{patient:true,toggle:false})}
+      <div class="panel">${analisisContent(active)}</div>
+      ${rightNotes()}
     </div>
     <div class="subfoot">
       <button class="btn primary" onclick="saveAnalisis()">Guardar y volver atrás</button>
@@ -476,12 +589,78 @@ function openAnalisis(){
   </div>`;
   window.scrollTo(0,0);
 }
-function saveAnalisis(){ state.done.analisis=true; renderLanding(); }
+function saveAnalisis(){ state.done.analisis=true; state.tActualizacion=new Date(); renderLanding(); }
+
+/* ---------- Análisis de seguimiento (form) ---------- */
+const SEG_MENU=['Seguimiento','Antecedentes','Clínica','Funcional','Cognitiva','Pfeiffer','Nutricional','Social'];
+const SEG_ICON={Seguimiento:'m_seg',Antecedentes:'m_ante',Clínica:'m_clin',Funcional:'m_func',Cognitiva:'m_cogn',Pfeiffer:'m_pfeiffer',Nutricional:'m_nutr',Social:'m_soc'};
+function seguimientoContent(sec){
+  if(sec!=='Seguimiento') return emptySection(sec);
+  const areas=['Physical activity','Nutrition','Active mind','Emotional well-being','Social participation','Tobacco and alcohol'];
+  const helped=['Physical activity','Nutrition','Active mind','Emotional well-being','Social participation','Hearing and eye care','Tobacco and alcohol'];
+  return `<h2>Seguimiento</h2>
+        <div class="fieldgroup">
+          <label class="q" style="margin-bottom:14px">Compared to last year, indicate how you think you are doing in the following areas:</label>
+          ${areas.map(a=>`
+          <div style="margin-bottom:12px">
+            <label class="q" style="font-weight:400;margin-bottom:6px">${a} <span class="req">*</span></label>
+            <div class="selectbox"><select><option value="" disabled selected>Escribe aquí...</option><option>Better</option><option>The same</option><option>Worse</option></select>${I.chevdown}</div>
+          </div>`).join('')}
+        </div>
+        <div class="fieldgroup">
+          <label class="q">Have you followed the recommendations of your prevention plan? <span class="req">*</span></label>
+          <div class="selectbox"><select><option value="" disabled selected>Selecciona...</option><option>Yes, fully</option><option>Partially</option><option>No</option></select>${I.chevdown}</div>
+        </div>
+        <div class="fieldgroup">
+          <label class="q">Have you had follow-ups with your Personal Advisor this year? <span class="req">*</span></label>
+          <div class="radios">
+            <label class="radio"><input type="radio" name="segfu"> Yes</label>
+            <label class="radio"><input type="radio" name="segfu"> No</label>
+          </div>
+        </div>
+        <div class="fieldgroup">
+          <label class="q" style="margin-bottom:12px">In which of these areas do you feel Qida's prevention services (the Plan's recommendations, your Personal Advisor, the client portal content, the newsletter...) have helped you adopt or strengthen healthy habits? <span class="req">*</span></label>
+          ${helped.map(h=>`<label class="checkrow"><input type="checkbox"> ${h}</label>`).join('')}
+        </div>`;
+}
+function openSeguimiento(active){
+  active=active||'Seguimiento'; useHeaderPortal();
+  el('view').innerHTML=`
+  <div class="page">
+    <div class="subhead">
+      <button class="back" onclick="renderLanding()">${I.back}</button>
+      <h1>Análisis de seguimiento</h1>
+    </div>
+    <div class="three">
+      ${sidecolHTML(SEG_MENU,active,SEG_ICON,'openSeguimiento',{patient:true,toggle:false})}
+      <div class="panel">${seguimientoContent(active)}</div>
+      ${rightNotes()}
+    </div>
+    <div class="subfoot">
+      <button class="btn primary" onclick="saveAnalisis()">Guardar y volver atrás</button>
+    </div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+/* ---------- Resumen Ejecutivo / Objetivos ---------- */
+const RES_MENU=['Nutricional','Cognitivo','Actividad Física','Emocional','Social','Auditivo y ocular','Tabaco y alcohol'];
+const RES_ICON={'Nutricional':'m_nutr','Cognitivo':'m_cogn','Actividad Física':'m_act','Emocional':'m_emo','Social':'m_soc','Auditivo y ocular':'m_aud','Tabaco y alcohol':'m_tab'};
+function bandOf(n){ return n<=4?'low':(n<=7?'mid':'high'); }
+function notesCollap(){
+  const body = state.notas ? esc(state.notas) : '<span style="color:#9aa">Sin notas todavía.</span>';
+  return `<div class="subcard collap">
+          <h4 onclick="this.nextElementSibling.classList.toggle('hidden')">Notas globales de la llamada ${I.chevdown}</h4>
+          <div class="notes-body">${body}</div>
+        </div>`;
+}
 
 /* ---------- Screen 2.1 : Resumen Ejecutivo (editor) ---------- */
-function openResumen(){
-  const tabs=[['m_nutr','Nutricional',true],['m_cogn','Cognitivo'],['m_act','Actividad Física'],['m_emo','Emocional'],['m_soc','Social'],['m_aud','Auditivo y ocular'],['m_tab','Tabaco y alcohol']];
-  const vals=Array.from({length:11},(_,i)=>`<button class="val ${i===8?'sel':''}">${i}</button>`).join('');
+// resumenUI: estado del componente de texto  1=normal 2=escribiendo 3=procesando 4=editado IA
+let resumenUI = { status:1, text:DATA.resumenText, rating:8 };
+function openResumen(active){
+  active=active||'Nutricional'; useHeaderPortal();
+  resumenUI={status:1, text:DATA.resumenText, rating:resumenUI.rating||8};
   el('view').innerHTML=`
   <div class="page">
     <div class="subhead">
@@ -489,34 +668,21 @@ function openResumen(){
       <h1>Resumen Ejecutivo</h1>
     </div>
     <div class="three">
-      <div>
-        <div class="vmenu">
-          ${tabs.map(t=>`<button class="${t[2]?'active':''}">${I[t[0]]}<span>${t[1]}</span></button>`).join('')}
-        </div>
-        <div style="margin-top:16px;color:var(--n700)">${I.collapse}</div>
-      </div>
+      ${sidecolHTML(RES_MENU,active,RES_ICON,'openResumen',{toggle:true})}
       <div class="panel">
-        <h2>Nutricional</h2>
+        <h2>${active}</h2>
         <div class="subcard">
           <h4>Valoración</h4>
-          <div class="valoracion">${vals}</div>
+          <div class="valoracion">${Array.from({length:11},(_,i)=>`<button class="val ${bandOf(i)} ${i===resumenUI.rating?'sel':''}" onclick="setRating(${i})">${i}</button>`).join('')}</div>
         </div>
-        <div class="subcard">
-          <h4>Resumen Ejecutivo</h4>
-          <div class="resumen-text">${DATA.resumenText}</div>
-          <div class="adjust"><input placeholder="Ajustar resumen..."><button class="send">${I.sendup}</button></div>
+        <div class="subcard" id="resumenCard">
+          <div class="res-head"><h4 style="margin:0">Resumen Ejecutivo</h4><span id="resHeadRight"></span></div>
+          <div class="resumen-text" id="resumenText">${DATA.resumenText}</div>
+          <div class="adjust"><input id="adjustInput" placeholder="Ajustar resumen..." oninput="onAdjustInput()"><button class="send" id="sendBtn" onclick="sendAdjust()">${I.sendup}</button></div>
         </div>
-        <div class="subcard collap">
-          <h4 onclick="this.nextElementSibling.classList.toggle('hidden')">Notas globales de la llamada ${I.chevdown}</h4>
-          <div class="notes-body">${DATA.notas}</div>
-        </div>
+        ${notesCollap()}
       </div>
-      <div>
-        <div class="patient"><div class="pa">PF</div><div><b>Pablo Fernández</b><span>Póliza #VRMC018619GB19</span></div></div>
-        <div class="metrics">
-          ${DATA.metrics.map(m=>`<div class="row"><span class="k">${m[0]}</span><span class="v">${m[1]}</span></div>`).join('')}
-        </div>
-      </div>
+      ${rightKpi()}
     </div>
     <div class="subfoot">
       <button class="btn primary" onclick="saveResumen()">Guardar</button>
@@ -524,10 +690,126 @@ function openResumen(){
   </div>`;
   window.scrollTo(0,0);
 }
-function saveResumen(){ state.done.resumen=true; renderLanding(); }
+function setRating(n){
+  resumenUI.rating=n;
+  document.querySelectorAll('.valoracion .val').forEach((b,i)=>{ b.classList.toggle('sel', i===n); });
+}
+// status 2: al teclear en "Ajustar resumen" se activa el botón de enviar
+function onAdjustInput(){
+  const inp=el('adjustInput'); const btn=el('sendBtn');
+  const has=inp.value.trim().length>0;
+  btn.classList.toggle('active', has);
+  resumenUI.status = has?2:1;
+}
+// status 3 (procesando) -> status 4 (editado con IA)
+function sendAdjust(){
+  const inp=el('adjustInput'); if(!inp.value.trim()) return;
+  inp.value=''; inp.disabled=true;
+  el('sendBtn').classList.remove('active');
+  resumenUI.status=3;
+  el('resumenText').textContent='';
+  el('resHeadRight').innerHTML=`<span class="res-status">${I.sparkle} Adaptando el resumen...</span>`;
+  setTimeout(()=>{
+    resumenUI.status=4; resumenUI.text=DATA.resumenTextIA;
+    el('resumenText').textContent=DATA.resumenTextIA;
+    el('resHeadRight').innerHTML=`<span class="res-ia">${I.sparkle} Editado con IA</span> <button class="res-undo" onclick="undoResumen()" title="Deshacer">${I.undo}</button>`;
+    el('adjustInput').disabled=false;
+  }, 2600);
+}
+function undoResumen(){
+  resumenUI.status=1; resumenUI.text=DATA.resumenText;
+  el('resumenText').textContent=DATA.resumenText;
+  el('resHeadRight').innerHTML='';
+  const inp=el('adjustInput'); inp.value=''; inp.disabled=false;
+  el('sendBtn').classList.remove('active');
+}
+function saveResumen(){ state.done.resumen=true; state.tActualizacion=new Date(); renderLanding(); }
 
-/* ---------- Objetivos (no detail screen in scope) ---------- */
-function completeObjetivos(){ state.done.objetivos=true; renderLanding(); }
+/* ---------- Objetivos (Días de la semana + Objetivos/Subobjetivos) ---------- */
+const OBJ_MENU=['Nutricional','Cognitivo','Físico'];
+const OBJ_ICON={Nutricional:'m_nutr',Cognitivo:'m_cogn',Físico:'m_func'};
+const DIAS=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+const FREQS=[['todos','Todos los días'],['lv','Lunes a viernes'],['finde','Fin de semana'],['alternos','Días alternos']];
+function daysOn(freq){
+  if(freq==='todos') return [1,1,1,1,1,1,1];
+  if(freq==='lv') return [1,1,1,1,1,0,0];
+  if(freq==='finde') return [0,0,0,0,0,1,1];
+  return [1,0,1,0,1,0,1]; // alternos
+}
+const OBJ_DATA={
+  Nutricional:[
+    {t:'Mantener una alimentación saludable', d:'Mantener una alimentación equilibrada como hasta ahora'},
+    {t:'Alcanzar una alimentación saludable', d:'Alcanzar una alimentación equilibrada.'},
+  ],
+  Cognitivo:[
+    {t:'Entrenamiento de las facultades cognitivas', d:'Potenciar y mantener las capacidades cognitivas mediante actividades y dinámicas adaptadas a su nivel funcional, favoreciendo la estimulación mental, la autonomía y el mantenimiento de las funciones cognitivas en el día a día.', subs:[
+      {t:'Estimulación cognitiva básica', d:'Ayuda a mantener la mente activa y ágil, favorece la concentración y contribuye a preservar la autonomía y la confianza en el día a día. Favorecer el mantenimiento de funciones cognitivas básicas como orientación, atención, reconocimiento y memoria inmediata mediante actividades sencillas y funcionales, promoviendo la participación activa y el bienestar cognitivo en las actividades cotidianas.'},
+      {t:'Entrenamiento cognitivo avanzado', d:'Ayuda a mantener la mente activa y ágil, favorece la concentración y contribuye a preservar la autonomía y la confianza en el día a día. Maximizar el rendimiento de funciones cognitivas complejas como memoria operativa, atención sostenida, razonamiento, planificación y lenguaje mediante ejercicios estructurados y actividades de estimulación cognitiva de complejidad media-alta, adaptadas al perfil y evolución de la persona.'},
+    ]},
+  ],
+  Físico:[
+    {t:'Mejora de la capacidad aeróbica', d:'Programa diseñado para fortalecer la salud cardiovascular y aumentar la vitalidad mediante caminatas adaptadas que mejoran la resistencia de forma progresiva, integrando el movimiento como una base sólida y natural de la rutina diaria para mejorar la movilidad y la autonomía.', subs:[
+      {t:'Natación o actividad acuática', d:'Permite el movimiento con menor carga de peso corporal, reduce el impacto en las articulaciones y mejora la resistencia aeróbica de forma segura. Ejercicios realizados en el medio acuático para aprovechar la flotación y la resistencia del agua, incluyendo caminatas asistidas, equilibrio y natación suave adaptada.'},
+      {t:'Cicilismo o bicicleta estática', d:'Mejora la salud cardiovascular, fortalece la musculatura de las piernas y protege las articulaciones de rodilla y cadera al evitar impactos. Uso de la bicicleta para trabajar el movimiento circular de las piernas sin impacto articular fuerte, desde la toma de contacto suave hasta retos de resistencia e intensidad.'},
+      {t:'Más energía', d:'Incremento notable de la resistencia física, mejora del estado de ánimo y mayor protección de las articulaciones. Progresión hacia caminatas de mayor duración. Se introduce la gestión del ritmo ante el cansancio, permitiendo al cuerpo adaptarse a esfuerzos más prolongados de forma segura.'},
+      {t:'Primeros pasos', d:'Reducción del sedentarismo, activación de la circulación inicial y mejora de la movilidad articular básica. Nivel pensado para personas que actualmente se mueven muy poco o están empezando a recuperar el hábito de caminar. El objetivo es introducir pequeñas caminatas diarias para ganar confianza sin generar fatiga.'},
+      {t:'Movimiento Vital', d:'Conservación de la autonomía funcional, salud cardiovascular óptima y mantenimiento de la masa muscular. Nivel orientado a mantener un estilo de vida activo y saludable a largo plazo con caminatas de mayor duración. El movimiento se convierte en una parte estable y natural de la rutina diaria.'},
+      {t:'Ritmo constante', d:'Mejora de la eficiencia cardiaca, mayor oxigenación del cuerpo y fortalecimiento de la estabilidad al caminar. Enfocado en consolidar el hábito mediante caminatas de duración intermedia. Se busca mantener un ritmo continuo y fluido, prestando atención a la postura y la respiración.'},
+    ]},
+    {t:'Mantenimiento del nivel de actividad física', d:'Enfoque transversal centrado en realizar actividad física regular (caminar, ejercicio aeróbico, fuerza y flexibilidad) adaptada a la condición física actual y mantenida de forma constante, proporcionando las herramientas de motivación y organización necesarias para consolidar el ejercicio como un pilar de bienestar sostenible y duradero.'},
+    {t:'Mejora de la fuerza muscular y resistencia física', d:'Programa centrado en ejercicios de fortalecimiento que potencien la musculatura y mejoren la resistencia física, brindando el soporte necesario para realizar las tareas diarias con menor esfuerzo, favoreciendo así la autonomía personal.'},
+    {t:'Mejora de la flexibilidad y movilidad articular', d:'Enfocado en favorecer la amplitud de movimiento mediante ejercicios de estiramiento y movilidad articular, contribuyendo a la reducción de la rigidez, la prevención de lesiones y la mejora del bienestar físico y postural en el día a día.'},
+  ],
+};
+let objState={ freq:{Nutricional:'lv',Cognitivo:'lv',Físico:'lv'}, obj:{Nutricional:0,Cognitivo:0,Físico:0}, sub:{Nutricional:0,Cognitivo:0,Físico:0} };
+function objContent(sec){
+  const freq=objState.freq[sec], on=daysOn(freq);
+  const dias=`<div class="subcard">
+      <h4>Días de la semana</h4>
+      <div class="freqrow">${FREQS.map(f=>`<button class="freq ${f[0]===freq?'sel':''}" onclick="setObjFreq('${sec}','${f[0]}')">${f[1]}</button>`).join('')}</div>
+      <div class="dayrow">${DIAS.map((d,i)=>`<span class="day ${on[i]?'on':''}">${d}</span>`).join('')}</div>
+    </div>`;
+  const list=OBJ_DATA[sec], selIdx=objState.obj[sec];
+  const objetivos=`<div class="subcard">
+      <h4>Objetivos</h4>
+      ${list.map((o,i)=>{
+        const sel=i===selIdx;
+        let subs='';
+        if(sel && o.subs){
+          const ss=objState.sub[sec];
+          subs=`<div class="subcardo"><div class="sublbl">Subobjetivos</div>
+            ${o.subs.map((s,j)=>`<div class="objopt"><span class="rad ${j===ss?'on':''}" onclick="setObjSub('${sec}',${j})"></span><div class="otxt"><b>${s.t}</b><p>${s.d}</p></div></div>`).join('')}
+          </div>`;
+        }
+        return `<div class="objopt ${sel?'selbg':''}"><span class="rad ${sel?'on':''}" onclick="setObj('${sec}',${i})"></span><div class="otxt"><b>${o.t}</b><p>${o.d}</p>${subs}</div></div>`;
+      }).join('')}
+    </div>`;
+  return `<h2>${sec}</h2>${dias}${objetivos}`;
+}
+function openObjetivos(active){
+  active=active||'Nutricional'; useHeaderPortal();
+  el('view').innerHTML=`
+  <div class="page">
+    <div class="subhead">
+      <button class="back" onclick="renderLanding()">${I.back}</button>
+      <h1>Objetivos</h1>
+    </div>
+    <div class="three">
+      ${sidecolHTML(OBJ_MENU,active,OBJ_ICON,'openObjetivos',{toggle:true})}
+      <div class="panel">${objContent(active)}</div>
+    </div>
+    <div class="subfoot">
+      <button class="btn primary" onclick="saveObjetivos()">Guardar</button>
+    </div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+// mantener la sección activa al re-renderizar
+function currentObjSec(){ const a=document.querySelector('.sidecol .vmenu button.active span'); return a?a.textContent:'Nutricional'; }
+function setObjFreq(sec,f){ objState.freq[sec]=f; openObjetivos(sec); }
+function setObj(sec,i){ objState.obj[sec]=i; openObjetivos(sec); }
+function setObjSub(sec,j){ objState.sub[sec]=j; openObjetivos(sec); }
+function saveObjetivos(){ state.done.objetivos=true; state.tActualizacion=new Date(); renderLanding(); }
 
 /* ---------- Screen 5 : modal Generar informe ---------- */
 function openModal(){
@@ -548,10 +830,28 @@ function openModal(){
   document.body.appendChild(ov);
 }
 function closeModal(){ const o=el('overlay'); if(o) o.remove(); }
+
+/* ---------- Vista previa del informe (columna INFORME del histórico) ---------- */
+function previewInforme(i){
+  const r=LIST_ROWS[i];
+  const ov=document.createElement('div');
+  ov.className='overlay open'; ov.id='overlay';
+  ov.onclick=(e)=>{ if(e.target===ov) closeModal(); };
+  ov.innerHTML=`
+    <div class="preview-modal">
+      <div class="pm-head">
+        <div><b>${r.informe}</b><span>${r.fecha} · ${r.metodo}</span></div>
+        <button class="x" onclick="closeModal()">${I.x}</button>
+      </div>
+      <div class="pm-body">${coverHTML()}</div>
+    </div>`;
+  document.body.appendChild(ov);
+}
 function sendReport(){
   const sel=document.querySelector('input[name="metodo"]:checked');
   state.metodo = sel ? sel.value : 'email';
   state.generated=true;
+  const now=new Date(); state.tGeneracion=now; state.tActualizacion=now;
   closeModal();
   renderLanding();
 }
