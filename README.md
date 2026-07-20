@@ -2,9 +2,9 @@
 
 Prototipos y material del área de Prevención (Qida).
 
-## Doble Decisión — prototipo
+## Doble o nada — prototipo
 
-Prototipo interactivo del juego **Doble Decisión**, con una versión por dispositivo
+Prototipo interactivo del juego **Doble o nada**, con una versión por dispositivo
 (desktop / tablet / mobile), basado en los diseños de Figma.
 
 - 📁 Carpeta: [`doble-decision-prototipo/`](doble-decision-prototipo/)

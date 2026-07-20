@@ -1,4 +1,4 @@
-/* Doble Decisión — motor del prototipo
+/* Doble o nada — motor del prototipo
    Un mismo motor para desktop / tablet / mobile.
    El dispositivo se define en window.DEVICE = "desktop" | "tablet" | "mobile" */
 
@@ -83,13 +83,13 @@
   function breadcrumb(label){
     return '<div class="topbar floating">' + backArrow() + '<span class="crumb">' + label + '</span></div>';
   }
-  // Header de las pantallas de juego (componente "Doble Decisión - Header game").
+  // Header de las pantallas de juego (componente "Doble o nada - Header game").
   // Desktop: barra blanca de breadcrumb + fila transparente (pill + badge).
   // Mobile / Tablet: SÓLO fila transparente con botón circular de volver + pill + badge (sin barra blanca).
   function gameHead(pill, badge){
     const round = badge || ('Ronda ' + (state.round+1) + ' / ' + ROUNDS);
     if (DEVICE === "desktop"){
-      return breadcrumb("Juegos / Doble Decisión")
+      return breadcrumb("Juegos / Doble o nada")
         + '<div class="hgame">'
         + (pill ? '<div class="g-pill">' + pill + '</div>' : '')
         + '<div class="g-round">' + round + '</div>'
@@ -133,18 +133,18 @@
   screens.home = function(){
     setOrientation("portrait");
     render(
-      topbar("Juegos / Doble Decisión", true) +
+      topbar("Juegos / Doble o nada", true) +
       '<div class="body"><div class="home">' +
         '<div class="home-illus"></div>' +
         '<div class="home-main">' +
-          '<h1 class="title">Doble Decisión</h1>' +
+          '<h1 class="title">Doble o nada</h1>' +
           '<p class="sub">Entrena tu mente para reaccionar más rápido y estar más alerta en tu día a día.</p>' +
           '<div class="dcards">' +
             '<div class="dcard"><div class="eyebrow">Nueva partida</div>' +
-              '<div class="dtext">Entrena tu atención con una nueva partida de Doble Decisión</div>' +
+              '<div class="dtext">Entrena tu atención con una nueva partida de Doble o nada</div>' +
               '<button class="btn primary block" data-action="start">Comenzar partida</button></div>' +
             '<div class="dcard"><div class="eyebrow">¿Cómo jugar?</div>' +
-              '<div class="dtext">Descubre las reglas de juego de Doble Decisión.</div>' +
+              '<div class="dtext">Descubre las reglas de juego de Doble o nada.</div>' +
               '<button class="btn ghost block" data-action="instructions">Ver instrucciones</button></div>' +
           '</div>' +
         '</div>' +
@@ -156,13 +156,13 @@
   screens.instructions = function(){
     setOrientation("portrait");
     render(
-      topbar(DEVICE === "mobile" ? "Instrucciones" : "Juegos / Doble Decisión / Instrucciones") +
+      topbar(DEVICE === "mobile" ? "Instrucciones" : "Juegos / Doble o nada / Instrucciones") +
       '<div class="body"><div class="instr">' +
         '<h1 class="page-title">Instrucciones</h1>' +
-        '<p class="sub">Descubre las reglas de juego de Doble Decisión.</p>' +
+        '<p class="sub">Descubre las reglas de juego de Doble o nada.</p>' +
         '<div class="video" data-action="play-video">' +
           '<div class="play"></div>' +
-          '<div class="cap">Vídeo · Cómo jugar a Doble Decisión</div>' +
+          '<div class="cap">Vídeo · Cómo jugar a Doble o nada</div>' +
           '<div class="bar"></div>' +
         '</div>' +
         '<div class="cta"><button class="btn primary" data-action="start">Comenzar partida</button>' +
@@ -201,7 +201,7 @@
       '<div class="screen game"><div class="rotate">' +
         '<div class="phone"></div>' +
         '<h2>Gira la pantalla</h2>' +
-        '<p>Para jugar a Doble Decisión coloca tu dispositivo en horizontal.</p>' +
+        '<p>Para jugar a Doble o nada coloca tu dispositivo en horizontal.</p>' +
         '<button class="btn primary" data-action="rotate-continue">Continuar</button>' +
       '</div></div>'
     );

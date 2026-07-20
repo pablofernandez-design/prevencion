@@ -1,6 +1,6 @@
-# Doble Decisión — Prototipo (Portal del Cliente · Qida)
+# Doble o nada — Prototipo (Portal del Cliente · Qida)
 
-Prototipo interactivo del juego **Doble Decisión** basado en los diseños de Figma,
+Prototipo interactivo del juego **Doble o nada** basado en los diseños de Figma,
 con una versión por dispositivo.
 
 ## Cómo abrirlo
