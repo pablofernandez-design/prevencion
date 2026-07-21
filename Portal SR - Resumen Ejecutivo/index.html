@@ -16,6 +16,10 @@
     --n900:#333;
     --success-50:#E8F8EF;
     --success-100:#B6E9CD;
+    --error-100:#F8BFBF;
+    --alert-50:#FDECEC;
+    --alert-700:#C4362F;
+    --alert-900:#5A1714;
     --success-700:#0E8343;
     --pending-bg:#FBEFC9;
     --pending-fg:#8A6B18;
@@ -74,14 +78,14 @@
   .landing{display:grid;grid-template-columns:288px 1fr;gap:16px;align-items:start}
   .side{display:flex;flex-direction:column;gap:14px}
   .navcard{
-    background:var(--green);color:#fff;border-radius:var(--radius);padding:16px;
+    background:#fff;color:var(--green);border-radius:var(--radius);padding:15px;
     min-height:112px;display:flex;flex-direction:column;gap:8px;
-    text-align:left;border:none;width:100%;position:relative;transition:transform .08s;
+    text-align:left;border:2px solid var(--green);width:100%;position:relative;transition:transform .08s;
   }
   .navcard:hover{transform:translateY(-1px)}
   .navcard .top{display:flex;align-items:flex-start;justify-content:space-between}
-  .navcard .ci{width:24px;height:24px;opacity:.95}
-  .navcard .badge{background:var(--success-50);color:var(--n900);font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
+  .navcard .ci{width:24px;height:24px}
+  .navcard .badge{background:var(--success-100);color:var(--n900);font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
   .navcard h3{margin:0;font-size:22px;font-weight:500}
   .navcard .arrow{align-self:flex-end;margin-top:auto;opacity:.95}
 
@@ -90,13 +94,23 @@
   .resultcard{padding:20px 24px}
   .resultcard .rc-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
   .resultcard h2{font-size:18px;font-weight:500;margin:0}
-  .status{font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
+  .status{font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
   .status.pending{background:var(--pending-bg);color:var(--pending-fg)}
-  .status.done{background:var(--success-50);color:var(--success-700)}
+  .status.done{background:var(--success-100);color:var(--n900)}
+  .status.pdte{background:var(--error-100);color:var(--n900)}
   .meta{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
   .meta .k{font-size:11px;letter-spacing:.4px;color:var(--n700);text-transform:uppercase;margin-bottom:6px}
   .meta .v{font-size:15px;font-weight:600;color:var(--n900)}
   .chip{display:inline-flex;align-items:center;gap:8px;background:var(--n200);color:var(--n900);font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
+  /* Alert (componente DS) — pendiente de facturar */
+  .alert{display:flex;align-items:center;gap:12px;background:var(--alert-50);border-radius:12px;padding:14px 18px;font-size:15px;color:var(--n900)}
+  .alert svg{width:22px;height:22px;flex-shrink:0;color:var(--alert-700)}
+  .alert.in-modal{margin:16px 0 20px}
+  .rc-head-right{display:flex;align-items:center;gap:16px}
+  /* labels de estado en el histórico */
+  .rowtag{display:inline-flex;align-items:center;font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px;color:var(--n900);white-space:nowrap}
+  .rowtag.fact{background:var(--success-100)}
+  .rowtag.pdte{background:var(--error-100)}
 
   .previewcard{padding:20px 24px 24px}
   .pv-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:16px}
@@ -230,7 +244,7 @@
   .metrics .row .v{color:var(--n900);font-weight:500}
 
   /* ---------- Modal ---------- */
-  .overlay{position:fixed;inset:0;background:rgba(120,140,135,.55);display:none;align-items:center;justify-content:center;z-index:50}
+  .overlay{position:fixed;inset:0;background:rgba(0,64,57,.4);display:none;align-items:center;justify-content:center;z-index:50}
   .overlay.open{display:flex}
   .modal{background:#fff;border-radius:14px;width:520px;max-width:92vw;padding:24px 26px;box-shadow:0 24px 60px rgba(0,0,0,.25)}
   .modal .mh{display:flex;justify-content:space-between;align-items:flex-start}
@@ -307,7 +321,7 @@
   <div id="view"></div>
 </div>
 
-<button class="fab" id="fab" onclick="goList()">%ICON_HOME% Histórico</button>
+<button class="fab" id="fab" onclick="confirmSalir()">%ICON_HOME% Histórico</button>
 
 <script>
 /* ---------- Icons ---------- */
@@ -348,6 +362,9 @@ const I = {
   trash:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>',
   m_pfeiffer:'<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g transform="translate(-16 -8)"><path d="M28 9.5C25.9233 9.5 23.8932 10.1158 22.1665 11.2696C20.4398 12.4233 19.094 14.0632 18.2993 15.9818C17.5045 17.9004 17.2966 20.0116 17.7018 22.0484C18.1069 24.0852 19.1069 25.9562 20.5754 27.4246C22.0438 28.8931 23.9148 29.8931 25.9516 30.2982C27.9884 30.7034 30.0996 30.4955 32.0182 29.7007C33.9368 28.906 35.5767 27.5602 36.7304 25.8335C37.8842 24.1068 38.5 22.0767 38.5 20C38.5 17.2152 37.3938 14.5445 35.4246 12.5754C33.4555 10.6062 30.7848 9.5 28 9.5ZM28 29C26.22 29 24.4799 28.4722 22.9999 27.4832C21.5198 26.4943 20.3663 25.0887 19.6851 23.4442C19.0039 21.7996 18.8257 19.99 19.1729 18.2442C19.5202 16.4984 20.3774 14.8947 21.636 13.636C22.8947 12.3774 24.4984 11.5202 26.2442 11.1729C27.99 10.8257 29.7996 11.0039 31.4442 11.6851C33.0887 12.3663 34.4943 13.5198 35.4832 14.9999C36.4722 16.4799 37 18.22 37 20C37 22.3869 36.0518 24.6761 34.364 26.364C32.6761 28.0518 30.387 29 28 29Z" fill="currentColor"/><path d="M28 26.75C28.6213 26.75 29.125 26.2463 29.125 25.625C29.125 25.0037 28.6213 24.5 28 24.5C27.3787 24.5 26.875 25.0037 26.875 25.625C26.875 26.2463 27.3787 26.75 28 26.75Z" fill="currentColor"/><path d="M28.75 14H27.625C27.1815 13.999 26.7422 14.0856 26.3323 14.2549C25.9224 14.4242 25.5499 14.6727 25.2363 14.9863C24.9227 15.2999 24.6742 15.6724 24.5049 16.0823C24.3356 16.4922 24.249 16.9315 24.25 17.375V17.75H25.75V17.375C25.75 16.8777 25.9475 16.4008 26.2992 16.0492C26.6508 15.6975 27.1277 15.5 27.625 15.5H28.75C29.2473 15.5 29.7242 15.6975 30.0758 16.0492C30.4275 16.4008 30.625 16.8777 30.625 17.375C30.625 17.8723 30.4275 18.3492 30.0758 18.7008C29.7242 19.0525 29.2473 19.25 28.75 19.25H27.25V22.625H28.75V20.75C29.6451 20.75 30.5036 20.3944 31.1365 19.7615C31.7694 19.1285 32.125 18.2701 32.125 17.375C32.125 16.4799 31.7694 15.6214 31.1365 14.9885C30.5036 14.3556 29.6451 14 28.75 14Z" fill="currentColor"/></g></svg>',
   bell:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  warn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.6 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>',
+  warnFill:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.3 3.6 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Zm1.7 4.9a1 1 0 0 1 1 1v3.5a1 1 0 0 1-2 0V9.5a1 1 0 0 1 1-1Zm0 8a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></svg>',
+  alertCircle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg>',
   dots:'<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
   sort:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M7 4 4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"/></svg>',
   pencil:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>',
@@ -383,16 +400,27 @@ function goList(){ el('fab').classList.remove('show'); renderList(); }
 // Nuevo informe: arranca un informe inicial y va DIRECTO al Análisis inicial
 function startNuevo(){ const now=new Date(); state=fresh(); state.tCreacion=now; el('fab').classList.add('show'); openAnalisis(); }
 // Informe inicial ya generado (visto desde el histórico) — notas y fechas del histórico
-function startInicial(name,row){ const t=row?parseDMY(row.fecha):new Date(); state={type:'inicial', title:name||'Informe inicial', done:{analisis:true,resumen:true,objetivos:true}, generated:true, metodo:'ambos', notas:DATA.notas, tCreacion:t, tActualizacion:t, tGeneracion:t}; el('fab').classList.add('show'); renderLanding(); }
-// Informe de seguimiento ya generado — conserva el nombre completo del histórico
-function startSeguimiento(name,row){ const t=row?parseDMY(row.fecha):new Date(); state={type:'seguimiento', title:name||'Informe de seguimiento', done:{analisis:true,resumen:true,objetivos:true}, generated:true, metodo:'ambos', notas:DATA.notas, tCreacion:t, tActualizacion:t, tGeneracion:t}; el('fab').classList.add('show'); renderLanding(); }
+// Informe abierto desde el histórico: el estado depende de la label de la fila
+// (fact = facturado; pdte = pendiente de facturar → sin fecha/método, con alerta)
+function openReport(type,name,row){
+  const t=row?parseDMY(row.fecha):new Date();
+  const fact = !row || row.estado==='fact';
+  state={type, title:name||(type==='seguimiento'?'Informe de seguimiento':'Informe inicial'),
+    done:{analisis:true,resumen:true,objetivos:true}, generated:fact,
+    metodo: fact?'ambos':null, notas:DATA.notas,
+    tCreacion:t, tActualizacion:t, tGeneracion: fact?t:null, wizard:false};
+  el('fab').classList.add('show'); renderLanding();
+}
+function startInicial(name,row){ openReport('inicial',name,row); }
+function startSeguimiento(name,row){ openReport('seguimiento',name,row); }
 
 /* ---------- Histórico de análisis list (Cliente - Análisis) ---------- */
 const LIST_ROWS=[
-  {fecha:'14/07/2026', informe:'Informe de seguimiento 2 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento'},
-  {fecha:'14/07/2025', informe:'Informe de seguimiento 1 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento'},
-  {fecha:'14/07/2024', informe:'Informe inicial', metodo:'Correo electrónico y postal', type:'inicial'},
+  {fecha:'14/07/2026', informe:'Informe de seguimiento 2 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento', estado:'pdte'},
+  {fecha:'14/07/2025', informe:'Informe de seguimiento 1 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento', estado:'fact'},
+  {fecha:'14/07/2024', informe:'Informe inicial', metodo:'Correo electrónico y postal', type:'inicial', estado:'fact'},
 ];
+const ESTADO_LABEL={fact:'Facturado', pdte:'Pendiente de facturar'};
 function openRow(i){ const r=LIST_ROWS[i]; r.type==='seguimiento' ? startSeguimiento(r.informe,r) : startInicial(r.informe,r); }
 function renderList(){
   el('view').innerHTML=`
@@ -409,7 +437,7 @@ function renderList(){
         <button class="btn primary" onclick="startNuevo()">${I.plus} Nuevo informe</button>
       </div>
       <table class="tbl">
-        <thead><tr><th>Fecha</th><th>Informe</th><th>Método de envío</th><th>Informe</th><th></th></tr></thead>
+        <thead><tr><th>Fecha</th><th>Informe</th><th>Método de envío</th><th>Informe</th><th>Estado</th><th></th></tr></thead>
         <tbody>
           ${LIST_ROWS.map((r,i)=>`
           <tr onclick="openRow(${i})">
@@ -417,6 +445,7 @@ function renderList(){
             <td>${r.informe}</td>
             <td>${r.metodo}</td>
             <td><a class="pdf" onclick="event.stopPropagation();previewInforme(${i})">informe.pdf</a></td>
+            <td><span class="rowtag ${r.estado}">${ESTADO_LABEL[r.estado]}</span></td>
             <td class="chev">${I.chev}</td>
           </tr>`).join('')}
         </tbody>
@@ -426,26 +455,39 @@ function renderList(){
   window.scrollTo(0,0);
 }
 
+// Alerta "pendiente de facturar" (estilo componente Alert del DS)
+function alertHTML(inModal){
+  return `<div class="alert${inModal?' in-modal':''}">${I.alertCircle}<span>Este informe está listo para facturar.</span></div>`;
+}
+
 /* ---------- Landing render (screens 1,2,3,4,6,7) ---------- */
 function renderLanding(){
   const s=state;
   const allDone = s.done.analisis && s.done.resumen && s.done.objetivos;
-  const gen = s.generated;
-  // Descargar y Generar se habilitan al completar los 3 pasos. Actualizar se deshabilita tras generar.
-  const ready = allDone;
-  const actualizarOn = allDone && !gen;
-  const resultDone = allDone || gen;
-  const showCover = allDone || gen;
+  const facturado = s.generated; // "facturado" = informe facturado
+  const showCover = allDone || facturado;
   const dateCreate=fmtDate(s.tCreacion);
   const dateUpd = fmtDate(s.tActualizacion);
-  const dateGen = fmtDate(s.tGeneracion);
   let metodoCell='-';
-  if(gen){
+  if(facturado){
     const label = s.metodo==='ambos' ? 'Correo electrónico y postal' : 'Correo electrónico';
     metodoCell = `<span class="chip">${I.mail} ${label}</span>`;
   }
-  // cards: tag "Completado" (success/50) siempre que la sección esté hecha (incluido tras generar)
   const badge = (k)=> s.done[k] ? '<span class="badge">Completado</span>' : '';
+
+  // Estado del resultado + botón facturar. La alerta solo aplica a "pendiente de facturar".
+  const pendienteFacturar = allDone && !facturado;
+  let statusTag, facturarBtn='';
+  if(facturado){
+    statusTag='<span class="status done">Facturado</span>';
+  } else if(allDone){
+    statusTag='<span class="status pdte">Pendiente de facturar</span>';
+    facturarBtn=`<button class="btn primary" onclick="openModal()">${I.file} Facturar informe</button>`;
+  } else {
+    statusTag='<span class="status pending">Pendiente</span>';
+  }
+  // Fecha de facturación: fecha real si facturado; "Pendiente de facturar" si listo; "-" si en progreso
+  const dateFact = facturado ? fmtDate(s.tGeneracion) : (pendienteFacturar ? 'Pendiente de facturar' : '-');
 
   const preview = showCover ? coverHTML() : '<div class="pv-empty"></div>';
 
@@ -454,16 +496,11 @@ function renderLanding(){
     <div class="crumbs">
       <span>Clientes</span> ${I.chev}
       <span>Pablo Fernández</span> ${I.chev}
-      <a href="#" onclick="goList();return false" style="color:inherit;text-decoration:none">Histórico de análisis</a> ${I.chev}
+      <a href="#" onclick="confirmSalir();return false" style="color:inherit;text-decoration:none">Histórico de análisis</a> ${I.chev}
       <span class="cur">${s.title}</span>
     </div>
     <div class="pagehead">
       <h1>${s.title}</h1>
-      <div class="actions">
-        <button class="btn" ${actualizarOn?'':'disabled'}>${I.refresh} Actualizar informe</button>
-        <button class="btn" ${ready?'':'disabled'}>${I.download} Descargar PDF</button>
-        <button class="btn primary" ${ready?'':'disabled'} onclick="${ready?'openModal()':''}">${I.file} Generar informe</button>
-      </div>
     </div>
 
     <div class="landing">
@@ -486,15 +523,16 @@ function renderLanding(){
       </div>
 
       <div class="main">
+        ${pendienteFacturar ? alertHTML() : ''}
         <div class="card resultcard">
           <div class="rc-head">
             <h2>Resultado</h2>
-            <span class="status ${resultDone?'done':'pending'}">${resultDone?'Completado':'Pendiente'}</span>
+            <div class="rc-head-right">${statusTag}${facturarBtn}</div>
           </div>
           <div class="meta">
             <div><div class="k">Fecha de creación</div><div class="v">${dateCreate}</div></div>
             <div><div class="k">Última actualización</div><div class="v">${dateUpd}</div></div>
-            <div><div class="k">Fecha de generación</div><div class="v">${dateGen}</div></div>
+            <div><div class="k">Fecha de facturación</div><div class="v">${dateFact}</div></div>
             <div><div class="k">Método de envío</div><div class="v">${metodoCell}</div></div>
           </div>
         </div>
@@ -835,19 +873,40 @@ function openModal(){
   ov.className='overlay open'; ov.id='overlay';
   ov.innerHTML=`
     <div class="modal">
-      <div class="mh"><h3>Generar informe</h3><button class="x" onclick="closeModal()">${I.x}</button></div>
-      <p>El informe queda registrado una vez generado. Es necesario indicar el método de envío del informe.</p>
+      <div class="mh"><h3>Facturar informe</h3><button class="x" onclick="closeModal()">${I.x}</button></div>
+      <p>El informe queda registrado una vez facturado. Es necesario indicar el método de envío del informe.</p>
       <div class="lbl">Método de envío</div>
       <label class="opt"><input type="radio" name="metodo" value="email"> Enviar por correo electrónico</label>
       <label class="opt"><input type="radio" name="metodo" value="ambos"> Enviar por correo electrónico y correo postal</label>
       <div class="mfoot">
         <button class="btn" onclick="closeModal()">Cancelar</button>
-        <button class="btn primary" onclick="sendReport()">${I.send} Enviar informe</button>
+        <button class="btn primary" onclick="sendReport()">Facturar y enviar</button>
       </div>
     </div>`;
   document.body.appendChild(ov);
 }
 function closeModal(){ const o=el('overlay'); if(o) o.remove(); }
+
+/* ---------- Modal: salir del informe (al volver al histórico) ---------- */
+// Solo aplica a informes con status "pendiente de facturar"; el resto sale directo.
+function confirmSalir(){
+  const pendiente = state.done && state.done.analisis && state.done.resumen && state.done.objetivos && !state.generated;
+  if(!pendiente){ goList(); return; }
+  const ov=document.createElement('div');
+  ov.className='overlay open'; ov.id='overlay';
+  ov.onclick=(e)=>{ if(e.target===ov) closeModal(); };
+  ov.innerHTML=`
+    <div class="modal">
+      <div class="mh"><h3>Salir del informe</h3><button class="x" onclick="closeModal()">${I.x}</button></div>
+      ${alertHTML(true)}
+      <p>Este informe no está facturado ni enviado al cliente. ¿Estás seguro que quieres salir del informe?</p>
+      <div class="mfoot">
+        <button class="btn" onclick="closeModal();goList()">Salir</button>
+        <button class="btn primary" onclick="closeModal()">Volver al informe</button>
+      </div>
+    </div>`;
+  document.body.appendChild(ov);
+}
 
 /* ---------- Vista previa del informe (columna INFORME del histórico) ---------- */
 function previewInforme(i){
