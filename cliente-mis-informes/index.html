@@ -1,0 +1,1588 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Qida — Portal del cliente (Prototipo)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600;700&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ======= SVG ICON SPRITE ======= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+    </symbol>
+    <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </symbol>
+    <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </symbol>
+    <symbol id="i-clipboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 2h6a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v0a2 2 0 0 1 2-2z"/>
+      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+    </symbol>
+    <symbol id="i-trend" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="3 17 9 11 13 15 21 7"/>
+      <polyline points="14 7 21 7 21 14"/>
+    </symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2"/>
+      <line x1="16" y1="2" x2="16" y2="6"/>
+      <line x1="8" y1="2" x2="8" y2="6"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      <polyline points="9 12 11 14 15 10"/>
+    </symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1"/>
+      <rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/>
+      <rect x="14" y="14" width="7" height="7" rx="1"/>
+    </symbol>
+    <symbol id="i-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+      <line x1="12" y1="17" x2="12.01" y2="17"/>
+    </symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </symbol>
+    <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+      <polygon points="6 4 20 12 6 20 6 4"/>
+    </symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+    </symbol>
+    <symbol id="i-running" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="13" cy="4" r="2"/>
+      <path d="M4 22l5-9 4 3 2-5 5 5"/>
+      <path d="M9 13l-3-3"/>
+    </symbol>
+    <symbol id="i-apple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 6c-2-3-6-3-7 0-1 4 2 12 7 12s8-8 7-12c-1-3-5-3-7 0z"/>
+      <path d="M12 6V3"/>
+    </symbol>
+    <symbol id="i-brain" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 4a3 3 0 0 0-3 3v0a3 3 0 0 0-2 5v0a3 3 0 0 0 2 5v0a3 3 0 0 0 3 3h0V4z"/>
+      <path d="M15 4a3 3 0 0 1 3 3v0a3 3 0 0 1 2 5v0a3 3 0 0 1-2 5v0a3 3 0 0 1-3 3h0V4z"/>
+    </symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </symbol>
+    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+      <circle cx="9" cy="7" r="4"/>
+      <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+    </symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+      <circle cx="12" cy="12" r="3"/>
+    </symbol>
+    <symbol id="i-ear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 8a6 6 0 1 1 12 0c0 3-2 4-3 5s-1 2-2 3-3 1-4-1"/>
+      <path d="M9 20a3 3 0 0 0 4-2"/>
+    </symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-9 4 0 7 3 7 7 0 7-9 9-9 9z"/>
+      <path d="M2 22c0-3 4-7 9-9"/>
+    </symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </symbol>
+    <symbol id="i-video" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="23 7 16 12 23 17 23 7"/>
+      <rect x="1" y="5" width="15" height="14" rx="2"/>
+    </symbol>
+    <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+    </symbol>
+    <symbol id="i-empty" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 3v5h5M5 3h9l5 5v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+    </symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"/>
+      <line x1="6" y1="6" x2="18" y2="18"/>
+    </symbol>
+    <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </symbol>
+    <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+    </symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"/>
+    </symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="19" y1="12" x2="5" y2="12"/>
+      <polyline points="12 19 5 12 12 5"/>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ======= HEADER ======= -->
+<header class="app-header">
+  <div class="container">
+    <div class="header-left">
+      <button class="icon-btn hamburger" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="drawer">
+        <svg width="20" height="20"><use href="#i-menu"/></svg>
+      </button>
+      <a href="#/" class="brand">Qida</a>
+    </div>
+
+    <div class="header-utils">
+      <button class="icon-btn" aria-label="Llamar"><svg width="18" height="18"><use href="#i-phone"/></svg></button>
+      <button class="icon-btn" aria-label="Mensajes"><svg width="18" height="18"><use href="#i-message"/></svg><span class="dot"></span></button>
+      <button class="icon-btn" aria-label="Ajustes"><svg width="18" height="18"><use href="#i-settings"/></svg></button>
+      <a href="#/" class="user-pill" aria-label="Mi perfil">
+        <span class="avatar">A</span>
+        <span class="meta">
+          <span class="name">Amada Pérez</span>
+          <span class="role">Cliente</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ======= MOBILE DRAWER ======= -->
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-scrim" data-drawer-close></div>
+  <div class="drawer-panel" role="dialog" aria-label="Navegación">
+    <header class="drawer-header">
+      <span class="drawer-brand">Menú</span>
+      <button class="icon-btn drawer-close" data-drawer-close aria-label="Cerrar menú">
+        <svg width="18" height="18"><use href="#i-x"/></svg>
+      </button>
+    </header>
+    <nav class="drawer-nav" id="drawer-nav">
+      <a href="#/inicio"      class="drawer-link" data-route="inicio"><svg><use href="#i-grid"/></svg><span>Inicio</span></a>
+      <a href="#/informes"    class="drawer-link" data-route="informes"><svg><use href="#i-clipboard"/></svg><span>Mis informes</span></a>
+      <a href="#/evolucion"   class="drawer-link" data-route="evolucion"><svg><use href="#i-trend"/></svg><span>Mi evolución</span></a>
+      <a href="#/citas"       class="drawer-link" data-route="citas"><svg><use href="#i-calendar"/></svg><span>Mis citas</span></a>
+      <a href="#/servicios"   class="drawer-link" data-route="servicios"><svg><use href="#i-shield"/></svg><span>Mis servicios</span></a>
+      <a href="#/contenidos"  class="drawer-link" data-route="contenidos"><svg><use href="#i-card"/></svg><span>Contenidos</span></a>
+      <a href="#/faq"         class="drawer-link" data-route="faq"><svg><use href="#i-help"/></svg><span>Preguntas frecuentes</span></a>
+    </nav>
+    <footer class="drawer-footer">
+      <div class="drawer-user">
+        <span class="avatar">A</span>
+        <span class="meta">
+          <span class="name">Amada Pérez</span>
+          <span class="role">Cliente</span>
+        </span>
+      </div>
+    </footer>
+  </div>
+</aside>
+
+<!-- ======= SECONDARY NAV ======= -->
+<nav class="tab-bar">
+  <div class="container" id="tabbar">
+    <a href="#/inicio"   class="tab" data-route="inicio"><svg><use href="#i-grid"/></svg>Inicio</a>
+    <a href="#/informes" class="tab" data-route="informes"><svg><use href="#i-clipboard"/></svg>Mis informes</a>
+    <a href="#/evolucion" class="tab" data-route="evolucion"><svg><use href="#i-trend"/></svg>Mi evolución</a>
+    <a href="#/citas"    class="tab" data-route="citas"><svg><use href="#i-calendar"/></svg>Mis citas</a>
+    <a href="#/servicios" class="tab" data-route="servicios"><svg><use href="#i-shield"/></svg>Mis servicios</a>
+    <a href="#/contenidos" class="tab" data-route="contenidos"><svg><use href="#i-card"/></svg>Contenidos</a>
+    <a href="#/faq"      class="tab" data-route="faq"><svg><use href="#i-help"/></svg>Preguntas frecuentes</a>
+  </div>
+</nav>
+
+<main>
+  <div class="container">
+
+    <!-- ============ INICIO ============ -->
+    <section class="view" data-view="inicio">
+      <div class="page">
+        <section class="greeting greeting--default" aria-label="Bienvenida">
+          <div class="photo" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80&auto=format&fit=crop')"></div>
+          <div class="greeting-body">
+            <h2>Hola, Amada</h2>
+            <p>Soy <strong>Osvaldo Luz</strong>, tu Orientador personal. Bienvenida a tu portal del cliente.</p>
+            <p>Agenda una cita para realizar tu Plan de Prevención conmigo.</p>
+            <div class="actions">
+              <button class="btn btn-primary">Más información</button>
+              <button class="btn btn-secondary">Enviar mensaje</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="greeting greeting--proto1" aria-label="Plan de prevención">
+          <div class="photo" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80&auto=format&fit=crop')"></div>
+          <div class="greeting-body">
+            <h2>Hola, Amada</h2>
+            <div class="greeting-row">
+              <p>Aquí tienes tu <strong>Plan de Prevención</strong>.</p>
+              <a href="#/informes" class="btn btn-primary">Ver plan de prevención</a>
+            </div>
+            <div class="greeting-row">
+              <p>También puedes acceder a tus servicios adicionales.</p>
+              <a href="#/servicios" class="btn btn-secondary">Ver mis servicios adicionales</a>
+            </div>
+          </div>
+        </section>
+
+        <div style="height:32px"></div>
+
+        <div class="section-header">
+          <h2>Accesos rápidos</h2>
+        </div>
+        <div class="tile-grid">
+          <a href="#/citas" class="tile">
+            <span class="ico peach"><svg><use href="#i-calendar"/></svg></span>
+            <span class="meta"><span class="title">Agendar cita</span><span class="sub">Con tu orientador</span></span>
+          </a>
+          <a href="#/evolucion" class="tile">
+            <span class="ico mint"><svg><use href="#i-trend"/></svg></span>
+            <span class="meta"><span class="title">Ver mi evolución</span><span class="sub">7 categorías de salud</span></span>
+          </a>
+          <a href="#/informes" class="tile">
+            <span class="ico violet"><svg><use href="#i-clipboard"/></svg></span>
+            <span class="meta"><span class="title">Mis informes</span><span class="sub">Aún sin generar</span></span>
+          </a>
+        </div>
+
+        <div style="height:40px"></div>
+
+        <div class="section-header">
+          <h2>Novedades de contenido</h2>
+          <a href="#/contenidos" class="link">Ver todo</a>
+        </div>
+        <div class="content-grid content-grid--sm" id="home-content"></div>
+      </div>
+    </section>
+
+    <!-- ============ MIS INFORMES ============ -->
+    <section class="view" data-view="informes">
+      <div class="page">
+        <header class="page-header">
+          <nav class="breadcrumb"><a href="#/inicio">Inicio</a><span class="sep">›</span><span class="current">Mis informes</span></nav>
+          <h1>Mis informes</h1>
+          <p class="subtitle">Aquí encontrarás los informes y planes generados durante los seguimientos con tu Orientador/a personal.</p>
+        </header>
+
+        <div class="report-controls">
+          <div class="a11y-menu" id="a11yMenu">
+            <button class="a11y-trigger" id="a11yTrigger" aria-expanded="false" aria-haspopup="true" aria-controls="a11yPopover" aria-label="Opciones de tamaño de letra y contraste">
+              <svg width="18" height="18"><use href="#i-settings"/></svg>
+              <span>Tamaño de letra</span>
+            </button>
+            <div class="a11y-scrim" id="a11yScrim" hidden></div>
+            <div class="a11y-popover" id="a11yPopover" role="dialog" aria-label="Tamaño de letra" hidden>
+              <div class="a11y-popover-head">
+                <span>Tamaño de letra</span>
+                <button class="a11y-popover-close" id="a11yClose" aria-label="Cerrar">
+                  <svg width="16" height="16"><use href="#i-x"/></svg>
+                </button>
+              </div>
+              <div class="a11y-row">
+                <span class="a11y-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+                  Tamaño de texto
+                </span>
+                <div class="a11y-switcher a11y-textsize" role="radiogroup" aria-label="Tamaño de texto">
+                  <button class="a11y-opt is-active" data-size="normal" role="radio" aria-checked="true" aria-label="Normal">A</button>
+                  <button class="a11y-opt" data-size="large" role="radio" aria-checked="false" aria-label="Grande"><span style="font-size:1.15em">A</span></button>
+                  <button class="a11y-opt" data-size="xlarge" role="radio" aria-checked="false" aria-label="Muy grande"><span style="font-size:1.35em">A</span></button>
+                </div>
+              </div>
+              <div class="a11y-row">
+                <span class="a11y-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+                  Alto contraste
+                </span>
+                <button class="a11y-toggle contrast" role="switch" aria-checked="false" aria-label="Activar alto contraste">
+                  <span class="a11y-toggle-track"><span class="a11y-toggle-thumb"></span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <article class="plan">
+            <header class="plan-hero">
+              <div class="eyebrow">Plan de Prevención y Reducción de Riesgos</div>
+              <h2>Tu futuro está<br>en tus <em>manos</em></h2>
+              <div class="plan-stat">
+                <strong>45%</strong>
+                <span>de los casos de demencia podrían prevenirse actuando sobre el estilo de vida.</span>
+              </div>
+              <div class="plan-meta">
+                <div class="plan-meta-item"><div class="lbl">Preparado para</div><div class="val">Amada Pérez</div></div>
+                <div class="plan-meta-item"><div class="lbl">Fecha del plan</div><div class="val">18 de marzo de 2026</div></div>
+                <div class="plan-meta-item"><div class="lbl">Estado</div><div class="val">Primera valoración</div></div>
+                <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Alba Prieto</div></div>
+              </div>
+            </header>
+
+            <nav class="plan-nav" id="planNav">
+              <a href="#sec-intro"      class="plan-nav-link is-active"><span class="full">Introducción</span><span class="short">Intro</span></a>
+              <a href="#sec-resultados" class="plan-nav-link"><span class="full">Resultados</span><span class="short">Resultados</span></a>
+              <a href="#sec-acciones"   class="plan-nav-link"><span class="full">Plan de acción</span><span class="short">Acciones</span></a>
+              <a href="#sec-proximos"   class="plan-nav-link"><span class="full">Próximos pasos</span><span class="short">Próximos</span></a>
+              <a href="#sec-anexo"      class="plan-nav-link"><span class="full">Anexos</span><span class="short">Anexos</span></a>
+            </nav>
+
+            <!-- INTRO -->
+            <section class="plan-section" id="sec-intro">
+              <div class="section-eyebrow">Comencemos</div>
+              <h3>¿Te imaginas cumplir años disfrutando plenamente de cada etapa?</h3>
+
+              <div class="plan-intro">
+                <p>Amada, <em class="highlight">esa calidad de vida no es cuestión de suerte</em>, sino que depende, en gran medida, de las decisiones que tomes hoy.</p>
+                <p>La ciencia lo demuestra: <strong>hasta el 45 % de los casos de demencia podrían prevenirse</strong> actuando sobre el estilo de vida (Comisión Lancet, 2024).</p>
+                <p>La prevención no solo protege a largo plazo, también se traduce en <strong>beneficios inmediatos</strong>. Pequeños cambios sostenidos pueden generar mejoras significativas a nivel físico, cognitivo y emocional.</p>
+              </div>
+
+              <div class="plan-toc">
+                <div class="plan-toc-title">¿Qué encontrarás en este plan?</div>
+                <div class="plan-toc-list">
+                  <div class="plan-toc-item"><span class="num">1</span><span class="txt"><strong>Los resultados detallados de tu valoración</strong> para entender tu punto de partida.</span></div>
+                  <div class="plan-toc-item"><span class="num">2</span><span class="txt"><strong>Objetivos alcanzables y consensuados</strong> contigo.</span></div>
+                  <div class="plan-toc-item"><span class="num">3</span><span class="txt"><strong>Tu plan de trabajo</strong> con acciones concretas y adaptadas a tu día a día.</span></div>
+                  <div class="plan-toc-item"><span class="num">4</span><span class="txt"><strong>Próximos pasos</strong> para dar continuidad y ajustar el plan según tu evolución.</span></div>
+                  <div class="plan-toc-item"><span class="num">5</span><span class="txt"><strong>El acompañamiento personalizado</strong> de tu orientadora, Alba Prieto, en cada etapa.</span></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- RESULTADOS -->
+            <section class="plan-section" id="sec-resultados">
+              <div class="section-eyebrow">Punto de partida</div>
+              <h3>Resultados de tu valoración</h3>
+              <p class="section-sub">Las recomendaciones se dividen en 3 niveles de actuación según el estado actual de cada hábito.</p>
+
+              <div class="plan-legend">
+                <div class="plan-legend-seg green">
+                  <div class="zone">8–10 · Área de fortaleza</div>
+                  <div class="desc">Aspectos donde ya estás haciendo un gran trabajo. Estos hábitos protegen tu salud y bienestar.</div>
+                </div>
+                <div class="plan-legend-seg amber">
+                  <div class="zone">5–7 · Área de mejora</div>
+                  <div class="desc">Vas por buen camino: pequeños ajustes pueden potenciar tu vitalidad.</div>
+                </div>
+                <div class="plan-legend-seg red">
+                  <div class="zone">1–4 · Área de acción</div>
+                  <div class="desc">El mayor potencial para implementar cambios y adoptar un estilo de vida más saludable.</div>
+                </div>
+              </div>
+
+              <div class="st">Mapa completo de tus 8 hábitos</div>
+
+              <div class="habit-list">
+                <a class="habit-row" href="#/evolucion#hab-actividad-fisica">
+                  <span class="habit-row-icon habit-actividad-fisica"><svg><use href="#i-running"/></svg></span>
+                  <div class="habit-name">Actividad Física</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-red)">3</span>
+                    <span class="bar"><span style="width:30%;background:var(--plan-red)"></span></span>
+                  </div>
+                  <span class="badge red">Acción</span>
+                  <div class="desc">Caminas poco y no realizas ejercicio de forma regular. Te cuesta encontrar el momento, pero quieres ser más activa.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+                <a class="habit-row" href="#/evolucion#hab-bienestar-emocional">
+                  <span class="habit-row-icon habit-bienestar-emocional"><svg><use href="#i-heart"/></svg></span>
+                  <div class="habit-name">Bienestar Emocional</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-red)">3</span>
+                    <span class="bar"><span style="width:30%;background:var(--plan-red)"></span></span>
+                  </div>
+                  <span class="badge red">Acción</span>
+                  <div class="desc">Te sientes más cansada emocionalmente y dedicas poco tiempo a actividades que te hagan disfrutar.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+                <a class="habit-row" href="#/evolucion#hab-nutricion">
+                  <span class="habit-row-icon habit-nutricion"><svg><use href="#i-apple"/></svg></span>
+                  <div class="habit-name">Nutrición</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-red)">4</span>
+                    <span class="bar"><span style="width:40%;background:var(--plan-red)"></span></span>
+                  </div>
+                  <span class="badge red">Acción</span>
+                  <div class="desc">Comes a horarios regulares (positivo), pero la ingesta de frutas y verduras es baja y hay poca variedad.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+                <a class="habit-row" href="#/evolucion#hab-mente-activa">
+                  <span class="habit-row-icon habit-mente-activa"><svg><use href="#i-brain"/></svg></span>
+                  <div class="habit-name">Mente Activa</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-red)">4</span>
+                    <span class="bar"><span style="width:40%;background:var(--plan-red)"></span></span>
+                  </div>
+                  <span class="badge red">Acción</span>
+                  <div class="desc">Tu rutina no incluye actividades de estimulación mental. Antes leías y hacías pasatiempos, pero lo has dejado.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+                <a class="habit-row" href="#/evolucion#hab-participacion-social">
+                  <span class="habit-row-icon habit-participacion-social"><svg><use href="#i-users"/></svg></span>
+                  <div class="habit-name">Participación Social</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-amber)">5</span>
+                    <span class="bar"><span style="width:50%;background:var(--plan-amber)"></span></span>
+                  </div>
+                  <span class="badge amber">Mejora</span>
+                  <div class="desc">Red familiar cercana, pero ves a tus amistades poco. Te gustaría recuperar contacto social fuera de casa.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+                <a class="habit-row" href="#/evolucion#hab-sueno">
+                  <span class="habit-row-icon habit-sueno"><svg><use href="#i-clock"/></svg></span>
+                  <div class="habit-name">Sueño</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-amber)">6</span>
+                    <span class="bar"><span style="width:60%;background:var(--plan-amber)"></span></span>
+                  </div>
+                  <span class="badge amber">Mejora</span>
+                  <div class="desc">Duermes 5–6 horas. Te cuesta conciliar el sueño y te despiertas varias veces por la noche.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+                <a class="habit-row" href="#/evolucion#hab-auditivo-ocular">
+                  <span class="habit-row-icon habit-auditivo-ocular"><svg><use href="#i-ear"/></svg></span>
+                  <div class="habit-name">Cuidado Ocular y Auditivo</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-amber)">7</span>
+                    <span class="bar"><span style="width:70%;background:var(--plan-amber)"></span></span>
+                  </div>
+                  <span class="badge amber">Mejora</span>
+                  <div class="desc">Sin incidencias relevantes. Usas gafas para leer. Mantén las revisiones periódicas.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+                <a class="habit-row" href="#/evolucion#hab-tabaco-alcohol">
+                  <span class="habit-row-icon habit-tabaco-alcohol"><svg><use href="#i-leaf"/></svg></span>
+                  <div class="habit-name">Tabaco y Alcohol</div>
+                  <div class="habit-score">
+                    <span class="circle" style="background:var(--plan-green)">10</span>
+                    <span class="bar"><span style="width:100%;background:var(--plan-green)"></span></span>
+                  </div>
+                  <span class="badge green">Fortaleza</span>
+                  <div class="desc">No consumes tabaco ni alcohol de forma habitual. Uno de los factores protectores más potentes para tu salud cerebral.</div>
+                  <span class="habit-cta" aria-label="Ver detalle"><svg><use href="#i-chevron"/></svg></span>
+                </a>
+              </div>
+
+              <div class="plan-disclaimer"><strong>Nota:</strong> Los resultados no representan un diagnóstico médico ni pretenden sustituir un servicio de atención médica.</div>
+
+              <div class="st">Resumen de tu valoración</div>
+              <div class="plan-summary">
+                <p>Amada, tras nuestra conversación tienes una <strong>base muy valiosa</strong> desde la que trabajar. Tu mayor fortaleza es que no consumes tabaco ni alcohol, lo que te sitúa en un nivel de protección excelente. Además, mantienes unos horarios de comida regulares.</p>
+                <p>Las áreas con mayor impacto a corto plazo son la <strong>actividad física</strong> y el <strong>bienestar emocional</strong>. La nutrición y la estimulación cognitiva también necesitan atención, pero iremos paso a paso. Vamos a construir juntas un camino realista y adaptado a ti.</p>
+              </div>
+            </section>
+
+            <!-- ACCIONES -->
+            <section class="plan-section" id="sec-acciones">
+              <div class="section-eyebrow">Objetivos consensuados</div>
+              <h3>Plan integral de acción</h3>
+              <p class="section-sub">A partir de los resultados, hemos definido juntas objetivos para los próximos meses, priorizando cambios realistas y sostenibles. <strong>La constancia por encima de la intensidad.</strong></p>
+
+              <div class="obj-grid">
+                <div class="obj-card">
+                  <div class="obj-head"><span class="num">01</span><span class="title">Activación física diaria</span></div>
+                  <div class="obj-body">
+                    <div>
+                      <div class="label">Objetivo</div>
+                      <p>Introducir movimiento de forma progresiva, evitando el esfuerzo excesivo y facilitando la adherencia.</p>
+                    </div>
+                    <div>
+                      <div class="label">Beneficio</div>
+                      <p>Favorece la oxigenación cerebral, mejora el ánimo y reduce el riesgo de deterioro cognitivo.</p>
+                    </div>
+                    <div class="row"><span class="al">Actividad:</span><span>Caminatas suaves y ejercicios de fortalecimiento.</span></div>
+                    <div class="row"><span class="al">Frecuencia:</span><span>Diaria (lunes a viernes)</span></div>
+                  </div>
+                </div>
+                <div class="obj-card">
+                  <div class="obj-head"><span class="num">02</span><span class="title">Mejora del patrón nutricional</span></div>
+                  <div class="obj-body">
+                    <div>
+                      <div class="label">Objetivo</div>
+                      <p>Incrementar progresivamente la ingesta de frutas y verduras en las comidas habituales.</p>
+                    </div>
+                    <div>
+                      <div class="label">Beneficio</div>
+                      <p>Aporta nutrientes clave para el funcionamiento cerebral y niveles de energía estables.</p>
+                    </div>
+                    <div class="row"><span class="al">Actividad:</span><span>Pieza de fruta en el desayuno: plátano o manzana.</span></div>
+                    <div class="row"><span class="al">Frecuencia:</span><span>Alterna (día sí, día no)</span></div>
+                  </div>
+                </div>
+                <div class="obj-card">
+                  <div class="obj-head"><span class="num">03</span><span class="title">Entrenamiento cognitivo</span></div>
+                  <div class="obj-body">
+                    <div>
+                      <div class="label">Objetivo</div>
+                      <p>Incorporar estimulación mental regular adaptada a tus intereses y rutina diaria.</p>
+                    </div>
+                    <div>
+                      <div class="label">Beneficio</div>
+                      <p>Mantiene activas las funciones mentales, fortalece la reserva cognitiva y preserva la autonomía.</p>
+                    </div>
+                    <div class="row"><span class="al">Actividad:</span><span>Tareas rápidas de atención, memoria y lenguaje.</span></div>
+                    <div class="row"><span class="al">Frecuencia:</span><span>Diaria (lunes a viernes)</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="plan-quote">
+                <div class="q">"No necesitas hacerlo todo a la vez. Solo el siguiente pequeño paso."</div>
+                <div class="src">Y ese paso, hoy, lo damos juntas.</div>
+              </div>
+            </section>
+
+            <!-- PRÓXIMOS PASOS -->
+            <section class="plan-section" id="sec-proximos">
+              <div class="section-eyebrow">Acompañamiento y continuidad</div>
+              <h3>Próximos pasos</h3>
+              <p class="section-sub">Sé que puede parecer mucho, pero recuerda que vamos paso a paso, y yo estaré ahí para ayudarte en cada momento.</p>
+
+              <div class="st">Seguimiento</div>
+              <div class="track-grid">
+                <div class="track-card">
+                  <div class="head"><span class="pill">4m</span><span class="ttl">Cada 4 meses</span></div>
+                  <p>Seguimiento con tu orientadora personal, cada cuatro meses, para resolver dificultades y ajustar el plan a tu situación.</p>
+                </div>
+                <div class="track-card dark">
+                  <div class="head"><span class="pill">1a</span><span class="ttl">Al año</span></div>
+                  <p>Valoración anual de avances, enfocada en evaluar el grado de consecución de los objetivos.</p>
+                </div>
+              </div>
+
+              <div class="st">Tu Orientadora Personal</div>
+              <div class="op-card">
+                <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80&auto=format&fit=crop')"></div>
+                <div>
+                  <div class="name">Alba Prieto</div>
+                  <div class="role">Orientadora personal · Qida</div>
+                  <div class="creds">Terapeuta Ocupacional · Colegiada nº 32-43255</div>
+                </div>
+                <div class="contact">
+                  <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 666 555 444</span>
+                  <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>Mensajería del portal</span>
+                </div>
+              </div>
+
+              <div class="plan-disclaimer"><strong>Disclaimer:</strong> Los resultados no representan un diagnóstico médico ni pretenden sustituir a un servicio de atención médica, ni determinar tratamiento alguno.</div>
+            </section>
+
+            <!-- ANEXO ACTIVIDADES -->
+            <section class="plan-section" id="sec-anexo">
+              <div class="section-eyebrow">Material complementario</div>
+              <h3>Anexo · Plan semanal</h3>
+              <p class="section-sub">Actividades prácticas para cada hábito, distribuidas a lo largo de la semana.</p>
+
+              <div class="st">Actividad física</div>
+              <div class="week-grid">
+                <div class="week-day"><div class="week-day-head shade-1">Lunes</div><div class="week-day-body">Anda a un ritmo suave durante <strong>15 min</strong>.</div></div>
+                <div class="week-day"><div class="week-day-head shade-2">Martes</div><div class="week-day-body"><strong>10 sentadillas</strong> con apoyo en silla o pared.</div></div>
+                <div class="week-day"><div class="week-day-head shade-1">Miércoles</div><div class="week-day-body">Anda a un ritmo suave durante <strong>20 min</strong>.</div></div>
+                <div class="week-day"><div class="week-day-head shade-2">Jueves</div><div class="week-day-body">Tren superior · <strong>10 reps</strong>. Tumbada, eleva ambos brazos hacia arriba y atrás.</div></div>
+                <div class="week-day"><div class="week-day-head shade-3">Viernes</div><div class="week-day-body">Movilidad de rodillas · <strong>12 reps</strong>. Flexiona como si fueras a sentarte.</div></div>
+              </div>
+
+              <div class="st">Nutrición</div>
+              <div class="week-grid">
+                <div class="week-day"><div class="week-day-head shade-1">Lunes</div><div class="week-day-body">Añade una <strong>pieza de fruta</strong> al desayuno.</div></div>
+                <div class="week-day"><div class="week-day-head shade-2">Martes</div><div class="week-day-body">Un puñado de <strong>espinacas frescas</strong> en una ensalada.</div></div>
+                <div class="week-day"><div class="week-day-head shade-1">Miércoles</div><div class="week-day-body">Prepara un <strong>bol de fruta variada</strong> ya cortada.</div></div>
+                <div class="week-day"><div class="week-day-head shade-2">Jueves</div><div class="week-day-body"><strong>Verduras asadas o al horno</strong> como primer plato.</div></div>
+                <div class="week-day"><div class="week-day-head shade-3">Viernes</div><div class="week-day-body">Sustituye snacks procesados por <strong>fruta o palitos de verdura</strong>.</div></div>
+              </div>
+            </section>
+
+            <!-- ANEXO COGNITIVO -->
+            <section class="plan-section" id="sec-cognitivo">
+              <div class="section-eyebrow">Anexo de actividades</div>
+              <h3>Mente activa</h3>
+              <p class="section-sub">Ejercicios diarios de estimulación cognitiva adaptados a ti.</p>
+
+              <div class="cog-list">
+                <div class="cog-day">
+                  <div class="cog-day-head shade-1">Lunes · Funciones ejecutivas</div>
+                  <div class="cog-day-body">
+                    <p>Escribe una capital que empiece por la letra <strong>P</strong> y nombra dos características de ese país. Haz lo mismo con la letra <strong>R</strong> y la <strong>W</strong>.</p>
+                  </div>
+                </div>
+                <div class="cog-day">
+                  <div class="cog-day-head shade-2">Martes · Atención</div>
+                  <div class="cog-day-body">
+                    <p>Tu objetivo hoy es buscar y contar <strong>cuántas cosas de color rojo</strong> hay en tu cocina.</p>
+                  </div>
+                </div>
+                <div class="cog-day">
+                  <div class="cog-day-head shade-1">Miércoles · Memoria</div>
+                  <div class="cog-day-body">
+                    <p>¿Qué muro dividió una ciudad europea y cayó en 1989? <strong>A)</strong> Muro de Berlín · <strong>B)</strong> Muro de Adriano · <strong>C)</strong> Gran Muralla.</p>
+                    <p class="hint">Amplía tus conocimientos:</p>
+                    <p>· ¿En qué país se encuentra cada uno de estos muros?</p>
+                    <p>· ¿Con qué finalidad se construyó cada uno?</p>
+                    <p>· ¿Cuál de ellos es el más largo?</p>
+                  </div>
+                </div>
+                <div class="cog-day">
+                  <div class="cog-day-head shade-2">Jueves · Praxias</div>
+                  <div class="cog-day-body">
+                    <p>Junta la yema del pulgar con la yema del meñique de la misma mano. <strong>¿Sabrías decir qué tres dedos han quedado en medio?</strong></p>
+                    <p>Después, con el pulgar, toca una a una las yemas de los demás dedos: índice, corazón, anular y meñique. Primero despacio, luego más rápido. Repite con ambas manos.</p>
+                  </div>
+                </div>
+                <div class="cog-day">
+                  <div class="cog-day-head shade-3">Viernes · Reto cognitivo</div>
+                  <div class="cog-day-body">
+                    <p>Tres amigos — <strong>Ana, Bruno y Carla</strong> — piden postre. Uno pide tarta, otro helado y otro fruta. Además, uno bebe café, otro té y otro agua.</p>
+                    <p class="hint">Sabemos que:</p>
+                    <p>1. Ana no pidió ni tarta ni café.</p>
+                    <p>2. Quien tomó té pidió fruta.</p>
+                    <p>3. Bruno no tomó agua.</p>
+                    <p>4. Carla no pidió helado.</p>
+                    <p>5. Quien pidió tarta no tomó café.</p>
+                    <p>6. Bruno tomó té.</p>
+                    <p class="hint">Pregunta: ¿qué pidió y qué bebió cada uno?</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+        </article>
+
+        <!-- ===== PLAN DE SEGUIMIENTO CUATRIMESTRAL (visible only in proto-2) ===== -->
+        <article class="plan plan-seguimiento show-seguimiento">
+          <header class="plan-hero">
+            <div class="eyebrow">Plan de Seguimiento · Cuatrimestre 1</div>
+            <h2>Cuatro meses<br>de <em>avances</em></h2>
+            <div class="plan-stat">
+              <strong>+8</strong>
+              <span>puntos en total a lo largo de tus 8 hábitos en este cuatrimestre.</span>
+            </div>
+            <div class="plan-meta">
+              <div class="plan-meta-item"><div class="lbl">Preparado para</div><div class="val">Amada Pérez</div></div>
+              <div class="plan-meta-item"><div class="lbl">Fecha del seguimiento</div><div class="val">18 de junio de 2026</div></div>
+              <div class="plan-meta-item"><div class="lbl">Cuatrimestre</div><div class="val">1º · Marzo–Junio 2026</div></div>
+              <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Alba Prieto</div></div>
+            </div>
+          </header>
+
+          <nav class="plan-nav">
+            <a href="#sec-evolucion-seg"     class="plan-nav-link is-active"><span class="full">Tu evolución</span><span class="short">Evolución</span></a>
+            <a href="#sec-objetivos-seg"     class="plan-nav-link"><span class="full">Objetivos</span><span class="short">Objetivos</span></a>
+            <a href="#sec-acompanamiento-seg" class="plan-nav-link"><span class="full">Acompañamiento</span><span class="short">OP</span></a>
+          </nav>
+
+          <!-- EVOLUCIÓN -->
+          <section class="plan-section" id="sec-evolucion-seg">
+            <div class="section-eyebrow">Marzo – Junio</div>
+            <h3>Cuatro meses de avances</h3>
+            <p class="section-sub">Amada, lo primero: gracias por tu constancia. En estos cuatro meses has demostrado un compromiso real con tu bienestar y se nota en los resultados. Este es el recorrido que hemos hecho hasta aquí.</p>
+
+            <div class="seg-narrative">
+              <p><strong>Lo que has hecho bien.</strong> Has incorporado las <em>caminatas de 20 minutos</em> a tu rutina prácticamente todos los días, algo que al empezar sentías imposible. Tus ejercicios de <em>mente activa</em> los has hecho con constancia y ya notas la diferencia al leer o recordar conversaciones. Y lo más importante: has recuperado el hábito de <em>cenar pronto y ligero</em>, lo que está mejorando tu descanso nocturno. Estos tres cambios, aunque parezcan pequeños, son la base sobre la que vamos a seguir construyendo.</p>
+            </div>
+
+            <div class="st">Tu situación actualizada</div>
+            <div class="seg-habits-legend">
+              <span><span class="dot up"></span>Has mejorado</span>
+              <span><span class="dot eq"></span>Se mantiene</span>
+            </div>
+            <div class="seg-habits-grid">
+              <a class="seg-habit up" href="#/evolucion#hab-actividad-fisica">
+                <span class="seg-habit-icon"><svg><use href="#i-running"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Actividad Física</div><div class="seg-habit-prev">antes 3/10</div></div>
+                <span class="seg-habit-now">5</span>
+                <span class="seg-habit-delta up">+2</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-nutricion">
+                <span class="seg-habit-icon"><svg><use href="#i-apple"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Nutrición</div><div class="seg-habit-prev">antes 4/10</div></div>
+                <span class="seg-habit-now">5</span>
+                <span class="seg-habit-delta up">+1</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-mente-activa">
+                <span class="seg-habit-icon"><svg><use href="#i-brain"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Mente Activa</div><div class="seg-habit-prev">antes 4/10</div></div>
+                <span class="seg-habit-now">6</span>
+                <span class="seg-habit-delta up">+2</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-bienestar-emocional">
+                <span class="seg-habit-icon"><svg><use href="#i-heart"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Bienestar emocional</div><div class="seg-habit-prev">antes 3/10</div></div>
+                <span class="seg-habit-now">5</span>
+                <span class="seg-habit-delta up">+2</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit eq" href="#/evolucion#hab-participacion-social">
+                <span class="seg-habit-icon"><svg><use href="#i-users"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Participación social</div><div class="seg-habit-prev">antes 5/10</div></div>
+                <span class="seg-habit-now">5</span>
+                <span class="seg-habit-delta eq">=</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit eq" href="#/evolucion#hab-auditivo-ocular">
+                <span class="seg-habit-icon"><svg><use href="#i-eye"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Cuidado ocular y auditivo</div><div class="seg-habit-prev">antes 7/10</div></div>
+                <span class="seg-habit-now">7</span>
+                <span class="seg-habit-delta eq">=</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-sueno">
+                <span class="seg-habit-icon"><svg><use href="#i-clock"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Sueño</div><div class="seg-habit-prev">antes 6/10</div></div>
+                <span class="seg-habit-now">7</span>
+                <span class="seg-habit-delta up">+1</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit eq" href="#/evolucion#hab-tabaco-alcohol">
+                <span class="seg-habit-icon"><svg><use href="#i-leaf"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Tabaco y alcohol</div><div class="seg-habit-prev">antes 10/10</div></div>
+                <span class="seg-habit-now">10</span>
+                <span class="seg-habit-delta eq">=</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+            </div>
+
+            <div class="plan-quote">
+              <div class="q">"Lo que has conseguido estos cuatro meses es tuyo, nadie te lo quita. Ahora vamos a por lo siguiente."</div>
+            </div>
+          </section>
+
+          <!-- OBJETIVOS -->
+          <section class="plan-section" id="sec-objetivos-seg">
+            <div class="section-eyebrow">Qué sigue</div>
+            <h3>De dónde venimos, a dónde vamos</h3>
+            <p class="section-sub">Revisamos los objetivos del cuatrimestre anterior y definimos los del próximo, ajustando las actividades a tu ritmo actual y a lo que hemos aprendido juntas.</p>
+
+            <div class="st">Cómo fueron los objetivos anteriores</div>
+            <div class="seg-retro-list">
+              <div class="seg-retro-card">
+                <span class="seg-retro-status achieved">✓</span>
+                <div>
+                  <div class="seg-retro-title">Activación Física Diaria</div>
+                  <div class="seg-retro-note">Caminatas incorporadas con constancia desde la segunda semana. Ya es parte de tu rutina.</div>
+                </div>
+                <span class="seg-retro-tag achieved">Conseguido</span>
+              </div>
+              <div class="seg-retro-card">
+                <span class="seg-retro-status partial">◐</span>
+                <div>
+                  <div class="seg-retro-title">Mejora del Patrón Nutricional</div>
+                  <div class="seg-retro-note">Fruta en el desayuno integrada 4–5 días por semana. Mantenemos el objetivo y ampliamos a otras comidas.</div>
+                </div>
+                <span class="seg-retro-tag partial">En progreso</span>
+              </div>
+              <div class="seg-retro-card">
+                <span class="seg-retro-status partial">◐</span>
+                <div>
+                  <div class="seg-retro-title">Entrenamiento Cognitivo</div>
+                  <div class="seg-retro-note">Tareas de atención y memoria realizadas 3 días por semana. Buen arranque, seguimos profundizando.</div>
+                </div>
+                <span class="seg-retro-tag partial">En progreso</span>
+              </div>
+            </div>
+
+            <div class="st">Tus nuevos objetivos del cuatrimestre</div>
+            <div class="obj-grid">
+              <div class="obj-card">
+                <div class="obj-head"><span class="num">01</span><span class="title">Añadir ejercicios de fuerza al hábito de caminar</span></div>
+                <div class="obj-body">
+                  <div>
+                    <div class="label">Por qué</div>
+                    <p>La parte de caminar ya la tienes dominada. Añadir fuerza mantiene tus músculos, mejora el equilibrio y reduce el riesgo de caídas — clave para seguir siendo independiente en tu día a día.</p>
+                  </div>
+                  <div class="row"><span class="al">Sentadillas:</span><span>2×10 con apoyo en silla · 3 días/semana</span></div>
+                  <div class="row"><span class="al">Brazos:</span><span>2-3×8-12 con pesas ligeras · 2 días/semana</span></div>
+                  <div class="row"><span class="al">Caminata:</span><span>20 min · 5–6 días + 1 día de 30 min</span></div>
+                </div>
+              </div>
+              <div class="obj-card">
+                <div class="obj-head"><span class="num">02</span><span class="title">Añadir un momento de descanso consciente al día</span></div>
+                <div class="obj-body">
+                  <div>
+                    <div class="label">Por qué</div>
+                    <p>Has avanzado mucho en mente activa y bienestar emocional. Un pequeño espacio diario para descansar la mente ayuda a consolidar esos avances y a sentirte con más energía durante el día.</p>
+                  </div>
+                  <div class="row"><span class="al">Respiración:</span><span>10 min al despertar, en silencio · a diario</span></div>
+                  <div class="row"><span class="al">Pausa sin pantallas:</span><span>5 min después de comer · a diario</span></div>
+                  <div class="row"><span class="al">Diario positivo:</span><span>3 cosas buenas antes de dormir · 5 días/semana</span></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ACOMPAÑAMIENTO -->
+          <section class="plan-section" id="sec-acompanamiento-seg">
+            <div class="section-eyebrow">Acompañamiento y continuidad</div>
+            <h3>Próximos pasos</h3>
+            <p class="section-sub">Cada cuatrimestre no empieza de cero. Empieza desde donde lo dejamos, un paso por delante.</p>
+
+            <div class="st">Seguimiento</div>
+            <div class="track-grid">
+              <div class="track-card">
+                <div class="head"><span class="pill">4m</span><span class="ttl">Cada 4 meses</span></div>
+                <p>Seguimiento mensual con tu orientadora personal para resolver dificultades y ajustar el plan a tu situación.</p>
+              </div>
+              <div class="track-card dark">
+                <div class="head"><span class="pill">1a</span><span class="ttl">Al año</span></div>
+                <p>Valoración de avances enfocada en evaluar el grado de consecución de los objetivos.</p>
+              </div>
+            </div>
+
+            <div class="st">Tu Orientadora Personal</div>
+            <div class="op-card">
+              <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80&auto=format&fit=crop')"></div>
+              <div>
+                <div class="name">Alba Prieto</div>
+                <div class="role">Orientadora personal · Qida</div>
+                <div class="creds">Llevamos cuatro meses trabajando juntas y seguimos en este nuevo cuatrimestre.</div>
+              </div>
+              <div class="contact">
+                <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 666 555 444</span>
+                <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>Mensajería del portal</span>
+              </div>
+            </div>
+
+            <div class="plan-quote">
+              <div class="q">"La prevención hoy es la libertad de mañana."</div>
+            </div>
+          </section>
+        </article>
+
+        <!-- ===== PLAN DE SEGUIMIENTO ANUAL (visible only in proto-3) ===== -->
+        <article class="plan plan-anual show-anual">
+          <header class="plan-hero">
+            <div class="eyebrow">Plan de Seguimiento · Resumen anual</div>
+            <h2>Un año<br>de <em>hábitos</em></h2>
+            <div class="plan-stat">
+              <strong>+19</strong>
+              <span>puntos ganados en el conjunto de tus 8 hábitos a lo largo de este año.</span>
+            </div>
+            <div class="plan-meta">
+              <div class="plan-meta-item"><div class="lbl">Preparado para</div><div class="val">Amada Pérez</div></div>
+              <div class="plan-meta-item"><div class="lbl">Fecha del informe</div><div class="val">18 de marzo de 2027</div></div>
+              <div class="plan-meta-item"><div class="lbl">Periodo</div><div class="val">Marzo 2026 – Marzo 2027</div></div>
+              <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Alba Prieto</div></div>
+            </div>
+          </header>
+
+          <nav class="plan-nav">
+            <a href="#sec-anual-resumen"     class="plan-nav-link is-active"><span class="full">Tu año</span><span class="short">Tu año</span></a>
+            <a href="#sec-anual-logros"      class="plan-nav-link"><span class="full">Logros del año</span><span class="short">Logros</span></a>
+            <a href="#sec-anual-futuro"      class="plan-nav-link"><span class="full">Lo que viene</span><span class="short">Futuro</span></a>
+            <a href="#sec-anual-actividades" class="plan-nav-link"><span class="full">Actividades</span><span class="short">Activid.</span></a>
+          </nav>
+
+          <!-- RESUMEN DEL AÑO -->
+          <section class="plan-section" id="sec-anual-resumen">
+            <div class="section-eyebrow">Un año contigo</div>
+            <h3>Un año construyendo hábitos saludables</h3>
+            <p class="section-sub">Amada, gracias por tu compromiso durante este año. El objetivo de este seguimiento ha sido ayudarte a establecer hábitos saludables que puedas mantener en el tiempo, adaptándolos a tus necesidades y a tu ritmo.</p>
+
+            <div class="seg-narrative">
+              <p>Cada paso que has dado, por pequeño que parezca, contribuye a cuidar tu salud y tu bienestar. Lo importante no es hacerlo todo perfecto, sino seguir construyendo una rutina que sea sostenible y que te ayude a sentirte mejor a largo plazo.</p>
+            </div>
+
+            <div class="seg-year-band">
+              <div class="seg-year-chip"><div class="k">3</div><div class="l">seguimientos cuatrimestrales</div></div>
+              <div class="seg-year-chip"><div class="k">+19</div><div class="l">puntos ganados en el año</div></div>
+              <div class="seg-year-chip"><div class="k">7 / 8</div><div class="l">hábitos al alza</div></div>
+            </div>
+
+            <div class="st">Tu evolución en el año</div>
+            <div class="seg-habits-legend">
+              <span><span class="dot up"></span>Has mejorado</span>
+              <span><span class="dot eq"></span>Se mantiene</span>
+            </div>
+            <div class="seg-habits-grid">
+              <a class="seg-habit up" href="#/evolucion#hab-actividad-fisica">
+                <span class="seg-habit-icon"><svg><use href="#i-running"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Actividad Física</div><div class="seg-habit-prev">antes 3/10</div></div>
+                <span class="seg-habit-now">7</span>
+                <span class="seg-habit-delta up">+4</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-mente-activa">
+                <span class="seg-habit-icon"><svg><use href="#i-brain"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Mente Activa</div><div class="seg-habit-prev">antes 4/10</div></div>
+                <span class="seg-habit-now">8</span>
+                <span class="seg-habit-delta up">+4</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-bienestar-emocional">
+                <span class="seg-habit-icon"><svg><use href="#i-heart"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Bienestar emocional</div><div class="seg-habit-prev">antes 3/10</div></div>
+                <span class="seg-habit-now">7</span>
+                <span class="seg-habit-delta up">+4</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-nutricion">
+                <span class="seg-habit-icon"><svg><use href="#i-apple"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Nutrición</div><div class="seg-habit-prev">antes 4/10</div></div>
+                <span class="seg-habit-now">7</span>
+                <span class="seg-habit-delta up">+3</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-sueno">
+                <span class="seg-habit-icon"><svg><use href="#i-clock"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Sueño</div><div class="seg-habit-prev">antes 6/10</div></div>
+                <span class="seg-habit-now">8</span>
+                <span class="seg-habit-delta up">+2</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-participacion-social">
+                <span class="seg-habit-icon"><svg><use href="#i-users"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Participación social</div><div class="seg-habit-prev">antes 5/10</div></div>
+                <span class="seg-habit-now">6</span>
+                <span class="seg-habit-delta up">+1</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit up" href="#/evolucion#hab-auditivo-ocular">
+                <span class="seg-habit-icon"><svg><use href="#i-eye"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Cuidado ocular y auditivo</div><div class="seg-habit-prev">antes 7/10</div></div>
+                <span class="seg-habit-now">8</span>
+                <span class="seg-habit-delta up">+1</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+              <a class="seg-habit eq" href="#/evolucion#hab-tabaco-alcohol">
+                <span class="seg-habit-icon"><svg><use href="#i-leaf"/></svg></span>
+                <div class="seg-habit-body"><div class="seg-habit-name">Tabaco y alcohol</div><div class="seg-habit-prev">antes 10/10</div></div>
+                <span class="seg-habit-now">10</span>
+                <span class="seg-habit-delta eq">=</span>
+                <span class="seg-habit-cta" aria-label="Ver en Mi evolución"><svg><use href="#i-chevron"/></svg></span>
+              </a>
+            </div>
+
+            <div class="plan-quote">
+              <div class="q">"Un año después, estos hábitos ya no son un esfuerzo: son parte de quien eres."</div>
+            </div>
+          </section>
+
+          <!-- LOGROS DEL AÑO -->
+          <section class="plan-section" id="sec-anual-logros">
+            <div class="section-eyebrow">De dónde venimos</div>
+            <h3>Lo que has consolidado este año</h3>
+            <p class="section-sub">Repasamos los objetivos que fuimos definiendo en cada cuatrimestre y cómo se han asentado en tu día a día.</p>
+
+            <div class="seg-retro-list">
+              <div class="seg-retro-card">
+                <span class="seg-retro-status achieved">✓</span>
+                <div>
+                  <div class="seg-retro-title">Rutina de movimiento consolidada</div>
+                  <div class="seg-retro-note">Caminatas casi diarias y ejercicios de fuerza incorporados. Hoy es un hábito estable, no una obligación.</div>
+                </div>
+                <span class="seg-retro-tag achieved">Consolidado</span>
+              </div>
+              <div class="seg-retro-card">
+                <span class="seg-retro-status achieved">✓</span>
+                <div>
+                  <div class="seg-retro-title">Estimulación cognitiva diaria</div>
+                  <div class="seg-retro-note">Ejercicios de mente activa integrados en tu rutina. Notas la diferencia al leer y recordar conversaciones.</div>
+                </div>
+                <span class="seg-retro-tag achieved">Consolidado</span>
+              </div>
+              <div class="seg-retro-card">
+                <span class="seg-retro-status achieved">✓</span>
+                <div>
+                  <div class="seg-retro-title">Alimentación más variada</div>
+                  <div class="seg-retro-note">Fruta y verdura presentes en la mayoría de comidas. Un patrón mucho más equilibrado que al empezar.</div>
+                </div>
+                <span class="seg-retro-tag achieved">Consolidado</span>
+              </div>
+              <div class="seg-retro-card">
+                <span class="seg-retro-status partial">◐</span>
+                <div>
+                  <div class="seg-retro-title">Descanso y bienestar emocional</div>
+                  <div class="seg-retro-note">Mejoras claras en sueño y ánimo. Seguimos reforzando los momentos de descanso consciente durante el día.</div>
+                </div>
+                <span class="seg-retro-tag partial">En progreso</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- LO QUE VIENE -->
+          <section class="plan-section" id="sec-anual-futuro">
+            <div class="section-eyebrow">Acompañamiento y continuidad</div>
+            <h3>Lo que viene</h3>
+            <p class="section-sub">El objetivo ahora es mantener lo conseguido y seguir ajustando el plan a tu ritmo. Seguimos acompañándote.</p>
+
+            <div class="st">Seguimiento</div>
+            <div class="track-grid">
+              <div class="track-card">
+                <div class="head"><span class="pill">4m</span><span class="ttl">Cada 4 meses</span></div>
+                <p>Seguimiento con tu orientadora personal, cada cuatro meses, para resolver dificultades y ajustar el plan a tu situación.</p>
+              </div>
+              <div class="track-card dark">
+                <div class="head"><span class="pill">1a</span><span class="ttl">Al año</span></div>
+                <p>Valoración anual de avances, enfocada en evaluar el grado de consecución de los objetivos.</p>
+              </div>
+            </div>
+
+            <div class="st">Tu Orientadora Personal</div>
+            <div class="op-card">
+              <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80&auto=format&fit=crop')"></div>
+              <div>
+                <div class="name">Alba Prieto</div>
+                <div class="role">Orientadora personal · Qida</div>
+                <div class="creds">Un año trabajando juntas. Seguimos construyendo sobre lo que ya has logrado.</div>
+              </div>
+              <div class="contact">
+                <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 666 555 444</span>
+                <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>Mensajería del portal</span>
+              </div>
+            </div>
+
+            <div class="plan-quote">
+              <div class="q">"Lo importante no es hacerlo todo perfecto, sino seguir construyendo una rutina sostenible."</div>
+            </div>
+          </section>
+
+          <!-- ACTIVIDADES (sustituye al anexo plan semanal — basado en Anexo_Actividades_Mes1.pdf) -->
+          <section class="plan-section" id="sec-anual-actividades">
+            <div class="section-eyebrow">Material complementario · Mes 1</div>
+            <h3>Actividades</h3>
+            <p class="section-sub">Tu plan semanal para empezar a mejorar, un pequeño paso cada día.</p>
+
+            <div class="st acts-mente"><svg><use href="#i-brain"/></svg>Mente activa</div>
+            <div class="week-grid acts-mente">
+              <div class="week-day"><div class="week-day-head shade-1">Lunes</div><div class="week-day-body">Lee al menos <strong>10 minutos</strong> un libro, una revista o el periódico.</div></div>
+              <div class="week-day"><div class="week-day-head shade-2">Martes</div><div class="week-day-body">Completa un <strong>juego interactivo del Portal</strong> o un sudoku.</div></div>
+              <div class="week-day"><div class="week-day-head shade-3">Miércoles</div><div class="week-day-body">Resuelve una <strong>sopa de letras</strong> o un crucigrama durante 10 minutos.</div></div>
+              <div class="week-day"><div class="week-day-head shade-1">Jueves</div><div class="week-day-body">Dedica otros <strong>10 minutos</strong> a la lectura o escribe un pequeño recuerdo.</div></div>
+              <div class="week-day"><div class="week-day-head shade-2">Viernes</div><div class="week-day-body">Completa un <strong>segundo juego del Portal</strong> o un ejercicio de memoria.</div></div>
+              <div class="week-day"><div class="week-day-head shade-3">Sábado</div><div class="week-day-body">Disfruta de un <strong>pasatiempo</strong>: dominó, cartas o ajedrez.</div></div>
+              <div class="week-day"><div class="week-day-head shade-1">Domingo</div><div class="week-day-body">Lee un rato o <strong>repite tu actividad favorita</strong>.</div></div>
+            </div>
+
+            <div class="st acts-nutri"><svg><use href="#i-apple"/></svg>Nutrición</div>
+            <div class="week-grid acts-nutri">
+              <div class="week-day"><div class="week-day-head shade-1">Lunes</div><div class="week-day-body">Añade una <strong>pieza de fruta</strong> al desayuno.</div></div>
+              <div class="week-day"><div class="week-day-head shade-2">Martes</div><div class="week-day-body">Acompaña la comida con una <strong>ración de verduras</strong>, como una ensalada.</div></div>
+              <div class="week-day"><div class="week-day-head shade-3">Miércoles</div><div class="week-day-body">Toma una <strong>pieza de fruta</strong> como merienda o postre.</div></div>
+              <div class="week-day"><div class="week-day-head shade-1">Jueves</div><div class="week-day-body">Prepara una <strong>crema de verduras</strong> o un gazpacho como primer plato.</div></div>
+              <div class="week-day"><div class="week-day-head shade-2">Viernes</div><div class="week-day-body">Incluye una <strong>tercera pieza de fruta</strong> durante el día.</div></div>
+              <div class="week-day"><div class="week-day-head shade-3">Sábado</div><div class="week-day-body">Prepara una <strong>receta saludable</strong> con fruta o verduras.</div></div>
+              <div class="week-day"><div class="week-day-head shade-1">Domingo</div><div class="week-day-body">Haz la compra con <strong>más frutas y verduras</strong>.</div></div>
+            </div>
+
+            <div class="st acts-fisica"><svg><use href="#i-running"/></svg>Actividad física</div>
+            <div class="week-grid acts-fisica">
+              <div class="week-day"><div class="week-day-head shade-1">Lunes</div><div class="week-day-body">Camina entre <strong>15 y 20 minutos</strong> a un ritmo cómodo.</div></div>
+              <div class="week-day"><div class="week-day-head shade-2">Martes</div><div class="week-day-body">Haz una <strong>sesión de fuerza</strong> guiada por los vídeos del Portal.</div></div>
+              <div class="week-day"><div class="week-day-head shade-3">Miércoles</div><div class="week-day-body">Mantente activo con <strong>pequeños desplazamientos a pie</strong>.</div></div>
+              <div class="week-day"><div class="week-day-head shade-1">Jueves</div><div class="week-day-body">Vuelve a caminar entre <strong>15 y 20 minutos</strong>.</div></div>
+              <div class="week-day"><div class="week-day-head shade-2">Viernes</div><div class="week-day-body">Repite la <strong>fuerza</strong>: sentadillas y elevación de talones.</div></div>
+              <div class="week-day"><div class="week-day-head shade-3">Sábado</div><div class="week-day-body">Disfruta de un <strong>paseo tranquilo</strong> si te apetece.</div></div>
+              <div class="week-day"><div class="week-day-head shade-1">Domingo</div><div class="week-day-body">Descansa o haz <strong>estiramientos suaves</strong> para preparar la semana.</div></div>
+            </div>
+          </section>
+        </article>
+
+        <!-- ===== Planes anteriores (historial — colapsado por defecto) ===== -->
+        <div class="acc-item historial">
+          <button class="acc-summary">
+            <span class="left">
+              <span class="ico" style="background:var(--brand-50);color:var(--brand-700)">
+                <svg><use href="#i-clock"/></svg>
+              </span>
+              <span>
+                <span class="title">Planes anteriores</span>
+                <span class="meta-line">
+                  <span class="show-default">Aún no tienes seguimientos archivados</span>
+                  <span class="show-seguimiento">1 plan archivado · Plan de Prevención</span>
+                </span>
+              </span>
+            </span>
+            <svg class="chev" width="18" height="18"><use href="#i-chevron"/></svg>
+          </button>
+          <div class="acc-content">
+            <!-- Default mode: empty state -->
+            <p class="show-default historial-empty">
+              Aún no tienes planes anteriores. Tu primer seguimiento cuatrimestral está previsto para junio de 2026.
+            </p>
+            <!-- Proto-2 mode: shows the original Plan de Prevención as a previous entry -->
+            <ul class="show-seguimiento historial-list">
+              <li class="historial-entry">
+                <div class="historial-entry-icon">
+                  <svg width="20" height="20"><use href="#i-file"/></svg>
+                </div>
+                <div class="historial-entry-body">
+                  <div class="historial-entry-type">Plan de Prevención y Reducción de Riesgos</div>
+                  <div class="historial-entry-meta">Tu valoración inicial · 18 de marzo de 2026 · Alba Prieto</div>
+                </div>
+                <div class="historial-entry-actions">
+                  <a href="#informes-pdf" class="btn btn-secondary btn-sm">Ver plan</a>
+                  <button class="btn btn-primary btn-sm">
+                    <svg width="14" height="14"><use href="#i-download"/></svg>
+                    Descargar PDF
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ===== Tus planes en PDF (descarga) ===== -->
+        <section class="plans-pdf" id="informes-pdf">
+          <div class="section-header">
+            <h2>Tus planes en PDF</h2>
+          </div>
+          <p class="subtitle" style="margin-bottom:16px">Descarga tus planes en PDF para guardarlos o imprimirlos.</p>
+
+          <!-- Plan de Seguimiento Anual (visible only in proto-3) -->
+          <div class="plan-pdf-card show-anual" style="margin-bottom:14px">
+            <div class="doc-icon"><svg><use href="#i-file"/></svg></div>
+            <div class="info">
+              <h3>Plan de Seguimiento Anual · 2026–2027</h3>
+              <div class="meta">
+                <span><svg width="14" height="14"><use href="#i-calendar"/></svg> Creado el 18 de marzo de 2027</span>
+                <span><svg width="14" height="14"><use href="#i-user"/></svg> Alba Prieto · Orientadora</span>
+                <span><svg width="14" height="14"><use href="#i-file"/></svg> 5 páginas · 2,1 MB</span>
+              </div>
+            </div>
+            <button class="btn btn-primary"><svg width="16" height="16"><use href="#i-download"/></svg>Descargar PDF</button>
+          </div>
+
+          <!-- Plan de Seguimiento (visible only in proto-2) -->
+          <div class="plan-pdf-card show-seguimiento" style="margin-bottom:14px">
+            <div class="doc-icon"><svg><use href="#i-file"/></svg></div>
+            <div class="info">
+              <h3>Plan de Seguimiento Cuatrimestral · Cuatrimestre 1</h3>
+              <div class="meta">
+                <span><svg width="14" height="14"><use href="#i-calendar"/></svg> Creado el 18 de junio de 2026</span>
+                <span><svg width="14" height="14"><use href="#i-user"/></svg> Alba Prieto · Orientadora</span>
+                <span><svg width="14" height="14"><use href="#i-file"/></svg> 4 páginas · 1,8 MB</span>
+              </div>
+            </div>
+            <button class="btn btn-primary"><svg width="16" height="16"><use href="#i-download"/></svg>Descargar PDF</button>
+          </div>
+
+          <!-- Plan de Prevención — visible only in default mode (in proto-2 it lives in the historial) -->
+          <div class="plan-pdf-card show-default">
+            <div class="doc-icon"><svg><use href="#i-file"/></svg></div>
+            <div class="info">
+              <h3>Plan de Prevención y Reducción de Riesgos</h3>
+              <div class="meta">
+                <span><svg width="14" height="14"><use href="#i-calendar"/></svg> Creado el 18 de marzo de 2026</span>
+                <span><svg width="14" height="14"><use href="#i-user"/></svg> Alba Prieto · Orientadora</span>
+                <span><svg width="14" height="14"><use href="#i-file"/></svg> 6 páginas · 2,4 MB</span>
+              </div>
+            </div>
+            <button class="btn btn-primary"><svg width="16" height="16"><use href="#i-download"/></svg>Descargar PDF</button>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <!-- ============ HABITO DETALLE ============ -->
+    <section class="view" data-view="habito">
+      <div class="page">
+        <header class="page-header page-header--with-action">
+          <div class="page-header-text">
+            <nav class="breadcrumb">
+              <a href="#/inicio">Inicio</a><span class="sep">›</span>
+              <a href="#/evolucion">Mi evolución</a><span class="sep">›</span>
+              <span class="current" id="habito-breadcrumb">—</span>
+            </nav>
+            <a href="#/evolucion" class="back-link" aria-label="Volver a mi evolución">
+              <span class="back-link-icon"><svg width="18" height="18"><use href="#i-arrow-left"/></svg></span>
+              <span class="back-link-text">Volver a mi evolución</span>
+            </a>
+          </div>
+          <div class="a11y-menu">
+            <button class="a11y-trigger" aria-expanded="false" aria-haspopup="true" aria-label="Opciones de tamaño de letra y contraste">
+              <svg width="18" height="18"><use href="#i-settings"/></svg>
+              <span>Tamaño de letra</span>
+            </button>
+            <div class="a11y-scrim" hidden></div>
+            <div class="a11y-popover" role="dialog" aria-label="Tamaño de letra" hidden>
+              <div class="a11y-popover-head">
+                <span>Tamaño de letra</span>
+                <button class="a11y-popover-close" aria-label="Cerrar">
+                  <svg width="16" height="16"><use href="#i-x"/></svg>
+                </button>
+              </div>
+              <div class="a11y-row">
+                <span class="a11y-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+                  Tamaño de texto
+                </span>
+                <div class="a11y-switcher a11y-textsize" role="radiogroup" aria-label="Tamaño de texto">
+                  <button class="a11y-opt is-active" data-size="normal" role="radio" aria-checked="true" aria-label="Normal">A</button>
+                  <button class="a11y-opt" data-size="large" role="radio" aria-checked="false" aria-label="Grande"><span style="font-size:1.15em">A</span></button>
+                  <button class="a11y-opt" data-size="xlarge" role="radio" aria-checked="false" aria-label="Muy grande"><span style="font-size:1.35em">A</span></button>
+                </div>
+              </div>
+              <div class="a11y-row">
+                <span class="a11y-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+                  Alto contraste
+                </span>
+                <button class="a11y-toggle contrast" role="switch" aria-checked="false" aria-label="Activar alto contraste">
+                  <span class="a11y-toggle-track"><span class="a11y-toggle-thumb"></span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div id="habito-content"></div>
+      </div>
+    </section>
+
+    <!-- ============ MI EVOLUCIÓN ============ -->
+    <section class="view" data-view="evolucion">
+      <div class="page">
+        <header class="page-header page-header--with-action">
+          <div class="page-header-text">
+            <nav class="breadcrumb"><a href="#/inicio">Inicio</a><span class="sep">›</span><span class="current">Mi evolución</span></nav>
+            <h1>Mi evolución</h1>
+            <p class="subtitle show-default">Tu progreso en cada uno de los 8 hábitos del Plan de Prevención. Reevaluamos algunas áreas cada 4 meses para que veas cómo avanzas.</p>
+            <p class="subtitle show-seguimiento">Tu progreso en cada uno de los 8 hábitos tras el seguimiento del Cuatrimestre 1 (junio 2026).</p>
+            <p class="subtitle show-anual">Tu progreso en cada uno de los 8 hábitos a lo largo de un año de seguimiento (marzo 2026 – marzo 2027).</p>
+          </div>
+          <div class="a11y-menu">
+            <button class="a11y-trigger" aria-expanded="false" aria-haspopup="true" aria-label="Opciones de tamaño de letra y contraste">
+              <svg width="18" height="18"><use href="#i-settings"/></svg>
+              <span>Tamaño de letra</span>
+            </button>
+            <div class="a11y-scrim" hidden></div>
+            <div class="a11y-popover" role="dialog" aria-label="Tamaño de letra" hidden>
+              <div class="a11y-popover-head">
+                <span>Tamaño de letra</span>
+                <button class="a11y-popover-close" aria-label="Cerrar">
+                  <svg width="16" height="16"><use href="#i-x"/></svg>
+                </button>
+              </div>
+              <div class="a11y-row">
+                <span class="a11y-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+                  Tamaño de texto
+                </span>
+                <div class="a11y-switcher a11y-textsize" role="radiogroup" aria-label="Tamaño de texto">
+                  <button class="a11y-opt is-active" data-size="normal" role="radio" aria-checked="true" aria-label="Normal">A</button>
+                  <button class="a11y-opt" data-size="large" role="radio" aria-checked="false" aria-label="Grande"><span style="font-size:1.15em">A</span></button>
+                  <button class="a11y-opt" data-size="xlarge" role="radio" aria-checked="false" aria-label="Muy grande"><span style="font-size:1.35em">A</span></button>
+                </div>
+              </div>
+              <div class="a11y-row">
+                <span class="a11y-label">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+                  Alto contraste
+                </span>
+                <button class="a11y-toggle contrast" role="switch" aria-checked="false" aria-label="Activar alto contraste">
+                  <span class="a11y-toggle-track"><span class="a11y-toggle-thumb"></span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="evolucion-list" id="evolucion-list"></div>
+      </div>
+    </section>
+
+    <!-- ============ MIS CITAS ============ -->
+    <section class="view" data-view="citas">
+      <div class="page">
+        <header class="page-header">
+          <nav class="breadcrumb"><a href="#/inicio">Inicio</a><span class="sep">›</span><span class="current">Mis citas</span></nav>
+          <h1>Mis citas</h1>
+          <p class="subtitle">Gestiona tus citas con tu orientador personal y profesionales colaboradores.</p>
+        </header>
+
+        <div class="row-between" style="margin-bottom:20px">
+          <div class="pills">
+            <button class="pill is-active">Próximas <span class="badge">2</span></button>
+            <button class="pill">Pasadas <span class="badge">8</span></button>
+            <button class="pill">Canceladas</button>
+          </div>
+          <button class="btn btn-primary"><svg width="16" height="16"><use href="#i-calendar"/></svg>Solicitar cita</button>
+        </div>
+
+        <div class="appt-list">
+          <article class="appt-card">
+            <div class="appt-date"><span class="day">14</span><span class="month">May</span></div>
+            <div class="appt-info">
+              <div class="title">Seguimiento cuatrimestral</div>
+              <div class="meta">
+                <span class="item"><svg width="14" height="14"><use href="#i-clock"/></svg>10:30 — 11:00</span>
+                <span class="item"><svg width="14" height="14"><use href="#i-user"/></svg>Osvaldo Luz</span>
+                <span class="item"><svg width="14" height="14"><use href="#i-pin"/></svg>Videollamada</span>
+              </div>
+            </div>
+            <div class="appt-actions">
+              <button class="btn btn-secondary btn-sm">Reprogramar</button>
+              <button class="btn btn-primary btn-sm">Unirse</button>
+            </div>
+          </article>
+
+          <article class="appt-card">
+            <div class="appt-date"><span class="day">02</span><span class="month">Jun</span></div>
+            <div class="appt-info">
+              <div class="title">Revisión cognitiva</div>
+              <div class="meta">
+                <span class="item"><svg width="14" height="14"><use href="#i-clock"/></svg>17:00 — 17:45</span>
+                <span class="item"><svg width="14" height="14"><use href="#i-user"/></svg>Dra. Carla Mendoza</span>
+                <span class="item"><svg width="14" height="14"><use href="#i-pin"/></svg>Centro Qida — Madrid</span>
+              </div>
+            </div>
+            <div class="appt-actions">
+              <button class="btn btn-secondary btn-sm">Reprogramar</button>
+              <button class="btn btn-ghost btn-sm">Detalles</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MIS SERVICIOS ============ -->
+    <section class="view" data-view="servicios">
+      <div class="page">
+        <header class="page-header">
+          <nav class="breadcrumb"><a href="#/inicio">Inicio</a><span class="sep">›</span><span class="current">Mis servicios</span></nav>
+          <h1>Mis servicios</h1>
+          <p class="subtitle">Estos son los diferentes servicios de tu póliza.</p>
+        </header>
+
+        <div class="row" style="margin-bottom:20px">
+          <div class="pills">
+            <button class="pill is-active">Todos <span class="badge">5</span></button>
+            <button class="pill">Activos <span class="badge">3</span></button>
+            <button class="pill">Pendientes <span class="badge">1</span></button>
+            <button class="pill">No disponibles <span class="badge">1</span></button>
+          </div>
+        </div>
+
+        <div class="service-list">
+          <article class="service-row">
+            <div>
+              <h3>Orientador u orientadora personal</h3>
+              <div class="body">
+                <p>Un profesional especializado en el cuidado y prevención de enfermedades neurodegenerativas será tu persona de referencia durante la vigencia de la póliza.</p>
+                <ul>
+                  <li>Activar los servicios adicionales que forman parte de la póliza.</li>
+                  <li>Ser tu persona de referencia ante cualquier duda o consulta.</li>
+                </ul>
+              </div>
+              <div class="footer-row">
+                <a href="#" class="more">Saber más <svg width="14" height="14"><use href="#i-chevron"/></svg></a>
+              </div>
+            </div>
+            <span class="chip chip-active">Activo</span>
+          </article>
+
+          <article class="service-row">
+            <div>
+              <h3>Plataforma de contenidos</h3>
+              <div class="body">
+                <p>Dentro de tu Portal del Cliente tendrás acceso a contenidos de interés, recomendaciones, hábitos, rutinas y ejercicios para prevenir enfermedades neurodegenerativas.</p>
+              </div>
+              <div class="footer-row">
+                <a href="#" class="more">Saber más <svg width="14" height="14"><use href="#i-chevron"/></svg></a>
+              </div>
+            </div>
+            <span class="chip chip-active">Activo</span>
+          </article>
+
+          <article class="service-row">
+            <div>
+              <h3>Plan de prevención y reducción de riesgos personalizado</h3>
+              <div class="body">
+                <p>Un plan adaptado a tu perfil, con acciones prácticas y seguimiento por parte de tu orientador.</p>
+              </div>
+              <div class="footer-row">
+                <a href="#" class="more">Saber más <svg width="14" height="14"><use href="#i-chevron"/></svg></a>
+              </div>
+            </div>
+            <span class="chip chip-active">Activo</span>
+          </article>
+
+          <article class="service-row">
+            <div>
+              <h3>Test cognitivo presencial</h3>
+              <div class="body">
+                <p>Sesión presencial con un profesional para evaluar funciones cognitivas y detectar señales tempranas.</p>
+              </div>
+              <div class="footer-row">
+                <a href="#" class="more">Saber más <svg width="14" height="14"><use href="#i-chevron"/></svg></a>
+              </div>
+            </div>
+            <span class="chip chip-pending">Pendiente</span>
+          </article>
+
+          <article class="service-row">
+            <div>
+              <h3>Acompañamiento familiar</h3>
+              <div class="body">
+                <p>Sesiones para familiares cuidadores. Disponible en próximas pólizas.</p>
+              </div>
+              <div class="footer-row">
+                <a href="#" class="more">Saber más <svg width="14" height="14"><use href="#i-chevron"/></svg></a>
+              </div>
+            </div>
+            <span class="chip chip-disabled">No disponible</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTENIDOS ============ -->
+    <section class="view" data-view="contenidos">
+      <div class="page">
+        <header class="page-header">
+          <nav class="breadcrumb"><a href="#/inicio">Inicio</a><span class="sep">›</span><span class="current">Contenidos</span></nav>
+          <h1>Contenidos</h1>
+          <p class="subtitle">Artículos, fichas y vídeos seleccionados para ti.</p>
+        </header>
+
+        <div class="row-between" style="margin-bottom:20px">
+          <div class="pills">
+            <button class="pill is-active">Todos <span class="badge">12</span></button>
+            <button class="pill">Artículos <span class="badge">7</span></button>
+            <button class="pill">Fichas <span class="badge">3</span></button>
+            <button class="pill">Vídeos <span class="badge">2</span></button>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <h2>Categorías</h2>
+          <div class="carousel-controls" aria-label="Navegar categorías">
+            <button class="carousel-arrow" data-dir="prev" aria-label="Categoría anterior">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="carousel-arrow" data-dir="next" aria-label="Siguiente categoría">
+              <svg width="18" height="18"><use href="#i-chevron"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="categories-carousel" id="categoriesCarousel">
+          <div class="categories-track">
+            <a href="#" class="tile">
+              <span class="ico mint"><svg><use href="#i-grid"/></svg></span>
+              <span class="meta"><span class="title">Todas las categorías</span><span class="sub">12 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico mint"><svg><use href="#i-running"/></svg></span>
+              <span class="meta"><span class="title">Actividad física</span><span class="sub">4 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico rose"><svg><use href="#i-heart"/></svg></span>
+              <span class="meta"><span class="title">Bienestar emocional</span><span class="sub">3 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico coral"><svg><use href="#i-apple"/></svg></span>
+              <span class="meta"><span class="title">Nutrición</span><span class="sub">5 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico violet"><svg><use href="#i-brain"/></svg></span>
+              <span class="meta"><span class="title">Mente activa</span><span class="sub">3 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico sun"><svg><use href="#i-users"/></svg></span>
+              <span class="meta"><span class="title">Participación social</span><span class="sub">2 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico sky"><svg><use href="#i-clock"/></svg></span>
+              <span class="meta"><span class="title">Sueño</span><span class="sub">2 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico peach"><svg><use href="#i-ear"/></svg></span>
+              <span class="meta"><span class="title">Cuidado auditivo</span><span class="sub">3 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico coral"><svg><use href="#i-eye"/></svg></span>
+              <span class="meta"><span class="title">Cuidado ocular</span><span class="sub">2 contenidos</span></span>
+            </a>
+            <a href="#" class="tile">
+              <span class="ico lavender"><svg><use href="#i-leaf"/></svg></span>
+              <span class="meta"><span class="title">Tabaco y alcohol</span><span class="sub">1 contenido</span></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="section-header"><h2>Todo tu contenido</h2></div>
+        <div class="content-grid" id="all-content"></div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="view" data-view="faq">
+      <div class="page">
+        <header class="page-header">
+          <nav class="breadcrumb"><a href="#/inicio">Inicio</a><span class="sep">›</span><span class="current">Preguntas frecuentes</span></nav>
+          <h1>Preguntas frecuentes</h1>
+          <p class="subtitle">Resolvemos las dudas más habituales sobre tu portal y los servicios de la póliza.</p>
+        </header>
+
+        <div class="faq" id="faq-list">
+          <div class="faq-item">
+            <button class="faq-summary">¿Cómo agendo una cita con mi orientador?<svg class="chev" width="18" height="18"><use href="#i-chevron-down"/></svg></button>
+            <div class="faq-content">Desde la pestaña <strong>Mis citas</strong> puedes pulsar "Solicitar cita". También puedes contactar directamente con tu orientador a través del canal de mensajería del portal.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary">¿Qué incluye el Plan de Prevención?<svg class="chev" width="18" height="18"><use href="#i-chevron-down"/></svg></button>
+            <div class="faq-content">El plan abarca 7 categorías de salud (actividad física, nutrición, cognitiva, emocional, social, auditiva y ocular, tabaco y alcohol). Tu orientador adapta las recomendaciones a tu perfil.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary">¿Puedo descargar mis informes?<svg class="chev" width="18" height="18"><use href="#i-chevron-down"/></svg></button>
+            <div class="faq-content">Sí, cuando un informe esté disponible aparecerá en <strong>Mis informes</strong> con la opción de descarga en PDF.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary">¿Cómo activo nuevos servicios de mi póliza?<svg class="chev" width="18" height="18"><use href="#i-chevron-down"/></svg></button>
+            <div class="faq-content">Tu orientador activa los servicios disponibles según tu plan. En <strong>Mis servicios</strong> verás los pendientes con la etiqueta correspondiente.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-summary">¿Quién tiene acceso a mis datos?<svg class="chev" width="18" height="18"><use href="#i-chevron-down"/></svg></button>
+            <div class="faq-content">Solo tú y el equipo asignado a tu caso. Cumplimos la normativa europea de protección de datos.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="app-footer">
+  Powered by <span class="brand-text">Qida</span> | <a href="#">Términos y condiciones</a>
+</footer>
+
+<button class="proto-fab" id="protoFab" aria-label="Cambiar variante de prototipo">
+  <span class="pulse"></span>
+  <span class="proto-fab-label">Prototype 1</span>
+</button>
+
+<script src="app.js?v=2"></script>
+</body>
+</html>
