@@ -1004,8 +1004,9 @@ p { margin: 0; }
 /* Section frame */
 .plan-section {
   padding: 36px 40px;
-  scroll-margin-top: calc(var(--header-h) + 60px);
+  scroll-margin-top: calc(var(--header-h) + var(--tabbar-h) + 24px);
 }
+.plan-hero { scroll-margin-top: calc(var(--header-h) + var(--tabbar-h) + 12px); }
 .plan-section + .plan-section { border-top: 1px solid var(--border); }
 .plan-section .section-eyebrow {
   font-size: 11px;
@@ -2412,9 +2413,21 @@ body.proto-3 .view[data-view="informes"] > .page > article.plan:not(.plan-anual)
   font-size: 12.5px;
   line-height: 1.45;
   text-align: center;
-  overflow-wrap: break-word;
-  hyphens: auto;
 }
+/* Tablet: 4 columnas (7 días → fila de 4 + fila de 3 con 1 hueco vacío) */
+@media (max-width: 1100px) {
+  .actividades .week-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .actividades .week-day-head { font-size: 12px; padding: 8px 12px; }
+  .actividades .week-day-body { font-size: 14px; padding: 12px 14px; }
+}
+/* Móvil: una sola columna */
+@media (max-width: 560px) {
+  .actividades .week-grid { grid-template-columns: 1fr; }
+  .actividades .week-day-body { text-align: left; }
+}
+/* Banner de cierre del informe (reutiliza .plan-quote) */
+.plan-closing { margin: 8px 40px 40px; }
+@media (max-width: 1024px) { .plan-closing { margin: 8px 24px 32px; } }
 /* Habit title carries the activity-type icon */
 .actividades .st {
   display: flex;
@@ -3301,6 +3314,65 @@ body.high-contrast .back-link-icon {
   .rs-select-box, .rs-select { width: 100%; }
   .report-download { width: 100%; }
 }
+
+/* Report section sidebar nav — single scroll, click to jump to a section */
+.plan-body { display: flex; align-items: stretch; }
+.plan-side {
+  flex: 0 0 208px;
+  background: var(--surface-2);
+  border-right: 1px solid var(--border);
+}
+.plan-side-inner {
+  position: sticky;
+  top: calc(var(--header-h) + var(--tabbar-h) + 12px);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 22px 12px;
+}
+.plan-side-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.25;
+  transition: background .15s ease, color .15s ease;
+}
+.plan-side-link svg { width: 18px; height: 18px; flex: none; }
+.plan-side-link:hover { background: var(--surface-tinted); color: var(--brand-700); }
+.plan-side-link.is-active { background: var(--brand-700); color: #fff; }
+.plan-sections { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
+/* Actividades penúltima: la sección de cierre de cada informe baja al final, el banner al último */
+#sec-proximos, #sec-acompanamiento-seg, #sec-anual-futuro { order: 1; }
+.plan-closing { order: 2; }
+@media (max-width: 768px) {
+  .plan-body { flex-direction: column; }
+  .plan-side { flex: none; border-right: none; border-bottom: 1px solid var(--border); position: sticky; top: var(--header-h); z-index: 5; }
+  .plan-side-inner { position: static; flex-direction: row; gap: 6px; padding: 10px 12px; overflow-x: auto; }
+  .plan-side-link { white-space: nowrap; flex: 0 0 auto; padding: 8px 12px; }
+}
+body.high-contrast .plan-side-link.is-active { background: #000; color: #fff; }
+
+/* Seguimiento y acompañamiento — two columns + frequency note */
+.followup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+.followup-col { border-top: 1px solid var(--border); padding-top: 16px; }
+.followup-col-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--brand-800); margin-bottom: 8px; }
+.followup-col p { margin: 0; color: var(--text-muted); line-height: 1.6; }
+.followup-note { font-style: italic; color: var(--text-muted); line-height: 1.6; margin: 22px 0 0; }
+@media (max-width: 560px) {
+  .followup { grid-template-columns: 1fr; gap: 0; }
+  .followup-col + .followup-col { margin-top: 20px; }
+}
+body.high-contrast .followup-col { border-color: #000; }
+body.high-contrast .followup-col-title { color: #000; }
 
 /* Tertiary button — subtle, low-emphasis */
 .btn-tertiary {

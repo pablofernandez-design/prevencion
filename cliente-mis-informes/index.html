@@ -334,9 +334,9 @@
         <div class="report-toolbar">
           <span class="rs-select-box">
             <select id="reportSelect" class="rs-select" aria-label="Seleccionar informe">
-              <option value="0">Plan de Prevención · 18 mar 2026</option>
-              <option value="1">Seguimiento cuatrimestral · 18 jun 2026</option>
               <option value="2" selected>Seguimiento anual · 18 mar 2027</option>
+              <option value="1">Seguimiento cuatrimestral · 18 jun 2026</option>
+              <option value="0">Plan de Prevención · 18 mar 2026</option>
             </select>
             <svg class="rs-chevron" width="16" height="16"><use href="#i-chevron-down"/></svg>
           </span>
@@ -347,30 +347,42 @@
         </div>
 
         <article class="plan">
-            <header class="plan-hero">
-              <div class="eyebrow">Plan de Prevención y Reducción de Riesgos</div>
-              <h2>Tu futuro está<br>en tus <em>manos</em></h2>
+            <div class="plan-body">
+              <nav class="plan-side" aria-label="Secciones del informe">
+                <div class="plan-side-inner">
+                  <a href="#sec-pdp-top" class="plan-side-link is-active"><svg><use href="#i-file"/></svg><span>Introducción</span></a>
+                  <a href="#sec-resultados" class="plan-side-link"><svg><use href="#i-trend"/></svg><span>Resultados</span></a>
+                  <a href="#sec-acciones" class="plan-side-link"><svg><use href="#i-clipboard"/></svg><span>Plan de acción</span></a>
+                  <a href="#sec-pdp-actividades" class="plan-side-link"><svg><use href="#i-running"/></svg><span>Actividades</span></a>
+                  <a href="#sec-proximos" class="plan-side-link"><svg><use href="#i-calendar"/></svg><span>Próximos pasos</span></a>
+                </div>
+              </nav>
+              <div class="plan-sections">
+            <header class="plan-hero" id="sec-pdp-top">
+              <div class="eyebrow">Plan de Prevención y Reducción de Riesgos personalizado</div>
+              <h2>Cuidarte hoy,<br>decidir <em>mañana</em></h2>
               <div class="plan-stat">
                 <strong>45%</strong>
-                <span>de los casos de demencia podrían prevenirse actuando sobre el estilo de vida.</span>
+                <span>del riesgo de demencia se asocia a factores de estilo de vida modificables.</span>
               </div>
               <div class="plan-meta">
                 <div class="plan-meta-item"><div class="lbl">Preparado para</div><div class="val">Amada Pérez</div></div>
                 <div class="plan-meta-item"><div class="lbl">Fecha del plan</div><div class="val">18 de marzo de 2026</div></div>
                 <div class="plan-meta-item"><div class="lbl">Estado</div><div class="val">Primera valoración</div></div>
-                <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Alba Prieto</div></div>
+                <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Paula Saez Soriano</div></div>
               </div>
             </header>
 
             <!-- INTRO -->
             <section class="plan-section" id="sec-intro">
               <div class="section-eyebrow">Comencemos</div>
-              <h3>¿Te imaginas cumplir años disfrutando plenamente de cada etapa?</h3>
+              <h3>Amada, ¿cuánto crees que influye tu día a día en cómo envejeces?</h3>
 
               <div class="plan-intro">
-                <p>Amada, <em class="highlight">esa calidad de vida no es cuestión de suerte</em>, sino que depende, en gran medida, de las decisiones que tomes hoy.</p>
-                <p>La ciencia lo demuestra: <strong>hasta el 45 % de los casos de demencia podrían prevenirse</strong> actuando sobre el estilo de vida (Comisión Lancet, 2024).</p>
-                <p>La prevención no solo protege a largo plazo, también se traduce en <strong>beneficios inmediatos</strong>. Pequeños cambios sostenidos pueden generar mejoras significativas a nivel físico, cognitivo y emocional.</p>
+                <p>La buena noticia es que esa calidad de vida no es cuestión de suerte, sino que depende de las decisiones que tomas a diario.</p>
+                <p>La evidencia lo respalda: <strong>hasta el 45 % del riesgo de demencia se asocia a factores del estilo de vida.</strong> Así lo estima la Comisión Lancet (2024), una de las fuentes científicas más reconocidas del mundo.</p>
+                <p>La prevención no solo protege a largo plazo, también se traduce en <strong>beneficios inmediatos.</strong> Pequeños cambios sostenidos en el tiempo pueden generar mejoras significativas a nivel físico, cognitivo y emocional.</p>
+                <p>Este informe es el primer paso para avanzar con propuestas realistas, adaptadas a ti y centradas en mejorar tu día a día.</p>
               </div>
 
               <div class="plan-toc">
@@ -380,33 +392,34 @@
                   <div class="plan-toc-item"><span class="num">2</span><span class="txt"><strong>Objetivos alcanzables y consensuados</strong> contigo.</span></div>
                   <div class="plan-toc-item"><span class="num">3</span><span class="txt"><strong>Tu plan de trabajo</strong> con acciones concretas y adaptadas a tu día a día.</span></div>
                   <div class="plan-toc-item"><span class="num">4</span><span class="txt"><strong>Próximos pasos</strong> para dar continuidad y ajustar el plan según tu evolución.</span></div>
-                  <div class="plan-toc-item"><span class="num">5</span><span class="txt"><strong>El acompañamiento personalizado</strong> de tu orientadora, Alba Prieto, en cada etapa.</span></div>
+                  <div class="plan-toc-item"><span class="num">5</span><span class="txt"><strong>El acompañamiento personalizado</strong> de tu orientadora en cada etapa.</span></div>
                 </div>
               </div>
             </section>
 
             <!-- RESULTADOS -->
             <section class="plan-section" id="sec-resultados">
-              <div class="section-eyebrow">Punto de partida</div>
+              <div class="section-eyebrow">Fortalezas y oportunidades de mejora</div>
               <h3>Resultados de tu valoración</h3>
-              <p class="section-sub">Las recomendaciones se dividen en 3 niveles de actuación según el estado actual de cada hábito.</p>
+              <p class="section-sub">Identifica tus áreas de fortaleza y los hábitos que conviene mejorar para construir un plan a tu medida.</p>
 
+              <div class="st">Las recomendaciones están divididas en 3 niveles de actuación:</div>
               <div class="plan-legend">
                 <div class="plan-legend-seg green">
-                  <div class="zone">8–10 · Área de fortaleza</div>
-                  <div class="desc">Aspectos donde ya estás haciendo un gran trabajo. Estos hábitos protegen tu salud y bienestar.</div>
+                  <div class="zone">8–10 · Área de Fortaleza</div>
+                  <div class="desc">Representa los aspectos donde ya estás haciendo un gran trabajo. Estos hábitos actúan como un escudo para tu salud y bienestar. ¡Sigue así!</div>
                 </div>
                 <div class="plan-legend-seg amber">
-                  <div class="zone">5–7 · Área de mejora</div>
-                  <div class="desc">Vas por buen camino: pequeños ajustes pueden potenciar tu vitalidad.</div>
+                  <div class="zone">5–7 · Área de Mejora</div>
+                  <div class="desc">Identifica hábitos en los que vas por buen camino, pero en los que hay oportunidad de realizar ajustes que te harán sentirte aún mejor y potenciarán tu vitalidad.</div>
                 </div>
                 <div class="plan-legend-seg red">
-                  <div class="zone">1–4 · Área de acción</div>
-                  <div class="desc">El mayor potencial para implementar cambios y adoptar un estilo de vida más saludable.</div>
+                  <div class="zone">1–4 · Área de Acción</div>
+                  <div class="desc">Aquí está el mayor potencial para implementar cambios y adoptar un estilo de vida más saludable. ¡Estamos aquí para guiarte!</div>
                 </div>
               </div>
 
-              <div class="st">Mapa completo de tus 8 hábitos</div>
+              <div class="st">Mapa completo de tus hábitos</div>
 
               <div class="habit-list">
                 <a class="habit-row" href="#/evolucion#hab-actividad-fisica">
@@ -512,7 +525,7 @@
             <section class="plan-section" id="sec-acciones">
               <div class="section-eyebrow">Objetivos consensuados</div>
               <h3>Plan integral de acción</h3>
-              <p class="section-sub">A partir de los resultados, hemos definido juntas objetivos para los próximos meses, priorizando cambios realistas y sostenibles. <strong>La constancia por encima de la intensidad.</strong></p>
+              <p class="section-sub">A partir de los resultados, definimos juntas objetivos para los próximos meses. Priorizamos cambios realistas y sostenibles, porque a largo plazo cuenta más la constancia que la intensidad.</p>
 
               <div class="obj-grid">
                 <div class="obj-card">
@@ -562,45 +575,52 @@
                 </div>
               </div>
 
-              <div class="plan-quote">
-                <div class="q">"No necesitas hacerlo todo a la vez. Solo el siguiente pequeño paso."</div>
-                <div class="src">Y ese paso, hoy, lo damos juntas.</div>
-              </div>
             </section>
 
             <!-- PRÓXIMOS PASOS -->
             <section class="plan-section" id="sec-proximos">
               <div class="section-eyebrow">Acompañamiento y continuidad</div>
               <h3>Próximos pasos</h3>
-              <p class="section-sub">Sé que puede parecer mucho, pero recuerda que vamos paso a paso, y yo estaré ahí para ayudarte en cada momento.</p>
+              <div class="plan-intro">
+                <p>Amada, te invito a dar el primer paso y empezar a incorporar estas recomendaciones de manera práctica. Iremos avanzando de forma progresiva, y contarás con mi acompañamiento en cada fase del proceso.</p>
+                <p>A través de este plan de acción, los materiales de ampliación, las fichas de trabajo y mi acompañamiento como tu orientadora, cuentas con todos los recursos necesarios para llevarlo a cabo.</p>
+                <p>Es importante que mantengas tu motivación y compromiso. Para ello, realizaremos seguimientos periódicos donde valoraremos tu progreso, celebraremos tus logros y ajustaremos el plan según tu evolución. Cada revisión es una oportunidad para avanzar un poco más.</p>
+              </div>
 
-              <div class="st">Seguimiento</div>
-              <div class="track-grid">
-                <div class="track-card">
-                  <div class="head"><span class="pill">4m</span><span class="ttl">Cada 4 meses</span></div>
-                  <p>Seguimiento con tu orientadora personal, cada cuatro meses, para resolver dificultades y ajustar el plan a tu situación.</p>
+              <div class="st">Seguimiento y acompañamiento</div>
+              <div class="followup">
+                <div class="followup-col">
+                  <div class="followup-col-title">Seguimiento periódico</div>
+                  <p>Revisión con tu orientadora personal para resolver dificultades y ajustar el plan a tu situación.</p>
                 </div>
-                <div class="track-card dark">
-                  <div class="head"><span class="pill">1a</span><span class="ttl">Al año</span></div>
-                  <p>Valoración anual de avances, enfocada en evaluar el grado de consecución de los objetivos.</p>
+                <div class="followup-col">
+                  <div class="followup-col-title">Valoración de avances</div>
+                  <p>Evaluación del grado de consecución de los objetivos y definición de los siguientes pasos.</p>
                 </div>
               </div>
+              <p class="followup-note">La frecuencia del seguimiento se acuerda contigo según tus objetivos y necesidades: cuatrimestral, semestral o anual.</p>
 
               <div class="st">Tu Orientadora Personal</div>
+              <p class="section-sub">Paula es Trabajadora Social colegiada, con más de cinco años de experiencia en el ámbito de la dependencia y la atención a personas mayores. Su trayectoria profesional se ha desarrollado principalmente en la coordinación de una asociación de ayuda a domicilio, donde ha gestionado equipos de trabajo y diseñado programas de intervención orientados a mejorar la calidad de vida y la autonomía personal de las personas usuarias. Su enfoque se basa en una atención centrada en la persona, promoviendo la participación activa, el bienestar emocional y la integración social.</p>
               <div class="op-card">
-                <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80&auto=format&fit=crop')"></div>
+                <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=200&q=80&auto=format&fit=crop')"></div>
                 <div>
-                  <div class="name">Alba Prieto</div>
-                  <div class="role">Orientadora personal · Qida</div>
-                  <div class="creds">Terapeuta Ocupacional · Colegiada nº 32-43255</div>
+                  <div class="name">Paula Saez Soriano</div>
+                  <div class="role">Orientadora Personal · Qida</div>
+                  <div class="creds">Trabajadora Social · Colegiada nº xxx</div>
                 </div>
                 <div class="contact">
-                  <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 666 555 444</span>
-                  <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>Mensajería del portal</span>
+                  <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 699999999</span>
+                  <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>platform.qida.es/chat</span>
                 </div>
               </div>
 
-              <div class="plan-disclaimer"><strong>Disclaimer:</strong> Los resultados no representan un diagnóstico médico ni pretenden sustituir a un servicio de atención médica, ni determinar tratamiento alguno.</div>
+              <div class="st">¿Quieres ampliar la información de tu informe?</div>
+              <p class="section-sub">Este documento es tu guía rápida para la acción. Si deseas acceder al detalle completo de tu valoración y consultar todos los recursos a tu disposición, entra en tu Portal del cliente:</p>
+              <div style="margin:4px 0 14px"><a href="#/inicio" class="btn btn-primary">Ir a mi Portal del cliente</a></div>
+              <p class="section-sub">Si necesitas ayuda para navegar por tu Portal o tienes cualquier consulta, no dudes en contactarme. Estoy aquí para lo que necesites.</p>
+
+              <div class="plan-disclaimer">Los resultados no representan un diagnóstico médico ni pretenden sustituir a un servicio de atención médica, ni determinar tratamiento alguno.</div>
             </section>
 
             <!-- ACTIVIDADES -->
@@ -643,12 +663,27 @@
               </div>
             </section>
 
-
+            <div class="plan-quote plan-closing">
+              <div class="q">"La prevención hoy es la libertad de mañana."</div>
+              <div class="src">Este plan es tu hoja de ruta · Qida, Calidad de vida</div>
+            </div>
+              </div>
+            </div>
         </article>
 
         <!-- ===== PLAN DE SEGUIMIENTO CUATRIMESTRAL (visible only in proto-2) ===== -->
         <article class="plan plan-seguimiento show-seguimiento">
-          <header class="plan-hero">
+          <div class="plan-body">
+            <nav class="plan-side" aria-label="Secciones del informe">
+              <div class="plan-side-inner">
+                <a href="#sec-seg-top" class="plan-side-link is-active"><svg><use href="#i-trend"/></svg><span>Tu evolución</span></a>
+                <a href="#sec-objetivos-seg" class="plan-side-link"><svg><use href="#i-clipboard"/></svg><span>Objetivos</span></a>
+                <a href="#sec-seg-actividades" class="plan-side-link"><svg><use href="#i-running"/></svg><span>Actividades</span></a>
+                <a href="#sec-acompanamiento-seg" class="plan-side-link"><svg><use href="#i-users"/></svg><span>Acompañamiento</span></a>
+              </div>
+            </nav>
+            <div class="plan-sections">
+          <header class="plan-hero" id="sec-seg-top">
             <div class="eyebrow">Plan de Seguimiento · Cuatrimestre 1</div>
             <h2>Cuatro meses<br>de <em>avances</em></h2>
             <div class="plan-stat">
@@ -659,7 +694,7 @@
               <div class="plan-meta-item"><div class="lbl">Preparado para</div><div class="val">Amada Pérez</div></div>
               <div class="plan-meta-item"><div class="lbl">Fecha del seguimiento</div><div class="val">18 de junio de 2026</div></div>
               <div class="plan-meta-item"><div class="lbl">Cuatrimestre</div><div class="val">1º · Marzo–Junio 2026</div></div>
-              <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Alba Prieto</div></div>
+              <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Paula Saez Soriano</div></div>
             </div>
           </header>
 
@@ -811,35 +846,33 @@
             <h3>Próximos pasos</h3>
             <p class="section-sub">Cada cuatrimestre no empieza de cero. Empieza desde donde lo dejamos, un paso por delante.</p>
 
-            <div class="st">Seguimiento</div>
-            <div class="track-grid">
-              <div class="track-card">
-                <div class="head"><span class="pill">4m</span><span class="ttl">Cada 4 meses</span></div>
-                <p>Seguimiento mensual con tu orientadora personal para resolver dificultades y ajustar el plan a tu situación.</p>
+            <div class="st">Seguimiento y acompañamiento</div>
+            <div class="followup">
+              <div class="followup-col">
+                <div class="followup-col-title">Seguimiento periódico</div>
+                <p>Revisión con tu orientadora personal para resolver dificultades y ajustar el plan a tu situación.</p>
               </div>
-              <div class="track-card dark">
-                <div class="head"><span class="pill">1a</span><span class="ttl">Al año</span></div>
-                <p>Valoración de avances enfocada en evaluar el grado de consecución de los objetivos.</p>
+              <div class="followup-col">
+                <div class="followup-col-title">Valoración de avances</div>
+                <p>Evaluación del grado de consecución de los objetivos y definición de los siguientes pasos.</p>
               </div>
             </div>
+            <p class="followup-note">La frecuencia del seguimiento se acuerda contigo según tus objetivos y necesidades: cuatrimestral, semestral o anual.</p>
 
             <div class="st">Tu Orientadora Personal</div>
             <div class="op-card">
-              <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80&auto=format&fit=crop')"></div>
+              <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=200&q=80&auto=format&fit=crop')"></div>
               <div>
-                <div class="name">Alba Prieto</div>
-                <div class="role">Orientadora personal · Qida</div>
+                <div class="name">Paula Saez Soriano</div>
+                <div class="role">Orientadora Personal · Qida</div>
                 <div class="creds">Llevamos cuatro meses trabajando juntas y seguimos en este nuevo cuatrimestre.</div>
               </div>
               <div class="contact">
-                <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 666 555 444</span>
-                <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>Mensajería del portal</span>
+                <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 699999999</span>
+                <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>platform.qida.es/chat</span>
               </div>
             </div>
 
-            <div class="plan-quote">
-              <div class="q">"La prevención hoy es la libertad de mañana."</div>
-            </div>
           </section>
 
           <!-- ACTIVIDADES -->
@@ -881,11 +914,28 @@
               <div class="week-day"><div class="week-day-head shade-1">Domingo</div><div class="week-day-body">Descansa o haz <strong>estiramientos suaves</strong> para preparar la semana.</div></div>
             </div>
           </section>
+
+          <div class="plan-quote plan-closing">
+            <div class="q">"La prevención hoy es la libertad de mañana."</div>
+            <div class="src">Este plan es tu hoja de ruta · Qida, Calidad de vida</div>
+          </div>
+            </div>
+          </div>
         </article>
 
         <!-- ===== PLAN DE SEGUIMIENTO ANUAL (visible only in proto-3) ===== -->
         <article class="plan plan-anual show-anual">
-          <header class="plan-hero">
+          <div class="plan-body">
+            <nav class="plan-side" aria-label="Secciones del informe">
+              <div class="plan-side-inner">
+                <a href="#sec-anual-top" class="plan-side-link is-active"><svg><use href="#i-calendar"/></svg><span>Tu año</span></a>
+                <a href="#sec-anual-logros" class="plan-side-link"><svg><use href="#i-shield"/></svg><span>Logros del año</span></a>
+                <a href="#sec-anual-actividades" class="plan-side-link"><svg><use href="#i-running"/></svg><span>Actividades</span></a>
+                <a href="#sec-anual-futuro" class="plan-side-link"><svg><use href="#i-trend"/></svg><span>Lo que viene</span></a>
+              </div>
+            </nav>
+            <div class="plan-sections">
+          <header class="plan-hero" id="sec-anual-top">
             <div class="eyebrow">Plan de Seguimiento · Resumen anual</div>
             <h2>Un año<br>de <em>hábitos</em></h2>
             <div class="plan-stat">
@@ -896,7 +946,7 @@
               <div class="plan-meta-item"><div class="lbl">Preparado para</div><div class="val">Amada Pérez</div></div>
               <div class="plan-meta-item"><div class="lbl">Fecha del informe</div><div class="val">18 de marzo de 2027</div></div>
               <div class="plan-meta-item"><div class="lbl">Periodo</div><div class="val">Marzo 2026 – Marzo 2027</div></div>
-              <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Alba Prieto</div></div>
+              <div class="plan-meta-item"><div class="lbl">Realizado por</div><div class="val">Paula Saez Soriano</div></div>
             </div>
           </header>
 
@@ -1033,29 +1083,30 @@
             <h3>Lo que viene</h3>
             <p class="section-sub">El objetivo ahora es mantener lo conseguido y seguir ajustando el plan a tu ritmo. Seguimos acompañándote.</p>
 
-            <div class="st">Seguimiento</div>
-            <div class="track-grid">
-              <div class="track-card">
-                <div class="head"><span class="pill">4m</span><span class="ttl">Cada 4 meses</span></div>
-                <p>Seguimiento con tu orientadora personal, cada cuatro meses, para resolver dificultades y ajustar el plan a tu situación.</p>
+            <div class="st">Seguimiento y acompañamiento</div>
+            <div class="followup">
+              <div class="followup-col">
+                <div class="followup-col-title">Seguimiento periódico</div>
+                <p>Revisión con tu orientadora personal para resolver dificultades y ajustar el plan a tu situación.</p>
               </div>
-              <div class="track-card dark">
-                <div class="head"><span class="pill">1a</span><span class="ttl">Al año</span></div>
-                <p>Valoración anual de avances, enfocada en evaluar el grado de consecución de los objetivos.</p>
+              <div class="followup-col">
+                <div class="followup-col-title">Valoración de avances</div>
+                <p>Evaluación del grado de consecución de los objetivos y definición de los siguientes pasos.</p>
               </div>
             </div>
+            <p class="followup-note">La frecuencia del seguimiento se acuerda contigo según tus objetivos y necesidades: cuatrimestral, semestral o anual.</p>
 
             <div class="st">Tu Orientadora Personal</div>
             <div class="op-card">
-              <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&q=80&auto=format&fit=crop')"></div>
+              <div class="op-avatar" style="background-image:url('https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=200&q=80&auto=format&fit=crop')"></div>
               <div>
-                <div class="name">Alba Prieto</div>
-                <div class="role">Orientadora personal · Qida</div>
+                <div class="name">Paula Saez Soriano</div>
+                <div class="role">Orientadora Personal · Qida</div>
                 <div class="creds">Un año trabajando juntas. Seguimos construyendo sobre lo que ya has logrado.</div>
               </div>
               <div class="contact">
-                <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 666 555 444</span>
-                <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>Mensajería del portal</span>
+                <span class="contact-item"><span class="ico"><svg><use href="#i-phone"/></svg></span>+34 699999999</span>
+                <span class="contact-item"><span class="ico"><svg><use href="#i-message"/></svg></span>platform.qida.es/chat</span>
               </div>
             </div>
 
@@ -1103,6 +1154,13 @@
               <div class="week-day"><div class="week-day-head shade-1">Domingo</div><div class="week-day-body">Descansa o haz <strong>estiramientos suaves</strong> para preparar la semana.</div></div>
             </div>
           </section>
+
+          <div class="plan-quote plan-closing">
+            <div class="q">"La prevención hoy es la libertad de mañana."</div>
+            <div class="src">Este plan es tu hoja de ruta · Qida, Calidad de vida</div>
+          </div>
+            </div>
+          </div>
         </article>
 
       </div>

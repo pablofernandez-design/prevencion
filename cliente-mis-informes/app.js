@@ -791,42 +791,40 @@
   }
 
   function initPlanNav() {
-    const nav = document.getElementById('planNav');
-    if (!nav) return;
-    const links = Array.from(nav.querySelectorAll('.plan-nav-link'));
-    const sections = links
-      .map(l => document.querySelector(l.getAttribute('href')))
-      .filter(Boolean);
+    const navs = Array.from(document.querySelectorAll('.plan-side'));
+    if (!navs.length) return;
+    const groups = navs.map(nav => {
+      const links = Array.from(nav.querySelectorAll('.plan-side-link'));
+      const sections = links.map(l => document.querySelector(l.getAttribute('href')));
+      return { links, sections };
+    });
 
-    // Smooth-scroll on click (account for sticky header + tab-bar + plan-nav)
-    nav.addEventListener('click', (e) => {
-      const a = e.target.closest('.plan-nav-link');
+    // Smooth-scroll on click; scroll-margin-top on .plan-section handles the sticky header offset
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('.plan-side-link');
       if (!a) return;
       const target = document.querySelector(a.getAttribute('href'));
       if (!target) return;
       e.preventDefault();
-      const headerH = document.querySelector('.app-header')?.offsetHeight || 0;
-      const tabH = document.querySelector('.tab-bar')?.offsetHeight || 0;
-      const navH = nav.offsetHeight;
-      const offset = headerH + (window.innerWidth > 768 ? tabH : 0) + navH + 12;
-      window.scrollTo({
-        top: target.getBoundingClientRect().top + window.scrollY - offset,
-        behavior: 'smooth'
-      });
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
-    // Scroll-spy: activate a section as soon as its heading is in view
-    // below the sticky nav (with a generous buffer so the highlight
-    // matches what the user is reading).
-    const onScroll = () => {
-      const navBottom = nav.getBoundingClientRect().bottom;
-      let active = sections[0];
-      for (const sec of sections) {
-        if (sec.getBoundingClientRect().top - navBottom < 120) active = sec;
-      }
-      links.forEach(l => l.classList.toggle('is-active', l.getAttribute('href') === '#' + active.id));
+    // Scroll-spy: highlight the section currently below the sticky header
+    const spy = () => {
+      const headerH = document.querySelector('.app-header')?.offsetHeight || 0;
+      const line = headerH + 120;
+      groups.forEach(({ links, sections }) => {
+        // Skip navs whose report is not currently visible (offsetParent null)
+        if (!sections.some(s => s && s.offsetParent !== null)) return;
+        let active = 0;
+        sections.forEach((sec, i) => {
+          if (sec && sec.offsetParent !== null && sec.getBoundingClientRect().top - line <= 0) active = i;
+        });
+        links.forEach((l, i) => l.classList.toggle('is-active', i === active));
+      });
     };
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', spy, { passive: true });
+    requestAnimationFrame(spy);
   }
 
   // -------- Mobile drawer --------
@@ -865,7 +863,9 @@
     const select = document.getElementById('reportSelect');
     const rsName = document.getElementById('rsName');
     const rsDate = document.getElementById('rsDate');
-    let idx = states.length - 1; // por defecto, el último plan recibido
+    // Estado inicial: por defecto el último plan recibido; se puede fijar por URL (?plan=0|1|2)
+    const planParam = parseInt(new URLSearchParams(location.search).get('plan'), 10);
+    let idx = (planParam >= 0 && planParam < states.length) ? planParam : states.length - 1;
     function apply() {
       const s = states[idx];
       document.body.classList.remove('proto-1', 'proto-2', 'proto-3');
