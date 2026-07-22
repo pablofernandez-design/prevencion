@@ -852,29 +852,34 @@
     });
   }
 
-  // -------- Prototype FAB toggle (cycles through original → proto-1 → proto-2) --------
+  // -------- Prototype FAB toggle (cycles through the 3 plan states) --------
+  // Plan inicial (proto-1) → Plan de seguimiento cuatrimestral (proto-2) → Plan de seguimiento anual (proto-3)
   function initProtoFab() {
+    const states = [
+      { cls: 'proto-1', name: 'Plan inicial',                       report: 'Plan de Prevención y Reducción de Riesgos',     date: '18 de marzo de 2026' },
+      { cls: 'proto-2', name: 'Plan de seguimiento cuatrimestral',  report: 'Plan de Seguimiento Cuatrimestral · Cuatrimestre 1', date: '18 de junio de 2026' },
+      { cls: 'proto-3', name: 'Plan de seguimiento anual',          report: 'Plan de Seguimiento Anual',                     date: '18 de marzo de 2027' }
+    ];
     const fab = document.getElementById('protoFab');
-    if (!fab) return;
-    const label = fab.querySelector('.proto-fab-label');
-    const states = ['original', 'proto-1', 'proto-2', 'proto-3'];
-    const labels = {
-      original: 'Prototype 1',
-      'proto-1': 'Prototype 2',
-      'proto-2': 'Prototype 3',
-      'proto-3': 'Volver al original'
-    };
-    let idx = 0;
-    fab.addEventListener('click', () => {
-      // Remove the previously active proto class
+    const label = fab ? fab.querySelector('.proto-fab-label') : null;
+    const select = document.getElementById('reportSelect');
+    const rsName = document.getElementById('rsName');
+    const rsDate = document.getElementById('rsDate');
+    let idx = states.length - 1; // por defecto, el último plan recibido
+    function apply() {
+      const s = states[idx];
       document.body.classList.remove('proto-1', 'proto-2', 'proto-3');
-      idx = (idx + 1) % states.length;
-      const next = states[idx];
-      if (next !== 'original') document.body.classList.add(next);
-      if (label) label.textContent = labels[next];
+      document.body.classList.add(s.cls);
+      if (label) label.textContent = s.name;
+      if (rsName) rsName.textContent = s.report;
+      if (rsDate) rsDate.textContent = s.date;
+      if (select && select.value !== String(idx)) select.value = String(idx);
       // Re-render evolución cards so seguimiento data is reflected
       renderEvolucion();
-    });
+    }
+    apply(); // "Plan inicial" por defecto al cargar
+    if (fab) fab.addEventListener('click', () => { idx = (idx + 1) % states.length; apply(); });
+    if (select) select.addEventListener('change', () => { idx = parseInt(select.value, 10) || 0; apply(); });
   }
 
   // -------- Accessibility: Settings Popover (supports multiple instances) --------

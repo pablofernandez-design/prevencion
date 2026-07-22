@@ -2308,6 +2308,8 @@ body.drawer-open { overflow: hidden; }
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
+  white-space: nowrap;
+  max-width: calc(100vw - 32px);
   transition: all .18s ease;
 }
 .proto-fab:hover {
@@ -2335,9 +2337,10 @@ body.proto-1 .proto-fab .pulse {
 }
 
 /* Hero: two variants — show one or the other based on body class */
-.greeting--proto1 { display: none; }
-body.proto-1 .greeting--default { display: none; }
-body.proto-1 .greeting--proto1  { display: grid; }
+/* Los 3 estados (Plan inicial / cuatrimestral / anual) son clientes con plan:
+   mostramos siempre el saludo "ya tienes tu plan" y ocultamos el de captación. */
+.greeting--default { display: none; }
+.greeting--proto1  { display: grid; }
 
 /* ============================================================
    Prototype 2: Plan de Seguimiento — visibility toggling
@@ -2395,16 +2398,16 @@ body.proto-3 .view[data-view="informes"] > .page > article.plan:not(.plan-anual)
 .plan-anual .seg-year-chip .l { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
 /* Annual "Actividades" annex — all 7 days in a single row, compact, icon per card */
-#sec-anual-actividades .week-grid {
+.actividades .week-grid {
   grid-template-columns: repeat(7, 1fr);
   gap: 6px;
 }
-#sec-anual-actividades .week-day-head {
+.actividades .week-day-head {
   padding: 6px 2px;
   font-size: 9.5px;
   letter-spacing: 0.01em;
 }
-#sec-anual-actividades .week-day-body {
+.actividades .week-day-body {
   padding: 10px 7px 14px;
   font-size: 12.5px;
   line-height: 1.45;
@@ -2413,15 +2416,15 @@ body.proto-3 .view[data-view="informes"] > .page > article.plan:not(.plan-anual)
   hyphens: auto;
 }
 /* Habit title carries the activity-type icon */
-#sec-anual-actividades .st {
+.actividades .st {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-#sec-anual-actividades .st svg { width: 20px; height: 20px; flex: none; }
-#sec-anual-actividades .st.acts-mente  svg { color: #2FA093; }
-#sec-anual-actividades .st.acts-nutri  svg { color: #6F9E1F; }
-#sec-anual-actividades .st.acts-fisica svg { color: #C98A0E; }
+.actividades .st svg { width: 20px; height: 20px; flex: none; }
+.actividades .st.acts-mente  svg { color: #2FA093; }
+.actividades .st.acts-nutri  svg { color: #6F9E1F; }
+.actividades .st.acts-fisica svg { color: #C98A0E; }
 
 /* ============================================================
    Plan de Seguimiento — bespoke components
@@ -3233,6 +3236,80 @@ body.high-contrast .back-link-icon {
   border-color: var(--brand-700);
 }
 .a11y-trigger svg { color: currentColor; }
+
+/* Header "Aa" text-size trigger (icon button look on the dark header) */
+.header-utils .a11y-menu { display: inline-flex; }
+.header-utils .a11y-trigger {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 50%;
+  color: inherit;
+}
+.header-utils .a11y-trigger:hover,
+.header-utils .a11y-trigger[aria-expanded="true"] {
+  background: rgba(255, 255, 255, 0.14);
+  border: none;
+  box-shadow: none;
+  color: inherit;
+}
+.aa-icon {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.aa-icon .aa-big   { font-size: 19px; }
+.aa-icon .aa-small { font-size: 15px; }
+
+/* Report toolbar — bare report selector (left) + download PDF (right), no card */
+.report-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.rs-select-box { position: relative; display: inline-flex; align-items: center; }
+.rs-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 10px 40px 10px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  max-width: 100%;
+}
+.rs-select:hover { border-color: var(--brand-700); }
+.rs-select:focus-visible { outline: 2px solid var(--brand-700); outline-offset: 2px; }
+.rs-chevron { position: absolute; right: 14px; pointer-events: none; color: var(--text-muted); }
+.report-download { flex-shrink: 0; }
+@media (max-width: 560px) {
+  .report-toolbar { align-items: stretch; }
+  .rs-select-box, .rs-select { width: 100%; }
+  .report-download { width: 100%; }
+}
+
+/* Tertiary button — subtle, low-emphasis */
+.btn-tertiary {
+  background: transparent;
+  color: var(--brand-700);
+  border: 1px solid var(--border-strong);
+}
+.btn-tertiary:hover { background: var(--surface-tinted); border-color: var(--brand-700); }
+body.high-contrast .btn-tertiary { border-color: #000; color: #000; }
 
 .a11y-popover {
   position: absolute;
