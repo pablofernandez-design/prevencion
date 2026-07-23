@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasaporte de Memoria · CMS (propuesta desktop)</title>
+<style>
+/* ── Tokens Qida (extraídos del prototipo del juego) ──────────────── */
+:root{
+  --primary:#004039;
+  --primary-400:#336661;
+  --primary-050:#EAF2F0;
+  --bg-app:#F1F7F7;
+  --white:#fff;
+  --n900:#333;
+  --n600:#6b7674;
+  --n400:#9aa5a3;
+  --n200:#E5E5E5;
+  --n100:#F1F3F3;
+  --ok:#0E8343; --ok-bg:#B6E9CD;
+  --warn:#8a6d00; --warn-bg:#FCEFC6;
+  --radius:12px;
+  --font:"Aeonik","Inter","Helvetica Neue",Arial,sans-serif;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(6,40,36,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font);background:#0e1513;color:var(--n900);-webkit-font-smoothing:antialiased}
+
+/* frame chrome so it reads as "Desktop mockup" like the other prototypes */
+.devlabel{position:fixed;top:14px;left:20px;z-index:60;color:#cfe0dd;font-size:13px;letter-spacing:.04em}
+.devlabel b{color:#fff;font-weight:600}
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(120% 120% at 50% 0%,#1d2b28 0%,#0e1513 70%);padding:44px 20px 20px}
+.app{width:1440px;max-width:100%;height:900px;max-height:calc(100vh - 64px);background:var(--bg-app);
+  border-radius:12px;overflow:hidden;display:grid;grid-template-columns:236px 1fr;grid-template-rows:minmax(0,1fr);box-shadow:0 40px 120px rgba(0,0,0,.55)}
+
+/* ── Sidebar ──────────────────────────────────────────────────────── */
+.side{background:var(--primary);color:#dfeae8;display:flex;flex-direction:column;padding:20px 14px}
+.brand{font-family:Georgia,"Times New Roman",serif;font-size:22px;color:#fff;padding:4px 10px 18px;display:flex;align-items:center;gap:9px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:#7fd1c4}
+.gamepick{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:10px;
+  padding:10px 12px;font-size:13px;color:#fff;display:flex;justify-content:space-between;align-items:center;cursor:pointer;margin-bottom:22px}
+.gamepick small{display:block;color:#8fb4ae;font-size:11px;letter-spacing:.05em;text-transform:uppercase;margin-bottom:3px}
+.navlabel{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7ea39d;padding:0 10px 8px}
+.nav a{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:9px;color:#cfe0dd;text-decoration:none;font-size:14px;margin-bottom:2px}
+.nav a .ic{width:18px;text-align:center;opacity:.85}
+.nav a.active{background:#fff;color:var(--primary);font-weight:500}
+.nav a:not(.active):hover{background:rgba(255,255,255,.08)}
+.nav a .count{margin-left:auto;font-size:12px;background:rgba(255,255,255,.14);border-radius:20px;padding:1px 8px}
+.nav a.active .count{background:var(--primary-050);color:var(--primary)}
+.side .spacer{flex:1}
+.userbox{border-top:1px solid rgba(255,255,255,.12);padding-top:14px;display:flex;align-items:center;gap:10px;font-size:13px}
+.avatar{width:32px;height:32px;border-radius:50%;background:#7fa39d;color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600}
+
+/* ── Main column ──────────────────────────────────────────────────── */
+.main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.topbar{height:64px;background:var(--white);border-bottom:1px solid var(--n200);display:flex;align-items:center;gap:14px;padding:0 28px;flex:0 0 auto}
+.crumb{font-size:13px;color:var(--n600)}
+.crumb b{color:var(--n900);font-weight:500}
+.badge{font-size:12px;font-weight:600;letter-spacing:.03em;padding:3px 10px;border-radius:20px}
+.badge.draft{background:var(--warn-bg);color:var(--warn)}
+.topbar .grow{flex:1}
+.btn{font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer;height:40px;padding:0 16px;border-radius:8px;
+  border:1px solid transparent;display:inline-flex;align-items:center;gap:8px;transition:filter .15s,background .15s}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary:hover{filter:brightness(1.12)}
+.btn.ghost{background:#fff;color:var(--primary);border-color:var(--primary)}
+.btn.ghost:hover{background:var(--primary-050)}
+.btn.subtle{background:transparent;color:var(--n600)}
+.btn.subtle:hover{background:var(--n100);color:var(--n900)}
+
+/* editor split */
+.split{flex:1;display:grid;grid-template-columns:1fr 388px;min-height:0;overflow:hidden}
+.editor{overflow:auto;padding:26px 28px 60px;min-height:0}
+.previewpane{border-left:1px solid var(--n200);background:#fff;overflow:auto;padding:22px 24px;min-height:0}
+
+.h-title{display:flex;align-items:center;gap:12px;margin-bottom:4px}
+.h-title h1{font-size:26px;font-weight:400;color:var(--n900)}
+.h-sub{font-size:13px;color:var(--n600);margin-bottom:24px}
+
+/* section card */
+.section{background:#fff;border:1px solid var(--n200);border-radius:var(--radius);padding:22px;margin-bottom:22px;box-shadow:var(--shadow)}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.sec-num{width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.sec-head h2{font-size:17px;font-weight:500;color:var(--n900)}
+.sec-desc{font-size:13px;color:var(--n600);margin:0 0 18px 36px}
+
+/* field primitives */
+.label{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--n600);margin-bottom:6px;display:block}
+.input,.select{width:100%;height:42px;border:1px solid var(--n200);border-radius:8px;padding:0 12px;font-family:var(--font);font-size:14px;color:var(--n900);background:#fff}
+.input:focus,.select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-050)}
+.select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7674' stroke-width='2'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;cursor:pointer}
+
+/* ── City cards (memorize) ── */
+.city{border:1px solid var(--n200);border-radius:10px;padding:14px;margin-left:36px;margin-bottom:14px;background:#fff}
+.city.open{border-color:var(--primary-400);box-shadow:0 0 0 3px var(--primary-050)}
+.city-head{display:flex;align-items:center;gap:12px;cursor:pointer}
+.thumb{width:52px;height:52px;border-radius:8px;flex:0 0 auto;background-size:cover;background-position:center;border:1px solid var(--n200)}
+.city-head .nm{font-size:15px;font-weight:500;color:var(--n900)}
+.city-head .meta{font-size:12px;color:var(--n600)}
+.city-head .grow{flex:1}
+.chev{color:var(--n400);transition:transform .18s}
+.city.open .chev{transform:rotate(180deg)}
+.city-body{margin-top:16px;display:none;grid-template-columns:184px 1fr;gap:20px}
+.city.open .city-body{display:grid}
+
+/* uploader */
+.uploader{border:1.5px dashed var(--n200);border-radius:10px;height:184px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:8px;text-align:center;padding:12px;cursor:pointer;position:relative;overflow:hidden;background:var(--n100)}
+.uploader.has{border-style:solid;border-color:var(--primary-400)}
+.uploader .ph{background-size:cover;background-position:center;position:absolute;inset:0}
+.uploader .ph::after{content:"Cambiar imagen";position:absolute;left:0;right:0;bottom:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font-size:12px;text-align:center}
+.uploader .up-ic{font-size:26px}
+.uploader small{font-size:12px;color:var(--n600);line-height:1.4}
+.uploader b{color:var(--primary)}
+
+/* ── Estructura de la ficha (definición de tipos, una vez) ── */
+.struct{margin-left:36px}
+.struct-hd{display:grid;grid-template-columns:20px 1fr 150px 24px;gap:12px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--n400);margin-bottom:8px;padding:0 2px}
+.field{display:grid;grid-template-columns:20px 1fr 150px 24px;gap:12px;align-items:center;margin-bottom:10px}
+.field .drag{color:var(--n400);cursor:grab;text-align:center;font-size:13px;letter-spacing:-2px}
+.field .del{color:var(--n400);cursor:pointer;text-align:center;font-size:15px}
+.field .del:hover{color:#a52222}
+.roleswitch{display:flex;align-items:center;gap:7px;height:42px;border:1px solid var(--n200);border-radius:8px;padding:0 12px;font-size:13px;color:var(--n600);cursor:pointer;user-select:none}
+.roleswitch .dotmark{width:14px;height:14px;border-radius:50%;border:2px solid var(--n400);flex:0 0 auto}
+.roleswitch.on{border-color:var(--primary);background:var(--primary-050);color:var(--primary);font-weight:500}
+.roleswitch.on .dotmark{border-color:var(--primary);background:var(--primary);box-shadow:inset 0 0 0 3px #fff}
+
+/* datos rows */
+.datos-hd{display:grid;grid-template-columns:180px 1fr;gap:10px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--n400);margin-bottom:8px}
+.dato{display:grid;grid-template-columns:180px 1fr;gap:10px;margin-bottom:10px;align-items:center}
+.fieldname{font-size:14px;color:var(--n900);font-weight:500;display:flex;align-items:center}
+.dato .tag{font-size:10px;color:var(--primary);background:var(--primary-050);border-radius:5px;padding:1px 6px;margin-left:8px;font-weight:600}
+.hint{font-size:12px;color:var(--n600);margin-top:2px;margin-left:36px}
+.addrow{margin-left:36px;margin-top:4px}
+.linkbtn{background:none;border:none;color:var(--primary);font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:8px 0}
+.linkbtn:hover{text-decoration:underline}
+
+/* ── Question cards ── */
+.q{border:1px solid var(--n200);border-radius:10px;padding:18px;margin-left:36px;margin-bottom:14px}
+.q-top{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.q-top .qn{font-size:14px;font-weight:600;color:var(--n900)}
+.q-top .grow{flex:1}
+.typechips{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.chip{border:1px solid var(--n200);border-radius:9px;padding:9px 12px;font-size:12.5px;color:var(--n600);cursor:pointer;display:flex;gap:9px;align-items:center;max-width:210px;background:#fff}
+.chip .cic{width:34px;height:26px;border-radius:5px;background:var(--n100);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.chip.on{border-color:var(--primary);background:var(--primary-050);color:var(--primary);font-weight:500}
+.chip.on .cic{background:var(--primary);color:#fff}
+.chip small{display:block;font-weight:400;color:var(--n400);font-size:11px}
+.chip.on small{color:var(--primary-400)}
+
+.optlist{margin-top:14px}
+.opt{display:flex;align-items:center;gap:12px;border:1px solid var(--n200);border-radius:8px;padding:8px 12px;margin-bottom:9px;background:#fff}
+.opt.correct{border-color:var(--ok);background:var(--ok-bg)}
+.radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--n400);flex:0 0 auto;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.opt.correct .radio{border-color:var(--ok);background:var(--ok)}
+.opt.correct .radio::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+.opt .otext{flex:1;font-size:14px;color:var(--n900);border:none;background:none;font-family:var(--font)}
+.opt .otext:focus{outline:none}
+.opt .oimg{width:44px;height:34px;border-radius:6px;background-size:cover;background-position:center;flex:0 0 auto;border:1px solid var(--n200)}
+.opt .ck{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--ok);text-transform:uppercase}
+.opt .del{color:var(--n400);cursor:pointer;font-size:16px;line-height:1}
+.opt .del:hover{color:#a52222}
+.opthint{font-size:12px;color:var(--n600);margin-top:2px}
+
+/* ── Preview (mobile phone) ── */
+.pv-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.pv-head .t{font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--n600)}
+.pvtabs{display:flex;gap:4px;background:var(--n100);border-radius:8px;padding:3px;margin-bottom:18px}
+.pvtab{flex:1;text-align:center;font-size:12px;padding:7px 4px;border-radius:6px;color:var(--n600);cursor:pointer}
+.pvtab.on{background:#fff;color:var(--primary);font-weight:600;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.phone{width:300px;margin:0 auto;border:8px solid #1b2523;border-radius:34px;overflow:hidden;background:var(--bg-app);box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.ph-bar{height:38px;background:#fff;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:15px;color:var(--n900);border-bottom:1px solid var(--n200)}
+.ph-body{padding:16px 14px 20px;min-height:470px}
+.ph-body .center{text-align:center}
+.ph-q{font-size:12px;color:var(--n600);margin-bottom:6px}
+.ph-title{font-size:16px;font-weight:600;color:var(--n900);margin-bottom:14px;line-height:1.3}
+.ph-photo{width:100%;height:150px;border-radius:12px;border:2px solid var(--primary);background-size:cover;background-position:center;margin-bottom:14px}
+.ph-photo.sm{height:74px;width:110px;margin:0 auto 10px}
+.ph-field{border:1.5px solid var(--primary);border-radius:10px;padding:9px 12px;text-align:center;margin-bottom:10px}
+.ph-field .l{font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--n600)}
+.ph-field .v{font-size:15px;color:var(--n900);margin-top:2px}
+.ph-opt{border:2px solid var(--primary);border-radius:10px;padding:11px;text-align:center;font-size:15px;color:var(--primary);margin-bottom:10px}
+.ph-opt.ok{background:var(--ok-bg);border-color:var(--ok);color:#0b5b30}
+.ph-note{font-size:11px;color:var(--n400);text-align:center;margin-top:10px}
+.pv-caption{font-size:12px;color:var(--n600);margin-top:14px;text-align:center;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="devlabel"><b>Pasaporte de Memoria</b> · CMS — propuesta Desktop 1440×900</div>
+<div class="stage">
+<div class="app">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="side">
+    <div class="brand"><span class="dot"></span>Qida CMS</div>
+    <div class="gamepick">
+      <div><small>Juego</small>Pasaporte de Memoria</div>
+      <span>⇅</span>
+    </div>
+    <div class="navlabel">Contenido</div>
+    <nav class="nav">
+      <a class="active" href="#">✎ Rondas <span class="count">18</span></a>
+      <a href="#"><span class="ic">◷</span>Programación</a>
+      <a href="#"><span class="ic">▤</span>Banco de imágenes</a>
+      <a href="#"><span class="ic">☷</span>Tipos de dato</a>
+    </nav>
+    <div class="navlabel" style="margin-top:22px">Analítica</div>
+    <nav class="nav">
+      <a href="#"><span class="ic">◨</span>Resultados</a>
+      <a href="#"><span class="ic">⚑</span>Reportes</a>
+    </nav>
+    <div class="spacer"></div>
+    <div class="userbox"><span class="avatar">PF</span><div>Pablo F.<br><span style="color:#8fb4ae;font-size:11px">Editor de contenido</span></div></div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <div class="main">
+    <div class="topbar">
+      <span class="crumb">Rondas ›&nbsp; <b>Ronda #19 — Ciudades del mundo</b></span>
+      <span class="badge draft">● Borrador</span>
+      <span class="grow"></span>
+      <span style="font-size:12px;color:var(--n600)">Guardado hace 2 min</span>
+      <button class="btn subtle">Vista previa</button>
+      <button class="btn ghost">Guardar borrador</button>
+      <button class="btn primary">Publicar ronda</button>
+    </div>
+
+    <div class="split">
+      <!-- EDITOR -->
+      <div class="editor">
+        <div class="h-title"><h1>Editar ronda</h1></div>
+        <div class="h-sub">Una ronda = varias ciudades para memorizar + las preguntas que se harán después. Los jugadores primero ven las fichas, luego responden.</div>
+
+        <!-- SECTION 1 · Estructura de la ficha (tipos de dato, una sola vez) -->
+        <div class="section">
+          <div class="sec-head"><span class="sec-num">1</span><h2>Estructura de la ficha</h2></div>
+          <p class="sec-desc">Define <b>una sola vez</b> qué datos tendrá cada ciudad de esta ronda. Todas las fichas comparten esta estructura, así no hay que elegir el tipo imagen por imagen.</p>
+
+          <div class="struct">
+            <div class="struct-hd"><span></span><span>Tipo de dato</span><span>Rol</span><span></span></div>
+
+            <div class="field">
+              <span class="drag">⋮⋮</span>
+              <select class="select"><option>Nombre</option><option>País</option><option>Plato típico</option><option>Monumento</option><option>Año</option><option>Población</option></select>
+              <label class="roleswitch on"><span class="dotmark"></span>Principal</label>
+              <span class="del" style="opacity:.35;cursor:not-allowed" title="El campo principal no se puede eliminar">✕</span>
+            </div>
+            <div class="field">
+              <span class="drag">⋮⋮</span>
+              <select class="select"><option>País</option><option>Nombre</option><option>Plato típico</option><option>Monumento</option><option>Año</option></select>
+              <label class="roleswitch">Secundario</label>
+              <span class="del">✕</span>
+            </div>
+            <div class="field">
+              <span class="drag">⋮⋮</span>
+              <select class="select"><option>Plato típico</option><option>País</option><option>Nombre</option><option>Monumento</option></select>
+              <label class="roleswitch">Secundario</label>
+              <span class="del">✕</span>
+            </div>
+
+            <button class="linkbtn" style="margin-top:2px">＋ Añadir campo</button>
+            <div class="opthint" style="margin-top:8px">El campo <b>Principal</b> es la identidad de la ficha (el nombre) y se usa como respuesta en las preguntas de tipo “¿qué ciudad es?”.</div>
+          </div>
+        </div>
+
+        <!-- SECTION 2 · Ciudades a memorizar -->
+        <div class="section">
+          <div class="sec-head"><span class="sec-num">2</span><h2>Ciudades para memorizar</h2></div>
+          <p class="sec-desc">Sube la imagen y rellena los valores. Los campos ya vienen fijados por la <b>estructura</b> de arriba — aquí solo se completan.</p>
+
+          <!-- City 1 collapsed -->
+          <div class="city">
+            <div class="city-head" onclick="this.parentNode.classList.toggle('open')">
+              <div class="thumb" style="background:linear-gradient(135deg,#c98a5a,#7796b8)"></div>
+              <div><div class="nm">Venecia</div><div class="meta">Italia · Risotto de marisco</div></div>
+              <span class="grow"></span>
+              <span style="font-size:12px;color:var(--ok)">✓ Completa</span>
+              <span class="chev">▾</span>
+            </div>
+          </div>
+
+          <!-- City 2 open (edit example) -->
+          <div class="city open">
+            <div class="city-head" onclick="this.parentNode.classList.toggle('open')">
+              <div class="thumb" style="background:linear-gradient(135deg,#e8a0b0,#5a7a9a)"></div>
+              <div><div class="nm">Kioto</div><div class="meta">Japón · Ramen de miso</div></div>
+              <span class="grow"></span>
+              <span style="font-size:12px;color:var(--ok)">✓ Completa</span>
+              <span class="chev">▾</span>
+            </div>
+            <div class="city-body">
+              <div>
+                <span class="label">Imagen</span>
+                <div class="uploader has"><div class="ph" style="background:linear-gradient(150deg,#f2b8c6,#88a7c9 70%,#6d8fb0)"></div></div>
+              </div>
+              <div>
+                <span class="label">Valores de la ficha</span>
+                <div class="datos-hd"><span>Campo (según estructura)</span><span>Valor</span></div>
+
+                <div class="dato">
+                  <div class="fieldname">Nombre <span class="tag">principal</span></div>
+                  <input class="input" value="Kioto">
+                </div>
+                <div class="dato">
+                  <div class="fieldname">País</div>
+                  <input class="input" value="Japón">
+                </div>
+                <div class="dato">
+                  <div class="fieldname">Plato típico</div>
+                  <input class="input" value="Ramen de miso">
+                </div>
+                <div class="opthint">¿Necesitas otro dato? Se añade en <b>Estructura de la ficha</b> y aparece en todas las ciudades.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- City 3 collapsed -->
+          <div class="city">
+            <div class="city-head" onclick="this.parentNode.classList.toggle('open')">
+              <div class="thumb" style="background:linear-gradient(135deg,#e0a24a,#7a4fa0)"></div>
+              <div><div class="nm">Bangkok</div><div class="meta">Tailandia · Pad Thai</div></div>
+              <span class="grow"></span>
+              <span style="font-size:12px;color:var(--ok)">✓ Completa</span>
+              <span class="chev">▾</span>
+            </div>
+          </div>
+
+          <div class="addrow"><button class="linkbtn">＋ Añadir ciudad</button></div>
+        </div>
+
+        <!-- SECTION 3 · Preguntas -->
+        <div class="section">
+          <div class="sec-head"><span class="sec-num">3</span><h2>Preguntas</h2></div>
+          <p class="sec-desc">Para cada pregunta elige el <b>tipo</b>, escribe el enunciado, define las opciones y marca la correcta. Las opciones (texto o imagen) cambian según el tipo elegido.</p>
+
+          <!-- Q1 · type 1: pregunta + imagen, opciones texto -->
+          <div class="q">
+            <div class="q-top"><span class="qn">Pregunta 1</span><span class="grow"></span><span class="btn subtle" style="height:30px;font-size:12px">Eliminar</span></div>
+            <span class="label">Tipo de pregunta</span>
+            <div class="typechips">
+              <div class="chip on"><span class="cic">🖼️</span><div>Imagen + texto<small>foto + opciones de texto</small></div></div>
+              <div class="chip"><span class="cic">A</span><div>Solo texto<small>opciones de texto</small></div></div>
+              <div class="chip"><span class="cic">▦</span><div>Opciones imagen<small>elegir una foto</small></div></div>
+            </div>
+            <span class="label">Enunciado</span>
+            <input class="input" value="¿Cómo se llama esta ciudad?">
+            <div style="margin-top:14px;display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:start">
+              <div><span class="label">Imagen mostrada</span>
+                <div class="uploader has" style="height:104px"><div class="ph" style="background:linear-gradient(150deg,#f2b8c6,#88a7c9 70%,#6d8fb0)"></div></div>
+                <div class="opthint" style="margin-top:6px">Reutiliza la foto de Kioto</div>
+              </div>
+              <div><span class="label">Opciones (marca la correcta)</span>
+                <div class="optlist">
+                  <div class="opt correct"><span class="radio"></span><input class="otext" value="Kioto"><span class="ck">Correcta</span><span class="del">✕</span></div>
+                  <div class="opt"><span class="radio"></span><input class="otext" value="Venecia"><span class="del">✕</span></div>
+                  <div class="opt"><span class="radio"></span><input class="otext" value="Bangkok"><span class="del">✕</span></div>
+                </div>
+                <button class="linkbtn">＋ Añadir opción</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q2 · type 2: solo texto -->
+          <div class="q">
+            <div class="q-top"><span class="qn">Pregunta 2</span><span class="grow"></span><span class="btn subtle" style="height:30px;font-size:12px">Eliminar</span></div>
+            <span class="label">Tipo de pregunta</span>
+            <div class="typechips">
+              <div class="chip"><span class="cic">🖼️</span><div>Imagen + texto<small>foto + opciones de texto</small></div></div>
+              <div class="chip on"><span class="cic">A</span><div>Solo texto<small>opciones de texto</small></div></div>
+              <div class="chip"><span class="cic">▦</span><div>Opciones imagen<small>elegir una foto</small></div></div>
+            </div>
+            <span class="label">Enunciado</span>
+            <input class="input" value="¿Cuál es el plato típico de Kioto?">
+            <div style="margin-top:14px"><span class="label">Opciones (marca la correcta)</span>
+              <div class="optlist">
+                <div class="opt"><span class="radio"></span><input class="otext" value="Pad Thai"><span class="del">✕</span></div>
+                <div class="opt"><span class="radio"></span><input class="otext" value="Risotto de marisco"><span class="del">✕</span></div>
+                <div class="opt correct"><span class="radio"></span><input class="otext" value="Ramen de miso"><span class="ck">Correcta</span><span class="del">✕</span></div>
+              </div>
+              <button class="linkbtn">＋ Añadir opción</button>
+            </div>
+          </div>
+
+          <!-- Q3 · type 3: opciones imagen -->
+          <div class="q">
+            <div class="q-top"><span class="qn">Pregunta 3</span><span class="grow"></span><span class="btn subtle" style="height:30px;font-size:12px">Eliminar</span></div>
+            <span class="label">Tipo de pregunta</span>
+            <div class="typechips">
+              <div class="chip"><span class="cic">🖼️</span><div>Imagen + texto<small>foto + opciones de texto</small></div></div>
+              <div class="chip"><span class="cic">A</span><div>Solo texto<small>opciones de texto</small></div></div>
+              <div class="chip on"><span class="cic">▦</span><div>Opciones imagen<small>elegir una foto</small></div></div>
+            </div>
+            <span class="label">Enunciado</span>
+            <input class="input" value="Su plato típico es el Pad Thai y está en Tailandia. ¿Qué ciudad es?">
+            <div style="margin-top:14px"><span class="label">Opciones — imagen (marca la correcta)</span>
+              <div class="optlist">
+                <div class="opt"><span class="radio"></span><span class="oimg" style="background:linear-gradient(135deg,#c98a5a,#7796b8)"></span><span class="otext" style="color:var(--n600)">Venecia</span><span class="del">✕</span></div>
+                <div class="opt"><span class="radio"></span><span class="oimg" style="background:linear-gradient(135deg,#e8a0b0,#5a7a9a)"></span><span class="otext" style="color:var(--n600)">Kioto</span><span class="del">✕</span></div>
+                <div class="opt correct"><span class="radio"></span><span class="oimg" style="background:linear-gradient(135deg,#e0a24a,#7a4fa0)"></span><span class="otext">Bangkok</span><span class="ck">Correcta</span><span class="del">✕</span></div>
+              </div>
+              <div class="opthint">Las imágenes se eligen del banco / de las ciudades de esta ronda.</div>
+              <button class="linkbtn" style="margin-top:6px">＋ Añadir opción</button>
+            </div>
+          </div>
+
+          <div class="addrow"><button class="linkbtn">＋ Añadir pregunta</button></div>
+        </div>
+      </div>
+
+      <!-- LIVE PREVIEW -->
+      <div class="previewpane">
+        <div class="pv-head"><span class="t">Vista previa en vivo</span><span style="font-size:12px;color:var(--n400)">Mobile</span></div>
+        <div class="pvtabs">
+          <div class="pvtab" data-v="ficha">Ficha</div>
+          <div class="pvtab on" data-v="q1">Preg. 1</div>
+          <div class="pvtab" data-v="q2">Preg. 2</div>
+          <div class="pvtab" data-v="q3">Preg. 3</div>
+        </div>
+
+        <div class="phone">
+          <div class="ph-bar">← <span style="font-size:15px">Pasaporte de Memoria</span></div>
+          <div class="ph-body" id="pvbody"></div>
+        </div>
+        <div class="pv-caption">La vista previa refleja lo que se está editando a la izquierda. Cambia de pestaña para revisar cada pantalla antes de publicar.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+const VIEWS = {
+  ficha:`<div class="center"><div class="ph-q">Memoriza los datos · 2 / 3</div></div>
+    <div class="ph-photo" style="background:linear-gradient(150deg,#f2b8c6,#88a7c9 70%,#6d8fb0)"></div>
+    <div class="ph-field"><div class="l">Nombre</div><div class="v">Kioto</div></div>
+    <div class="ph-field"><div class="l">País</div><div class="v">Japón</div></div>
+    <div class="ph-field"><div class="l">Plato típico</div><div class="v">Ramen de miso</div></div>`,
+  q1:`<div class="center"><div class="ph-q">Pregunta 1 de 3</div><div class="ph-title">¿Cómo se llama esta ciudad?</div></div>
+    <div class="ph-photo" style="background:linear-gradient(150deg,#f2b8c6,#88a7c9 70%,#6d8fb0)"></div>
+    <div class="ph-opt ok">Kioto</div><div class="ph-opt">Venecia</div><div class="ph-opt">Bangkok</div>
+    <div class="ph-note">Tipo: imagen + opciones de texto · verde = correcta</div>`,
+  q2:`<div class="center"><div class="ph-q">Pregunta 2 de 3</div><div class="ph-title">¿Cuál es el plato típico de Kioto?</div></div>
+    <div class="ph-opt">Pad Thai</div><div class="ph-opt">Risotto de marisco</div><div class="ph-opt ok">Ramen de miso</div>
+    <div class="ph-note">Tipo: solo texto · verde = correcta</div>`,
+  q3:`<div class="center"><div class="ph-q">Pregunta 3 de 3</div><div class="ph-title">Su plato típico es el Pad Thai y está en Tailandia. ¿Qué ciudad es?</div></div>
+    <div class="ph-photo sm" style="background:linear-gradient(135deg,#c98a5a,#7796b8)"></div>
+    <div class="ph-photo sm" style="background:linear-gradient(135deg,#e8a0b0,#5a7a9a)"></div>
+    <div class="ph-photo sm ok" style="background:linear-gradient(135deg,#e0a24a,#7a4fa0);border-color:#0E8343;border-width:3px"></div>
+    <div class="ph-note">Tipo: opciones de imagen · borde verde = correcta</div>`
+};
+const body=document.getElementById('pvbody');
+function show(v){body.innerHTML=VIEWS[v];document.querySelectorAll('.pvtab').forEach(t=>t.classList.toggle('on',t.dataset.v===v));}
+document.querySelectorAll('.pvtab').forEach(t=>t.onclick=()=>show(t.dataset.v));
+show('q1');
+</script>
+</body>
+</html>

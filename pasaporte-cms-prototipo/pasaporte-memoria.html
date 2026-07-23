@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasaporte de Memoria · Prototipo del juego</title>
+<style>
+:root{
+  --primary:#004039;
+  --bg:#F1F7F7; --white:#fff;
+  --n900:#333333; --n700:#666666; --n400:#B3B3B3; --n200:#E5E5E5;
+  --info-bg:#E6ECEB;
+  --ok:#0E8343; --ok-100:#B6E9CD; --ok-50:#E8F8EF;
+  --err:#A52222; --err-100:#F8BFBF;
+  --new-bg:#E8F8EF; --warn-bg:#FBF1BB;
+  --r:12px; --rbtn:8px;
+  --shadow-card:0 2px 4px -1px rgba(0,0,0,.06), 0 4px 6px -1px rgba(0,0,0,.10);
+  --font:"Aeonik","Inter","Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font);background:#0e1513;color:var(--n900);-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+
+/* Toolbar */
+.toolbar{position:fixed;inset:0 0 auto 0;height:52px;z-index:100;display:flex;align-items:center;gap:16px;padding:0 18px;background:#0b1210;color:#cfe0dd;border-bottom:1px solid #1d2b28}
+.toolbar .tt{font-size:13px;color:#fff;font-weight:600}
+.toolbar .tt small{display:block;color:#7ea39d;font-weight:400;font-size:11px}
+.toolbar .grow{flex:1}
+.seg{display:flex;background:#16211f;border:1px solid #24332f;border-radius:9px;padding:3px}
+.seg button{background:none;border:none;color:#9fb8b3;font-size:12.5px;padding:6px 14px;border-radius:6px;cursor:pointer}
+.seg button.on{background:#fff;color:var(--primary);font-weight:600}
+.tbtn{background:#16211f;border:1px solid #24332f;color:#cfe0dd;font-size:12.5px;padding:7px 13px;border-radius:8px;cursor:pointer}
+.tbtn:hover{background:#1d2b28}
+
+/* Stage / device */
+.stage{position:fixed;inset:52px 0 0 0;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:34px 20px 60px;background:radial-gradient(120% 120% at 50% 0%,#1d2b28 0%,#0e1513 70%)}
+.device{background:var(--bg);overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.55);display:flex;flex-direction:column;position:relative;flex:0 0 auto}
+/* width/height incluyen el borde (border-box); interior = Figma (390/744/1440) */
+.device[data-device="mobile"]{width:408px;height:862px;border:9px solid #121b19;border-radius:40px}
+.device[data-device="tablet"]{width:768px;height:1157px;border:12px solid #121b19;border-radius:26px}
+.device[data-device="desktop"]{width:1440px;height:1024px;border-radius:12px}
+
+/* Shell */
+.screen{display:flex;flex-direction:column;height:100%;background:var(--bg)}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;overflow:auto}
+[data-device="mobile"] .body{overflow:hidden}
+[data-device="mobile"] .seleccion .body{overflow:auto}
+
+.hdr{flex:0 0 auto;height:72px;background:var(--white);display:flex;align-items:center;gap:16px;padding:0 16px}
+.hdr .back{width:24px;height:24px;display:flex;align-items:center;justify-content:center;color:var(--n900);cursor:pointer;flex:0 0 auto}
+.hdr .htitle{font-size:26px;font-weight:400;color:var(--n900);line-height:1.15}
+[data-device="tablet"] .hdr{padding:0 24px}
+[data-device="desktop"] .hdr{padding:0 80px}
+
+.ftr{flex:0 0 auto;background:var(--white);border-top:1px solid var(--n200);display:flex;align-items:center;justify-content:space-between;padding:16px 24px;font-size:12px;color:var(--n700)}
+.ftr .brand{display:flex;align-items:center;gap:8px}
+.ftr .qida{font-family:Georgia,"Times New Roman",serif;color:var(--primary);font-size:17px;line-height:1}
+.ftr .links{display:flex;gap:14px}
+.ftr .links a{color:var(--primary);text-decoration:none}
+[data-device="tablet"] .ftr{padding:28px 32px}
+[data-device="desktop"] .ftr{padding:28px 80px;font-size:14px}
+[data-device="desktop"] .ftr .links{gap:24px}
+
+/* Buttons (componente) */
+.btn{height:44px;padding:8px 16px;border-radius:var(--rbtn);border:1px solid transparent;font-size:16px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;line-height:1;transition:filter .15s,background .15s}
+.btn svg{width:20px;height:20px;flex:0 0 auto}
+.btn.primary{background:var(--primary);color:#fff}
+.btn.primary:hover{filter:brightness(1.12)}
+.btn.primary:active{filter:brightness(.9)}
+.btn.secondary{background:transparent;color:var(--primary);border-color:var(--primary)}   /* secundario VERDE */
+.btn.secondary:hover{background:var(--ok-50)}
+.btn.secondary:active{background:var(--ok-100)}
+.btn.big{height:44px;font-size:20px}
+.btn.h40{height:40px}
+.btn.h36{height:36px;font-size:14px}
+.btn:disabled{opacity:1;color:var(--n700);border-color:var(--n200);background:transparent;cursor:not-allowed}
+.btn.full{width:100%}
+
+/* Image card (memoriza / pregunta / empezar / hero) */
+.figcard{background:#fff;border-radius:var(--r);padding:16px;box-shadow:var(--shadow-card);flex:0 0 auto;align-self:center}
+.figcard .figphoto{width:326px;height:256px;border-radius:2px;background:var(--n400) center/cover}
+[data-device="tablet"] .figcard .figphoto,[data-device="desktop"] .figcard .figphoto{width:520px;height:401px}
+
+/* ═════════ SELECCIÓN ═════════ */
+.hero-txt h1{font-weight:500;color:var(--n900);line-height:1.05}
+.hero-txt p{font-size:18px;color:var(--n900);line-height:1.35;margin-top:8px}
+.sec-title{font-size:20px;font-weight:500;color:var(--n900)}
+.cards{display:flex;gap:16px;margin-top:16px}
+.tag{display:inline-flex;align-items:center;font-size:14px;font-weight:500;color:var(--n900);padding:2px 8px;border-radius:4px;white-space:nowrap}
+.tag.new{background:var(--new-bg)}
+.tag.warn{background:var(--warn-bg)}
+.gthumb{background:var(--n400) center/cover;border-radius:8px;flex:0 0 auto}
+.gcard{background:#fff;border:1px solid var(--n200);border-radius:var(--r);padding:16px;display:flex;gap:16px}
+.gcard .gbody{flex:1;min-width:0;display:flex;flex-direction:column}
+.gdate{font-size:12px;color:var(--n700)}
+
+/* mobile seleccion */
+[data-device="mobile"] .sel-mobile{display:flex;flex-direction:column}
+[data-device="mobile"] .hero-bleed{width:100%;height:240px;background:var(--n400) center/cover;flex:0 0 auto}
+[data-device="mobile"] .hero-txt{padding:24px 16px 0}
+[data-device="mobile"] .hero-txt h1{font-size:36px}
+[data-device="mobile"] .sel-partidas{padding:24px 16px 32px}
+[data-device="mobile"] .cards{flex-direction:column}
+[data-device="mobile"] .gcard{flex-direction:column}
+[data-device="mobile"] .gthumb{width:100%;height:200px}
+[data-device="mobile"] .gcard .grow{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px}
+[data-device="mobile"] .gname{font-size:20px;font-weight:500;color:var(--n900);margin-top:8px}
+[data-device="mobile"] .gcard .cbtn{width:100%;margin-top:16px}
+
+/* tablet seleccion */
+[data-device="tablet"] .sel-tablet{display:flex;flex-direction:column;gap:40px;padding:40px 24px}
+[data-device="tablet"] .hero{display:flex;flex-direction:row;gap:40px;align-items:flex-start}
+[data-device="tablet"] .hero .figcard{align-self:flex-start}
+[data-device="tablet"] .hero .figcard .figphoto{width:256px;height:256px}
+[data-device="tablet"] .hero-txt h1{font-size:56px;font-weight:400}
+[data-device="tablet"] .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+[data-device="tablet"] .gcard{min-width:0;align-items:center}
+[data-device="tablet"] .gthumb{width:120px;height:160px}
+
+/* desktop seleccion */
+[data-device="desktop"] .sel-desktop{display:flex;flex-direction:row;gap:40px;padding:40px 80px;align-items:flex-start}
+[data-device="desktop"] .sel-desktop>.figcard{align-self:flex-start}
+[data-device="desktop"] .sel-desktop .figcard .figphoto{width:368px;height:368px}
+[data-device="desktop"] .sel-right{flex:1;display:flex;flex-direction:column;gap:40px;min-width:0}
+[data-device="desktop"] .hero-txt h1{font-size:56px;font-weight:400}
+[data-device="desktop"] .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+[data-device="desktop"] .gcard{min-width:0;align-items:center}
+[data-device="desktop"] .gthumb{width:120px;height:136px}
+
+/* card content (desktop/tablet horizontal) */
+[data-device="tablet"] .gcard,[data-device="desktop"] .gcard{align-items:stretch}
+[data-device="tablet"] .gcard .gbody,[data-device="desktop"] .gcard .gbody{justify-content:space-between;gap:8px}
+[data-device="tablet"] .gcard .gtag,[data-device="desktop"] .gcard .gtag{display:flex;justify-content:flex-end;min-height:24px}
+[data-device="tablet"] .gcard .gtexts,[data-device="desktop"] .gcard .gtexts{display:flex;flex-direction:column;gap:4px}
+[data-device="tablet"] .gname,[data-device="desktop"] .gname{font-size:16px;font-weight:500;color:var(--n900)}
+[data-device="tablet"] .gcard .cbtn,[data-device="desktop"] .gcard .cbtn{align-self:flex-end;margin-top:0}
+
+/* ═════════ INTERSTITIALS ═════════ */
+.inter{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px 16px;gap:8px}
+.inter .eyebrow{font-size:16px;font-weight:700;color:var(--n900)}
+.inter h2{font-size:26px;font-weight:400;color:var(--n900);line-height:1.2;max-width:560px}
+.inter .note{font-size:16px;color:var(--n700);margin-top:24px}
+
+/* ═════════ EMPEZAR ═════════ */
+.empezar .body{display:flex}
+.emp-wrap{display:flex;flex:1;min-height:0}
+.emp-head .date{font-size:12px;color:var(--n700)}
+.emp-head .title{font-size:36px;font-weight:500;color:var(--primary);line-height:1.05;margin-top:4px}
+.howto{background:var(--info-bg);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:16px}
+.howto .lbl{font-size:14px;color:var(--n700)}
+.step{display:flex;align-items:center;gap:10px}
+.step .num{width:24px;height:24px;border-radius:50%;background:var(--primary);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+.step .stxt{font-size:16px;color:var(--n900)}
+.howto .free{font-size:14px;color:var(--n700)}
+.emp-content{display:flex;flex-direction:column;gap:24px}
+/* mobile: imagen full-bleed sin margen */
+[data-device="mobile"] .emp-wrap{flex-direction:column}
+[data-device="mobile"] .emp-fig{padding:0;box-shadow:none;border-radius:0;align-self:stretch;width:100%}
+[data-device="mobile"] .emp-fig .figphoto{width:100%;height:240px;border-radius:0}
+[data-device="mobile"] .emp-right{display:flex;flex-direction:column;gap:24px;padding:24px 16px}
+[data-device="mobile"] .emp-btn .btn{width:100%}
+/* tablet: vertical centrado */
+[data-device="tablet"] .emp-wrap{flex-direction:column;align-items:center;justify-content:center;gap:40px}
+[data-device="tablet"] .emp-right{width:358px;display:flex;flex-direction:column;gap:24px}
+[data-device="tablet"] .emp-btn .btn{width:100%}
+/* desktop: dos columnas centrado */
+[data-device="desktop"] .emp-wrap{flex-direction:row;align-items:center;justify-content:center;gap:40px}
+[data-device="desktop"] .emp-right{width:358px;display:flex;flex-direction:column;gap:24px}
+[data-device="desktop"] .emp-btn .btn{width:100%}
+
+/* ═════════ MEMORIZA ═════════ */
+.memo{flex:1;display:flex;flex-direction:column;justify-content:center;gap:24px;padding:0 16px}
+.memo .subtitle{font-size:20px;font-weight:400;color:var(--n900);text-align:center}
+.memo-cols{display:flex;flex-direction:column;align-items:center;gap:40px}
+.imgblock{display:flex;flex-direction:column;gap:8px;align-items:center}
+.imgblock .counter{font-size:12px;color:var(--n700);text-align:center;width:100%}
+.memo-right{width:358px;display:flex;flex-direction:column}
+.datacards{display:flex;flex-direction:column;gap:8px}
+.dcard{background:#fff;border:2px solid var(--primary);border-radius:var(--r);padding:10px 16px;text-align:center}
+.dcard .dl{font-size:12px;color:var(--n700)}
+.dcard .dv{font-size:16px;font-weight:500;color:var(--n900);margin-top:2px}
+.memo-nav{display:flex;justify-content:space-between;gap:16px;margin-top:24px}
+[data-device="desktop"] .memo-cols{flex-direction:row;align-items:center;gap:40px;justify-content:center}
+[data-device="desktop"] .memo,[data-device="tablet"] .memo{gap:40px}
+[data-device="mobile"] .memo{justify-content:flex-start;padding-top:32px;gap:24px}
+[data-device="mobile"] .memo .subtitle{font-size:16px}
+[data-device="mobile"] .memo-cols{gap:24px}
+
+/* ═════════ PREGUNTAS ═════════ */
+.q{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px;padding:0 16px}
+[data-device="mobile"] .q{gap:24px}
+.qhead{text-align:center;display:flex;flex-direction:column;gap:8px}
+.qhead .qn{font-size:12px;color:var(--n900)}
+.qhead .qt{font-size:20px;font-weight:500;color:var(--n900);line-height:1.25}
+.opts{width:358px;display:flex;flex-direction:column;gap:16px}
+.opt{background:#fff;border:2px solid var(--primary);border-radius:var(--r);padding:16px;text-align:center;font-size:20px;color:var(--primary);cursor:pointer;transition:background .12s,border-color .12s,color .12s}
+.opt:hover{background:var(--ok-50)}
+.opt.correct{background:var(--ok-100);border-color:var(--ok);color:var(--ok)}
+.opt.wrong{background:var(--err-100);border-color:var(--err);color:var(--err)}
+.opt.locked{pointer-events:none}
+.optgrid{display:flex;flex-direction:column;gap:16px;align-items:center}
+.optimg{background:#fff;border:2px solid var(--primary);border-radius:var(--r);padding:8px;cursor:pointer;transition:background .12s,border-color .12s}
+.optimg .optphoto{width:164px;height:145px;border-radius:4px;background:var(--n400) center/cover}
+.optimg.correct{background:var(--ok-100);border-color:var(--ok)}
+.optimg.wrong{background:var(--err-100);border-color:var(--err)}
+.optimg.locked{pointer-events:none}
+[data-device="tablet"] .optimg{padding:16px}
+[data-device="tablet"] .optimg .optphoto{width:232px;height:204px}
+[data-device="desktop"] .optimg{padding:16px}
+[data-device="desktop"] .optimg .optphoto{width:326px;height:288px}
+[data-device="desktop"] .optgrid{flex-direction:row;gap:24px;justify-content:center}
+/* reserva de espacio para el botón: las opciones no se mueven */
+.q-actions{display:flex;justify-content:center;min-height:44px;align-items:center}
+.q-actions.empty{visibility:hidden}
+/* desktop P1: dos columnas (imagen izq, pregunta+opciones+botón der) */
+[data-device="desktop"] .q-img{flex-direction:row;align-items:center;justify-content:center;gap:40px}
+[data-device="desktop"] .q-img .figcard{align-self:center}
+[data-device="desktop"] .q-img .q-col{display:flex;flex-direction:column;gap:40px;width:358px}
+[data-device="desktop"] .q-img .qhead{text-align:left}
+[data-device="desktop"] .q-img .q-actions{justify-content:center}
+[data-device="mobile"] .q-imgopts{justify-content:space-between;gap:0;padding-top:12px;padding-bottom:12px}
+[data-device="tablet"] .q-imgopts{padding-bottom:48px}
+
+/* ═════════ RESULTADO ═════════ */
+.res{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.rescard{background:#fff;border-radius:var(--r);padding:40px 16px;display:flex;flex-direction:column;gap:40px;width:100%;max-width:358px;align-items:center}
+.rescard .top{display:flex;flex-direction:column;align-items:center;gap:24px;width:100%}
+.rescheck{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.rescheck svg{width:40px;height:40px}
+.restexts{display:flex;flex-direction:column;gap:4px;text-align:center}
+.restexts .rt{font-size:20px;font-weight:500;color:var(--n900)}
+.restexts .rs{font-size:16px;color:var(--n700);line-height:1.35}
+[data-device="mobile"] .restexts .rs{font-size:15px}
+.res-aciertos{font-size:18px;color:var(--n900)}
+.res-actions{display:flex;flex-direction:column;gap:16px;width:100%}
+[data-device="desktop"] .rescard,[data-device="tablet"] .rescard{max-width:460px;padding:48px 40px}
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <div class="tt">Pasaporte de Memoria<small>Prototipo del juego · flujo jugable</small></div>
+  <div class="grow"></div>
+  <div class="seg" id="seg">
+    <button data-dev="mobile">📱 Mobile</button>
+    <button data-dev="tablet">▭ Tablet</button>
+    <button data-dev="desktop" class="on">🖥 Desktop</button>
+  </div>
+  <button class="tbtn" id="restart">↺ Reiniciar flujo</button>
+</div>
+<div class="stage">
+  <div class="device" data-device="desktop" id="device"></div>
+</div>
+
+<script>
+/* DATOS */
+const IMG={venecia:"assets/venecia.png",kioto:"assets/kioto.png",bangkok:"assets/bangkok.png"};
+const CITIES=[
+  {name:"Venecia",pais:"Italia",plato:"Risotto de marisco",img:IMG.venecia},
+  {name:"Kioto",pais:"Japón",plato:"Ramen de miso",img:IMG.kioto},
+  {name:"Bangkok",pais:"Tailandia",plato:"Pad Thai",img:IMG.bangkok},
+];
+const QUESTIONS=[
+  {kind:"img",num:"Pregunta 1 de 3",text:"¿Cómo se llama esta ciudad?",img:IMG.kioto,options:["Kioto","Venecia","Bangkok"],correct:0,next:"Siguiente pregunta"},
+  {kind:"text",num:"Pregunta 2 de 3",text:"¿Cuál es el plato típico de Kioto?",options:["Pad Thai","Risotto de marisco","Ramen de miso"],correct:2,next:"Siguiente pregunta"},
+  {kind:"imgopts",num:"Pregunta 3 de 3",text:"Su plato típico es el Pad Thai y está en Tailandia. ¿Qué ciudad es?",options:[{name:"Venecia",img:IMG.venecia},{name:"Kioto",img:IMG.kioto},{name:"Bangkok",img:IMG.bangkok}],correct:2,next:"Ver resultados"},
+];
+const RESULTS={
+  3:{bg:"var(--ok)",check:"#fff",title:"¡Enhorabuena!",sub:"Has respondido correctamente todas las preguntas."},
+  2:{bg:"var(--ok-100)",check:"var(--primary)",title:"¡Muy bien!",sub:"Casi lo tienes, se te escapó solo 1 pregunta."},
+  1:{bg:"var(--ok-50)",check:"var(--primary)",title:"¡Buen intento!",sub:"Repasa los datos e inténtalo de nuevo."},
+  0:{bg:"var(--n200)",check:"var(--n700)",title:"¡Sigue practicando!",sub:"Inténtalo de nuevo."},
+};
+const PARTIDAS=[
+  {name:"3 ciudades",img:IMG.kioto,status:"new"},
+  {name:"Partida",img:null,status:"done"},
+  {name:"Partida",img:null,status:"incomplete"},
+];
+const IC={
+  back:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`,
+  arrowR:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
+  arrowL:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>`,
+  check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`,
+};
+
+let state={screen:"seleccion",mi:0,qi:0,answers:[null,null,null]};
+let device="desktop";
+
+const header=(title,{back=true}={})=>`<div class="hdr">${back?`<div class="back" data-act="back">${IC.back}</div>`:""}<div class="htitle">${title}</div></div>`;
+const footer=()=>`<div class="ftr"><div class="brand"><span class="qida">Qida</span><span>© 2026 Qida</span></div><div class="links"><a href="#">Términos</a><a href="#">Privacidad</a><a href="#">Ayuda</a></div></div>`;
+const btn=(label,{cls="primary",icon=null,act="",disabled=false}={})=>`<button class="btn ${cls}" ${act?`data-act="${act}"`:""} ${disabled?"disabled":""}>${icon==="left"?IC.arrowL:""}<span>${label}</span>${icon==="right"?IC.arrowR:""}</button>`;
+const tagEl=(s)=> s==="new"?`<span class="tag new">Nuevo</span>`: s==="incomplete"?`<span class="tag warn">No completado</span>`:"";
+
+/* SELECCIÓN */
+function scr_seleccion(){
+  const heroTxt=`<div class="hero-txt"><h1>Pasaporte de Memoria</h1><p>Entrena tu memoria y tu concentración con un reto diferente en cada partida.</p></div>`;
+  const partidas=`<div class="sel-partidas"><div class="sec-title">Partidas disponibles</div><div class="cards">${PARTIDAS.map(cardFor).join("")}</div></div>`;
+  let inner;
+  if(device==="desktop"){
+    inner=`<div class="sel-desktop">
+      <div class="figcard"><div class="figphoto" style="background-image:url('${IMG.kioto}')"></div></div>
+      <div class="sel-right">${heroTxt}${partidas}</div></div>`;
+  } else if(device==="tablet"){
+    inner=`<div class="sel-tablet">
+      <div class="hero"><div class="figcard"><div class="figphoto" style="background-image:url('${IMG.kioto}')"></div></div>${heroTxt}</div>
+      ${partidas}</div>`;
+  } else {
+    inner=`<div class="sel-mobile">
+      <div class="hero-bleed" style="background-image:url('${IMG.kioto}')"></div>
+      ${heroTxt}${partidas}</div>`;
+  }
+  return `<div class="screen seleccion">${header(device==="mobile"?"Pasaporte de Memoria":"Juegos / Pasaporte de Memoria",{back:false})}<div class="body">${inner}</div>${footer()}</div>`;
+}
+function cardFor(p){
+  const img=p.img?`background-image:url('${p.img}')`:"";
+  if(device==="mobile"){
+    return `<div class="gcard"><div class="gthumb" style="${img}"></div>
+      <div class="gbody"><div class="grow"><span class="gdate">09/07/2026</span>${tagEl(p.status)}</div>
+      <div class="gname">${p.name}</div>${btn("Jugar",{cls:"primary h36 cbtn",act:"start"})}</div></div>`;
+  }
+  return `<div class="gcard"><div class="gthumb" style="${img}"></div>
+    <div class="gbody">
+      <div class="gtag">${tagEl(p.status)}</div>
+      <div class="gtexts"><span class="gdate">09/07/2026</span><span class="gname">${p.name}</span></div>
+      ${btn("Jugar",{cls:"primary h36 cbtn",act:"start"})}
+    </div></div>`;
+}
+
+/* EMPEZAR */
+function scr_empezar(){
+  return `<div class="screen empezar">${header("Pasaporte de Memoria")}<div class="body">
+    <div class="emp-wrap">
+      <div class="figcard emp-fig"><div class="figphoto" style="background-image:url('${IMG.venecia}')"></div></div>
+      <div class="emp-right">
+        <div class="emp-content">
+          <div class="emp-head"><div class="date">09/07/2026</div><div class="title">3 ciudades</div></div>
+          <div class="howto">
+            <div class="lbl">CÓMO FUNCIONA</div>
+            <div class="step"><span class="num">1</span><span class="stxt">Memoriza las 3 ciudades y sus datos.</span></div>
+            <div class="step"><span class="num">2</span><span class="stxt">Responde a las preguntas sobre ellas.</span></div>
+            <div class="free">Sin límite de tiempo, puedes repasar antes de responder.</div>
+          </div>
+        </div>
+        <div class="emp-btn">${btn("Empezar partida",{cls:"primary big",act:"toFijate"})}</div>
+      </div>
+    </div>
+  </div>${footer()}</div>`;
+}
+
+/* INTERSTITIALS */
+function scr_inter(kind){
+  const d=kind==="fijate"
+    ?{eye:"¡FÍJATE BIEN!",h:"Memoriza los datos de las siguientes ciudades",note:"Después pondremos a prueba lo que recuerdas."}
+    :{eye:"¡HORA DE LA VERDAD!",h:"Responde a las preguntas sobre las ciudades que acabas de memorizar",note:""};
+  return `<div class="screen inter-screen">${header("Pasaporte de Memoria")}<div class="body"><div class="inter"><div class="eyebrow">${d.eye}</div><h2>${d.h}</h2>${d.note?`<div class="note">${d.note}</div>`:""}</div></div>${footer()}</div>`;
+}
+
+/* MEMORIZA */
+function scr_memo(){
+  const c=CITIES[state.mi];const last=state.mi===CITIES.length-1;
+  return `<div class="screen memoriza">${header("Pasaporte de Memoria")}<div class="body">
+    <div class="memo">
+      <div class="subtitle">Memoriza los datos de las siguientes ciudades</div>
+      <div class="memo-cols">
+        <div class="imgblock"><div class="counter">${state.mi+1} / ${CITIES.length}</div><div class="figcard"><div class="figphoto" style="background-image:url('${c.img}')"></div></div></div>
+        <div class="memo-right">
+          <div class="datacards">
+            <div class="dcard"><div class="dl">Nombre</div><div class="dv">${c.name}</div></div>
+            <div class="dcard"><div class="dl">País</div><div class="dv">${c.pais}</div></div>
+            <div class="dcard"><div class="dl">Plato típico</div><div class="dv">${c.plato}</div></div>
+          </div>
+          <div class="memo-nav">
+            ${btn("Anterior",{cls:"secondary h40",icon:"left",act:"memoPrev",disabled:state.mi===0})}
+            ${last?btn("Ir a las preguntas",{cls:"primary h40",icon:"right",act:"toHora"}):btn("Siguiente",{cls:"primary h40",icon:"right",act:"memoNext"})}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>${footer()}</div>`;
+}
+
+/* PREGUNTAS */
+function scr_question(){
+  const q=QUESTIONS[state.qi];
+  const answered=state.answers[state.qi]!==null;
+  const chosen=state.answers[state.qi];
+  const oc=(i,base)=>{ if(!answered)return base; let c=base+" locked"; if(i===q.correct)c+=" correct"; else if(i===chosen)c+=" wrong"; return c; };
+  const actions=`<div class="q-actions ${answered?"":"empty"}">${btn(q.next,{cls:"primary h40",icon:"right",act:"nextQ"})}</div>`;
+  const qhead=`<div class="qhead"><div class="qn">${q.num}</div><div class="qt">${q.text}</div></div>`;
+  let inner;
+  if(q.kind==="text"){
+    inner=`<div class="q q-text">${qhead}<div class="opts">${q.options.map((o,i)=>`<div class="${oc(i,'opt')}" data-act="answer" data-i="${i}">${o}</div>`).join("")}</div>${actions}</div>`;
+  } else if(q.kind==="img"){
+    const fig=`<div class="figcard"><div class="figphoto" style="background-image:url('${q.img}')"></div></div>`;
+    const optsHtml=`<div class="opts">${q.options.map((o,i)=>`<div class="${oc(i,'opt')}" data-act="answer" data-i="${i}">${o}</div>`).join("")}</div>`;
+    inner = device==="desktop"
+      ? `<div class="q q-img">${fig}<div class="q-col">${qhead}${optsHtml}${actions}</div></div>`
+      : `<div class="q q-img">${qhead}${fig}${optsHtml}${actions}</div>`;
+  } else {
+    inner=`<div class="q q-imgopts">${qhead}<div class="optgrid">${q.options.map((o,i)=>`<div class="${oc(i,'optimg')}" data-act="answer" data-i="${i}"><div class="optphoto" style="background-image:url('${o.img}')"></div></div>`).join("")}</div>${actions}</div>`;
+  }
+  return `<div class="screen question">${header("Pasaporte de Memoria")}<div class="body">${inner}</div>${footer()}</div>`;
+}
+
+/* RESULTADO */
+function scr_result(){
+  const score=state.answers.filter((a,i)=>a===QUESTIONS[i].correct).length;
+  const r=RESULTS[score];
+  return `<div class="screen resultado">${header("Pasaporte de Memoria")}<div class="body"><div class="res"><div class="rescard">
+    <div class="top">
+      <div class="rescheck" style="background:${r.bg};color:${r.check}">${IC.check}</div>
+      <div class="restexts"><div class="rt">${r.title}</div><div class="rs">${r.sub}</div></div>
+      <div class="res-aciertos">Aciertos ${score}/3</div>
+    </div>
+    <div class="res-actions">${btn("Jugar otra partida",{cls:"primary h40",act:"playAgain"})}${btn("Volver al portal",{cls:"secondary h40",act:"toPortal"})}</div>
+  </div></div></div>${footer()}</div>`;
+}
+
+/* RENDER + ROUTER */
+const device_el=document.getElementById("device");
+let interTimer=null;
+function render(){
+  clearTimeout(interTimer);
+  let html;
+  switch(state.screen){
+    case "seleccion":html=scr_seleccion();break;
+    case "empezar":html=scr_empezar();break;
+    case "fijate":html=scr_inter("fijate");break;
+    case "hora":html=scr_inter("hora");break;
+    case "memo":html=scr_memo();break;
+    case "question":html=scr_question();break;
+    case "result":html=scr_result();break;
+  }
+  device_el.innerHTML=html;
+  const b=device_el.querySelector(".body"); if(b)b.scrollTop=0;
+  fitDevice();
+  if(state.screen==="fijate")interTimer=setTimeout(()=>go("toMemo"),4000);
+  if(state.screen==="hora")interTimer=setTimeout(()=>go("toQuestions"),4000);
+}
+function go(act,el){
+  switch(act){
+    case "back": if(state.screen==="empezar")state.screen="seleccion"; else if(state.screen==="memo"&&state.mi>0)state.mi--; else if(state.screen==="question"&&state.qi>0)state.qi--; else state.screen="seleccion"; break;
+    case "start":state.screen="empezar";break;
+    case "toFijate":state.screen="fijate";break;
+    case "toMemo":state.screen="memo";state.mi=0;break;
+    case "memoNext":state.mi=Math.min(CITIES.length-1,state.mi+1);break;
+    case "memoPrev":state.mi=Math.max(0,state.mi-1);break;
+    case "toHora":state.screen="hora";break;
+    case "toQuestions":state.screen="question";state.qi=0;break;
+    case "answer": if(state.answers[state.qi]!==null)return; state.answers[state.qi]=parseInt(el.dataset.i,10); break;
+    case "nextQ": if(state.qi<QUESTIONS.length-1)state.qi++; else state.screen="result"; break;
+    case "playAgain":state.answers=[null,null,null];state.qi=0;state.mi=0;state.screen="empezar";break;
+    case "toPortal":reset();return;
+  }
+  render();
+}
+function reset(){state={screen:"seleccion",mi:0,qi:0,answers:[null,null,null]};render();}
+function fitDevice(){
+  const stage=document.querySelector(".stage");
+  device_el.style.zoom="1";
+  const availH=stage.clientHeight-40, availW=stage.clientWidth-40;
+  const s=Math.min(1, availH/device_el.offsetHeight, availW/device_el.offsetWidth);
+  device_el.style.zoom=s>0?s:1;
+}
+window.addEventListener("resize",fitDevice);
+device_el.addEventListener("click",(e)=>{const t=e.target.closest("[data-act]");if(!t)return;go(t.dataset.act,t);});
+document.getElementById("seg").addEventListener("click",(e)=>{const btnEl=e.target.closest("button[data-dev]");if(!btnEl)return;device=btnEl.dataset.dev;document.querySelectorAll("#seg button").forEach(x=>x.classList.toggle("on",x===btnEl));device_el.dataset.device=device;render();});
+document.getElementById("restart").addEventListener("click",reset);
+render();
+</script>
+</body>
+</html>
