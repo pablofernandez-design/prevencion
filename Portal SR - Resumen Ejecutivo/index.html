@@ -232,6 +232,14 @@
   .objcol{display:flex;flex-direction:column;background:#F6F7F9;border-radius:12px;padding:18px}
   .objcol .q{display:block;font-size:14px;font-weight:600;color:var(--n900);margin-bottom:8px}
   .objcol .selectbox select{background:#fff}
+  /* nuevo: un bloque por objetivo (área + perfil + actividades inline) */
+  .objblock{background:#F6F7F9;border-radius:12px;padding:18px;margin-bottom:16px}
+  .objblock:last-child{margin-bottom:0}
+  .objselrow{display:flex;gap:16px;flex-wrap:wrap}
+  .objblock .act-tabs{margin-top:16px}
+  .objfield{flex:0 0 328px;max-width:340px;min-width:240px}
+  .objfield .q{display:block;font-size:14px;font-weight:600;color:var(--n900);margin-bottom:8px}
+  .objblock .selectbox select{background:#fff}
   .objcard-foot{display:flex;justify-content:flex-end;margin-top:20px}
   .act-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:36px 20px}
   .act-emptyic{width:56px;height:56px;border-radius:50%;background:var(--primary50);display:flex;align-items:center;justify-content:center;margin-bottom:4px}
@@ -817,16 +825,13 @@ const AREAS=[
   {a:'Tabaco y alcohol', s:10, lvl:'sig', ic:'m_tab'},
 ];
 const LVL_LABEL={at:'ATENCIÓN', mej:'MEJORA', sig:'SIGUE ASÍ'};
-// Contenido de cada dropdown de perfil según el área seleccionada (del CMS)
+// Perfiles por área (del CMS). Solo algunas áreas tienen perfil; el resto no.
 const PERFIL_MAP={
   'Actividad Física':['General','Diversidad funcional','Contraindicaciones médicas – tronco inferior','Contraindicaciones médicas – tronco superior','Tonificación baja','Tonificación media'],
   'Nutrición':['General','Vegetariano'],
-  'Mente activa':['Nivel 1','Nivel 2','Nivel 3'],
 };
-const PERFILES=['General','Diversidad funcional','Movilidad reducida','Deterioro cognitivo leve'];
-// Mente activa se selecciona por Nivel (1/2/3); el resto por perfil
-function perfilOpts(area){ return PERFIL_MAP[area] || PERFILES; }
-function perfilLbl(area){ return area==='Mente activa' ? 'Nivel' : 'Perfil'; }
+function hasPerfil(area){ return !!PERFIL_MAP[area]; }
+function perfilOpts(area){ return PERFIL_MAP[area] || []; }
 // Actividades (una vez asignadas): parrilla semanal por meses, con "Acceder" en algunas
 const DIAS_SEM=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 const ACT_WEEK=[
@@ -838,29 +843,38 @@ const ACT_WEEK=[
   {t:'Realiza 1 serie de 10 repeticiones del ejercicio 2 adjuntado en el cuadernillo.'},
   {t:'Camina durante 25 minutos a paso ligero para activar tu cuerpo.'},
 ];
-// Objetivos preseleccionados por backend (editables) + perfil/nivel por objetivo
-let objState={ obj:['Actividad Física','Nutrición','Mente activa'], perfil:['Diversidad funcional','Vegetariano',''], asignado:false, dirty:false, actTab:0 };
+// Objetivos preseleccionados por backend (editables). Cada objetivo: área + perfil (si aplica) + mes activo
+let objState={ obj:['Actividad Física','Nutrición','Mente activa'], perfil:['General','General',''], actTab:[0,0,0] };
 
-function actividadesContent(){
-  const tabs=objState.obj;
-  return `
-    <div class="act-tabs">${tabs.map((t,i)=>`<button class="act-tab ${i===objState.actTab?'on':''}" onclick="objState.actTab=${i};openObjetivos()">${t}</button>`).join('')}</div>
-    ${[1,2,3,4].map(mes=>`
-      <div class="act-month">
-        <div class="act-mlabel">ACTIVIDADES - MES ${mes}</div>
-        <div class="act-grid">
-          <div class="act-grow act-ghead">${DIAS_SEM.map(d=>`<div class="act-hcell">${d}</div>`).join('')}</div>
-          <div class="act-grow">${ACT_WEEK.map(a=>`<div class="act-cell"><p>${a.t}</p>${(mes===1&&a.btn)?`<button class="btn primary act-acceder">Acceder</button>`:''}</div>`).join('')}</div>
-        </div>
-      </div>`).join('')}
-  `;
+// Un bloque por objetivo: selectores arriba y, si está relleno, sus actividades (tabs de mes + parrilla semanal)
+function objetivoBlock(i){
+  const area=objState.obj[i];
+  const hp=hasPerfil(area);
+  const filled = area && (!hp || objState.perfil[i]);
+  const tab=objState.actTab[i]||0;
+  return `<div class="objblock">
+    <div class="objselrow">
+      <div class="objfield">
+        <label class="q">Área</label>
+        <div class="selectbox"><select onchange="setObjArea(${i},this.value)"><option value="" ${area?'':'selected'} disabled>Selecciona...</option>${AREAS.map(x=>`<option ${x.a===area?'selected':''}>${x.a}</option>`).join('')}</select>${I.chevdown}</div>
+      </div>
+      ${(area&&hp)?`<div class="objfield">
+        <label class="q">Perfil</label>
+        <div class="selectbox"><select onchange="setPerfil(${i},this.value)"><option value="" ${objState.perfil[i]?'':'selected'} disabled>Selecciona un perfil...</option>${perfilOpts(area).map(p=>`<option ${p===objState.perfil[i]?'selected':''}>${p}</option>`).join('')}</select>${I.chevdown}</div>
+      </div>`:''}
+    </div>
+    ${filled?`
+      <div class="act-tabs month-tabs">${[0,1,2,3].map(m=>`<button class="act-tab ${m===tab?'on':''}" onclick="objState.actTab[${i}]=${m};openObjetivos()">Mes ${m+1}</button>`).join('')}</div>
+      <div class="act-grid">
+        <div class="act-grow act-ghead">${DIAS_SEM.map(d=>`<div class="act-hcell">${d}</div>`).join('')}</div>
+        <div class="act-grow">${ACT_WEEK.map(a=>`<div class="act-cell"><p>${a.t}</p>${a.btn?`<button class="btn primary act-acceder">Acceder</button>`:''}</div>`).join('')}</div>
+      </div>`:''}
+  </div>`;
 }
 
 function openObjetivos(){
   useHeaderPortal();
-  const perfilesOk = objState.perfil.every(p=>p);
-  const canAsignar = perfilesOk && (!objState.asignado || objState.dirty);
-  const actividadesOk = objState.asignado && !objState.dirty;
+  const allFilled = [0,1,2].every(i=>{ const a=objState.obj[i]; return a && (!hasPerfil(a) || objState.perfil[i]); });
   el('view').innerHTML=`
   <div class="page">
     <div class="subhead">
@@ -877,38 +891,18 @@ function openObjetivos(){
       <div class="objright">
         <div class="objcard">
           <h4 class="objtitle">Objetivos</h4>
-          <div class="objgrid">
-            ${[0,1,2].map(i=>{const area=objState.obj[i];return `<div class="objcol">
-              <label class="q">Objetivo</label>
-              <div class="selectbox"><select onchange="setObjArea(${i},this.value)">${AREAS.map(x=>`<option ${x.a===area?'selected':''}>${x.a}</option>`).join('')}</select>${I.chevdown}</div>
-              <label class="q" style="margin-top:12px">${perfilLbl(area)}</label>
-              <div class="selectbox"><select onchange="setPerfil(${i},this.value)"><option value="" ${objState.perfil[i]?'':'selected'} disabled>Selecciona ${area==='Mente activa'?'un nivel':'un perfil'}...</option>${perfilOpts(area).map(p=>`<option ${p===objState.perfil[i]?'selected':''}>${p}</option>`).join('')}</select>${I.chevdown}</div>
-            </div>`;}).join('')}
-          </div>
-          <div class="objcard-foot">
-            <button class="btn primary" ${canAsignar?'':'disabled'} onclick="${canAsignar?'asignarActividades()':''}">${I.file} Asignar actividades</button>
-          </div>
-        </div>
-        <div class="objcard">
-          <h4 class="objtitle">Actividades</h4>
-          ${(objState.asignado && objState.dirty) ? `<div class="alert-warn"><span class="aw-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span><p>La definición de los objetivos ha cambiado. Asigna de nuevo las actividades para que coincidan con la nueva selección.</p></div>` : ''}
-          ${objState.asignado ? actividadesContent() : `<div class="act-empty">
-            <div class="act-emptyic">${I.report}</div>
-            <b>Aún no hay actividades</b>
-            <p>Asigna los objetivos y sus perfiles para empezar a añadir actividades desde el CMS.</p>
-          </div>`}
+          ${[0,1,2].map(i=>objetivoBlock(i)).join('')}
         </div>
       </div>
     </div>
     <div class="subfoot">
-      <button class="btn primary" ${actividadesOk?'':'disabled'} onclick="${actividadesOk?'saveObjetivos()':''}">Guardar y continuar</button>
+      <button class="btn primary" ${allFilled?'':'disabled'} onclick="${allFilled?'saveObjetivos()':''}">Guardar y continuar</button>
     </div>
   </div>`;
   window.scrollTo(0,0);
 }
-function setObjArea(i,v){ objState.obj[i]=v; objState.perfil[i]=''; if(objState.asignado) objState.dirty=true; openObjetivos(); }
-function setPerfil(i,v){ objState.perfil[i]=v; if(objState.asignado) objState.dirty=true; openObjetivos(); }
-function asignarActividades(){ objState.asignado=true; objState.dirty=false; objState.actTab=0; openObjetivos(); }
+function setObjArea(i,v){ objState.obj[i]=v; objState.perfil[i]=''; objState.actTab[i]=0; openObjetivos(); }
+function setPerfil(i,v){ objState.perfil[i]=v; openObjetivos(); }
 function saveObjetivos(){ state.done.objetivos=true; state.tActualizacion=new Date(); state.wizard=false; renderLanding(); }
 
 /* ---------- Screen 5 : modal Generar informe ---------- */
