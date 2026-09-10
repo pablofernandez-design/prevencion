@@ -827,6 +827,43 @@
     requestAnimationFrame(spy);
   }
 
+  // -------- Section side-nav for reports (smooth scroll + scroll-spy) --------
+  function initRepNav() {
+    const navs = Array.from(document.querySelectorAll('.rep-side'));
+    if (!navs.length) return;
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('.rep-side-link');
+      if (!a) return;
+      const target = document.getElementById(a.dataset.target);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+
+    const groups = navs.map(nav => {
+      const links = Array.from(nav.querySelectorAll('.rep-side-link'));
+      const sections = links.map(l => document.getElementById(l.dataset.target));
+      return { links, sections };
+    });
+    const spy = () => {
+      const headerH = document.querySelector('.app-header')?.offsetHeight || 0;
+      const line = headerH + 140;
+      groups.forEach(({ links, sections }) => {
+        // only the visible report (its sections are laid out)
+        if (!sections.some(s => s && s.offsetParent !== null)) return;
+        let active = 0;
+        sections.forEach((sec, i) => {
+          if (sec && sec.offsetParent !== null && sec.getBoundingClientRect().top - line <= 0) active = i;
+        });
+        links.forEach((l, i) => l.classList.toggle('is-active', i === active));
+      });
+    };
+    window.addEventListener('scroll', spy, { passive: true });
+    window.addEventListener('resize', spy);
+    requestAnimationFrame(spy);
+  }
+
   // -------- Mobile drawer --------
   function initDrawer() {
     const drawer = document.getElementById('drawer');
@@ -850,36 +887,41 @@
     });
   }
 
-  // -------- Prototype FAB toggle (cycles through the 3 plan states) --------
-  // Plan inicial (proto-1) → Plan de seguimiento cuatrimestral (proto-2) → Plan de seguimiento anual (proto-3)
-  function initProtoFab() {
-    const states = [
-      { cls: 'proto-1', name: 'Plan inicial',                       report: 'Plan de Prevención y Reducción de Riesgos',     date: '18 de marzo de 2026' },
-      { cls: 'proto-2', name: 'Plan de seguimiento cuatrimestral',  report: 'Plan de Seguimiento Cuatrimestral · Cuatrimestre 1', date: '18 de junio de 2026' },
-      { cls: 'proto-3', name: 'Plan de seguimiento anual',          report: 'Plan de Seguimiento Anual',                     date: '18 de marzo de 2027' }
-    ];
-    const fab = document.getElementById('protoFab');
-    const label = fab ? fab.querySelector('.proto-fab-label') : null;
+  // -------- Report selector (4 informes) --------
+  // 0 = Plan de Prevención (inicial) · 1 = Plan de Prevención Anual
+  // 2 = Seguimiento 1er cuatrimestre · 3 = Seguimiento 2º cuatrimestre
+  function initReportSelector() {
     const select = document.getElementById('reportSelect');
-    const rsName = document.getElementById('rsName');
-    const rsDate = document.getElementById('rsDate');
-    // Estado inicial: por defecto el último plan recibido; se puede fijar por URL (?plan=0|1|2)
-    const planParam = parseInt(new URLSearchParams(location.search).get('plan'), 10);
-    let idx = (planParam >= 0 && planParam < states.length) ? planParam : states.length - 1;
-    function apply() {
-      const s = states[idx];
-      document.body.classList.remove('proto-1', 'proto-2', 'proto-3');
-      document.body.classList.add(s.cls);
-      if (label) label.textContent = s.name;
-      if (rsName) rsName.textContent = s.report;
-      if (rsDate) rsDate.textContent = s.date;
+    const reports = Array.from(document.querySelectorAll('.rep'));
+    if (!reports.length) return;
+    function show(idx) {
+      reports.forEach(r => { r.hidden = (r.dataset.report !== String(idx)); });
       if (select && select.value !== String(idx)) select.value = String(idx);
-      // Re-render evolución cards so seguimiento data is reflected
-      renderEvolucion();
+      window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
     }
-    apply(); // "Plan inicial" por defecto al cargar
-    if (fab) fab.addEventListener('click', () => { idx = (idx + 1) % states.length; apply(); });
-    if (select) select.addEventListener('change', () => { idx = parseInt(select.value, 10) || 0; apply(); });
+    // Estado inicial: Plan de Prevención por defecto; se puede fijar por URL (?report=0..3)
+    const p = parseInt(new URLSearchParams(location.search).get('report'), 10);
+    const def = (p >= 0 && p < reports.length) ? p : 0;
+    show(def);
+    if (select) select.addEventListener('change', () => show(parseInt(select.value, 10) || 0));
+  }
+
+  // -------- Anexo month tabs (Mes 1–4), scoped per report --------
+  function initAnexoTabs() {
+    document.addEventListener('click', (e) => {
+      const tab = e.target.closest('.rep-anexo-tab');
+      if (!tab) return;
+      const wrap = tab.closest('[data-anexo]');
+      if (!wrap) return;
+      const m = tab.dataset.month;
+      wrap.querySelectorAll('.rep-anexo-tab').forEach(t => t.classList.toggle('is-active', t === tab));
+      wrap.querySelectorAll('.rep-anexo-month').forEach(p => {
+        p.hidden = (p.dataset.month !== m);
+      });
+      // reflect selected month in the "Mes N" pill of this anexo sheet
+      const pill = wrap.closest('.rep-sheet')?.querySelector('.rep-mespill');
+      if (pill) pill.textContent = 'Mes ' + m;
+    });
   }
 
   // -------- Accessibility: Settings Popover (supports multiple instances) --------
@@ -976,12 +1018,125 @@
     });
   }
 
+  // -------- "Ver Actividades" toggle (informe ↔ anexo a pantalla completa) --------
+  function initActivitiesToggle() {
+    const btn = document.getElementById('toggleActivities');
+    const view = document.querySelector('.view[data-view="informes"]');
+    if (!btn || !view) return;
+    const label = btn.querySelector('.ta-label');
+    const syncLabel = () => { if (label) label.textContent = view.classList.contains('show-activities') ? 'Ver informe' : 'Ver Actividades'; };
+    syncLabel(); // asegura coherencia al cargar (p. ej. restauración bfcache)
+    window.addEventListener('pageshow', syncLabel);
+    btn.addEventListener('click', () => {
+      view.classList.toggle('show-activities');
+      syncLabel();
+      window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+    });
+    // Al cambiar de informe, volver a la vista de informe (no de actividades)
+    const select = document.getElementById('reportSelect');
+    if (select) select.addEventListener('change', () => {
+      view.classList.remove('show-activities');
+      if (label) label.textContent = 'Ver Actividades';
+    });
+  }
+
+  // -------- Anexo móvil (Opción A): selector de día + tarjetas por área --------
+  // Construye la vista móvil a partir de la rejilla semanal de cada mes.
+  function initAnexoResponsive() {
+    const DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+    const CORTO = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+    const mk = (tag, cls, txt) => { const n = document.createElement(tag); if (cls) n.className = cls; if (txt != null) n.textContent = txt; return n; };
+
+    document.querySelectorAll('.rep-anexo-month').forEach(month => {
+      const grid = month.querySelector('.anx-grid');
+      if (!grid || month.querySelector('.anx-mA')) return;
+      const areas = Array.prototype.map.call(grid.querySelectorAll('.anx-area'), a => ({
+        cat: a.getAttribute('data-cat'),
+        name: a.querySelector('.anx-name').textContent,
+        status: a.querySelector('.anx-status').textContent,
+        days: Array.prototype.map.call(a.querySelectorAll('.anx-db'), d => d.textContent)
+      }));
+      if (!areas.length) return;
+
+      const mA = mk('div', 'anx-mA');
+      const daysBar = mk('div', 'anx-mA-days');
+      const dateLine = mk('div', 'anx-mA-date');
+      const cards = mk('div', 'anx-mA-cards');
+      let sel = 0;
+
+      const render = () => {
+        dateLine.textContent = DIAS[sel];
+        cards.textContent = '';
+        areas.forEach(a => {
+          const c = mk('div', 'anx-card cat-' + a.cat);
+          const top = mk('div', 'top');
+          top.appendChild(mk('span', 'nm', a.name));
+          top.appendChild(mk('span', 'chip', a.status));
+          c.appendChild(top);
+          c.appendChild(mk('p', 'txt', a.days[sel] || ''));
+          const done = mk('div', 'anx-done');
+          done.appendChild(mk('i'));
+          done.appendChild(mk('span', null, 'Marcar como hecho'));
+          done.addEventListener('click', () => {
+            const on = done.classList.toggle('on');
+            done.querySelector('span').textContent = on ? 'Hecho' : 'Marcar como hecho';
+          });
+          c.appendChild(done);
+          cards.appendChild(c);
+        });
+      };
+
+      CORTO.forEach((lbl, i) => {
+        const b = mk('button', null, lbl);
+        b.type = 'button';
+        b.setAttribute('aria-pressed', i === sel ? 'true' : 'false');
+        b.setAttribute('aria-label', DIAS[i]);
+        b.addEventListener('click', () => {
+          sel = i;
+          Array.prototype.forEach.call(daysBar.children, (n, j) => n.setAttribute('aria-pressed', j === sel ? 'true' : 'false'));
+          render();
+        });
+        daysBar.appendChild(b);
+      });
+
+      mA.appendChild(daysBar);
+      mA.appendChild(dateLine);
+      mA.appendChild(cards);
+      month.appendChild(mA);
+      render();
+    });
+  }
+
+  // -------- Sticky offsets: mide alturas reales de tab-bar y toolbar --------
+  // Mide SOLO la altura de la toolbar (varía al apilarse en móvil o al cambiar el
+  // tamaño de texto). El header y el menú de opciones tienen altura fija en CSS.
+  function initStickyOffsets() {
+    const root = document.documentElement;
+    const toolbar = document.querySelector('.view[data-view="informes"] .report-toolbar');
+    if (!toolbar) return;
+    const update = () => {
+      if (toolbar.offsetHeight > 0) root.style.setProperty('--toolbar-h', toolbar.offsetHeight + 'px');
+    };
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(() => requestAnimationFrame(update)).observe(toolbar);
+    }
+    update();
+    window.addEventListener('resize', update, { passive: true });
+    window.addEventListener('load', update);
+    setTimeout(update, 120);
+  }
+
   // -------- Init --------
   document.addEventListener('DOMContentLoaded', () => {
     renderContent();
     renderEvolucion();
     initDrawer();
-    initProtoFab();
+    initReportSelector();
+    initAnexoTabs();
+    initRepNav();
+    initActivitiesToggle();
+    initAnexoResponsive();
+    initStickyOffsets();
     initCategoriesCarousel();
     initPlanNav();
     initA11yMenus();
