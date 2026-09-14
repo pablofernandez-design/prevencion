@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qida — Propuestas para los accesos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=17" />
+<style>
+  .brand{font-size:26px;font-weight:600;letter-spacing:-.02em;color:#fff}
+  .page{padding:28px 0 90px}
+  .lead{font-size:16px;color:var(--text-muted);margin:-6px 0 34px;max-width:820px}
+  .props{display:grid;grid-template-columns:repeat(auto-fill,minmax(390px,1fr));gap:40px;align-items:start}
+  .prop{background:#fff;border-radius:var(--card-r);box-shadow:var(--card-sh);overflow:hidden}
+  .prop-h{padding:22px 24px 0}
+  .prop-h .n{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:#fff;background:var(--brand-700);border-radius:var(--r-pill);padding:3px 10px;margin-bottom:10px}
+  .prop-h h2{font-size:19px;letter-spacing:-.01em}
+  .prop-h p{font-size:14px;color:var(--text-muted);margin-top:8px;line-height:1.5}
+  .prop-h .desk{font-size:13.5px;color:var(--brand-700);margin-top:10px;font-weight:600}
+  .phone{margin:20px;padding:16px;background:var(--bg);border-radius:20px}
+  .phone .cap{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--text-subtle);margin-bottom:12px}
+
+  /* ---------- piezas comunes ---------- */
+  .ico-sq{width:46px;height:46px;border-radius:14px;background:var(--brand-50);color:var(--brand-700);
+    display:grid;place-items:center;flex:none}
+  .ico-sq svg{width:23px;height:23px}
+  .chev{width:18px;height:18px;color:var(--text-subtle);flex:none}
+  .lock-pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.18);
+    border-radius:var(--r-pill);padding:4px 10px;font-size:12px;font-weight:600}
+  .lock-pill svg{width:13px;height:13px}
+  .lock-pill.dark{background:var(--brand-50);color:var(--brand-700)}
+
+  /* A · lista de filas */
+  .pa{display:flex;flex-direction:column;gap:10px}
+  .pa a{display:flex;align-items:center;gap:14px;background:#fff;border-radius:18px;padding:16px;
+    box-shadow:var(--card-sh)}
+  .pa .t{flex:1;min-width:0}
+  .pa strong{display:block;font-size:17px;font-weight:600;letter-spacing:-.01em;color:var(--neutral-900)}
+  .pa span.s{font-size:14px;color:var(--text-muted)}
+
+  /* B · tarjetas con dato */
+  .pb{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pb a{background:#fff;border-radius:18px;padding:18px;box-shadow:var(--card-sh);display:flex;
+    flex-direction:column;gap:10px;min-height:132px}
+  .pb .wide{grid-column:1 / -1;background:var(--brand-800);color:#fff;min-height:0}
+  .pb strong{font-size:17px;font-weight:600;letter-spacing:-.01em}
+  .pb span.s{font-size:13.5px;color:var(--text-muted);margin-top:auto}
+  .pb .wide span.s{color:rgba(255,255,255,.8)}
+  .pb .wide .ico-sq{background:rgba(255,255,255,.14);color:#fff}
+
+  /* C · hero del espacio personal */
+  .pc-hero{background:var(--brand-800);color:#fff;border-radius:20px;padding:22px;margin-bottom:12px}
+  .pc-hero h4{font-size:19px;letter-spacing:-.01em;color:#fff}
+  .pc-hero p{font-size:14.5px;color:rgba(255,255,255,.82);margin-top:8px;line-height:1.45}
+  .pc-hero .btn{margin-top:16px;width:100%;justify-content:center}
+  .pc-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pc-two a{background:#fff;border-radius:18px;padding:16px;box-shadow:var(--card-sh);
+    display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600;color:var(--neutral-900)}
+  .pc-two svg{width:20px;height:20px;color:var(--brand-700);flex:none}
+
+  /* D · píldoras */
+  .pd{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+  .pd a{display:inline-flex;align-items:center;gap:9px;background:#fff;border-radius:var(--r-pill);
+    padding:12px 18px;box-shadow:var(--card-sh);font-size:15.5px;font-weight:600;white-space:nowrap;
+    color:var(--neutral-900)}
+  .pd svg{width:19px;height:19px;color:var(--brand-700)}
+  .pd .lock{color:var(--text-subtle)}
+
+  /* E · sin sección: solo el aviso de verificación */
+  .pe-note{display:flex;gap:14px;align-items:flex-start;background:#fff;border-radius:18px;padding:18px;
+    box-shadow:var(--card-sh)}
+  .pe-note .t{flex:1}
+  .pe-note strong{display:block;font-size:16.5px;font-weight:600;color:var(--neutral-900)}
+  .pe-note p{font-size:14px;color:var(--text-muted);margin-top:4px;line-height:1.45}
+  .pe-note .btn{margin-top:12px}
+  .pe-after{margin-top:14px;font-size:13.5px;color:var(--text-subtle)}
+
+  /* F · con imagen */
+  .pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pf a{position:relative;border-radius:18px;overflow:hidden;box-shadow:var(--card-sh);min-height:130px;
+    display:flex;align-items:flex-end;padding:14px;color:#fff;font-size:17px;font-weight:600}
+  .pf a::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.62))}
+  .pf a span{position:relative;z-index:1}
+  .pf .im{position:absolute;inset:0;background-size:cover;background-position:center}
+  .pf .wide{grid-column:1 / -1;background:var(--brand-800);min-height:96px;align-items:center;
+    justify-content:center;gap:10px}
+  .pf .wide::after{display:none}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></symbol>
+<symbol id="i-game" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h4M8 10v4"/><circle cx="16" cy="11" r="1"/><circle cx="18.5" cy="13.5" r="1"/><rect x="2" y="6" width="20" height="12" rx="4"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+<symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 5 16 12 9 19"/></symbol>
+</defs></svg>
+
+<header class="app-header">
+  <div class="container"><a href="index.html" class="brand">Qida</a>
+    <div class="header-right"><a href="index.html" class="btn btn-secondary btn-sm">Volver al prototipo</a></div>
+  </div>
+</header>
+
+<main><div class="container"><div class="page">
+  <h1 class="pagetitle">Propuestas para los accesos</h1>
+  <p class="lead">Seis formas de resolver Contenidos, Juegos y Espacio personal, dibujadas a 390 px
+    porque es donde se decide. Debajo de cada una, qué pasa en escritorio y dónde encaja en la página.</p>
+
+  <div class="props">
+
+    <section class="prop">
+      <div class="prop-h"><span class="n">Propuesta A</span>
+        <h2>Lista de filas</h2>
+        <p>Tres filas a todo el ancho con icono, nombre y una línea que dice qué hay dentro. Es el patrón
+          que mejor funciona con el pulgar y el que menos obliga a interpretar: se lee como un índice.</p>
+        <p class="desk">En escritorio: las tres filas en una columna de 3.</p>
+      </div>
+      <div class="phone"><div class="cap">390 px</div>
+        <div class="pa">
+          <a href="#"><span class="ico-sq"><svg><use href="#i-card"/></svg></span>
+            <span class="t"><strong>Contenidos</strong><span class="s">3 nuevos esta semana</span></span>
+            <svg class="chev"><use href="#i-chevron-right"/></svg></a>
+          <a href="#"><span class="ico-sq"><svg><use href="#i-game"/></svg></span>
+            <span class="t"><strong>Juegos</strong><span class="s">Sudoku, memoria y cálculo</span></span>
+            <svg class="chev"><use href="#i-chevron-right"/></svg></a>
+          <a href="#"><span class="ico-sq"><svg><use href="#i-user"/></svg></span>
+            <span class="t"><strong>Espacio personal</strong><span class="s">Informes, citas y servicios</span></span>
+            <span class="lock-pill dark"><svg><use href="#i-lock"/></svg>Verificar</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="prop">
+      <div class="prop-h"><span class="n">Propuesta B</span>
+        <h2>Tarjetas con dato vivo</h2>
+        <p>La rejilla de ahora, pero cada tarjeta trae un dato en vez de solo el nombre. Da una razón para
+          entrar hoy y de paso convierte la home en un resumen.</p>
+        <p class="desk">En escritorio: 2 + 1 a lo ancho, como ahora.</p>
+      </div>
+      <div class="phone"><div class="cap">390 px</div>
+        <div class="pb">
+          <a href="#"><span class="ico-sq"><svg><use href="#i-card"/></svg></span>
+            <strong>Contenidos</strong><span class="s">3 nuevos</span></a>
+          <a href="#"><span class="ico-sq"><svg><use href="#i-game"/></svg></span>
+            <strong>Juegos</strong><span class="s">Sudoku de hoy</span></a>
+          <a href="#" class="wide"><span class="ico-sq"><svg><use href="#i-user"/></svg></span>
+            <strong>Espacio personal</strong>
+            <span class="s">Informes, citas y servicios · <span class="lock-pill"><svg><use href="#i-lock"/></svg>Verificar</span></span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="prop">
+      <div class="prop-h"><span class="n">Propuesta C</span>
+        <h2>Espacio personal como aviso</h2>
+        <p>El bloqueo deja de ser una etiqueta y pasa a ser el mensaje: se explica qué hay detrás y se
+          ofrece el botón de verificar. Contenidos y Juegos quedan como dos accesos pequeños.</p>
+        <p class="desk">En escritorio: el aviso a lo ancho y los dos accesos debajo, a la derecha.</p>
+      </div>
+      <div class="phone"><div class="cap">390 px</div>
+        <div class="pc-hero">
+          <h4>Verifica tu identidad</h4>
+          <p>Es lo único que falta para ver tus informes, tus citas y tus servicios.</p>
+          <button class="btn btn-secondary">Verificar ahora</button>
+        </div>
+        <div class="pc-two">
+          <a href="#"><svg><use href="#i-card"/></svg>Contenidos</a>
+          <a href="#"><svg><use href="#i-game"/></svg>Juegos</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="prop">
+      <div class="prop-h"><span class="n">Propuesta D</span>
+        <h2>Píldoras en una línea</h2>
+        <p>Ocupa una fila y deja el peso de la página en el plan y los contenidos. Lo más ligero, pero
+          también lo que menos invita a tocar: los accesos pierden presencia.</p>
+        <p class="desk">En escritorio: la misma fila, centrada bajo el saludo.</p>
+      </div>
+      <div class="phone"><div class="cap">390 px</div>
+        <div class="pd">
+          <a href="#"><svg><use href="#i-card"/></svg>Contenidos</a>
+          <a href="#"><svg><use href="#i-game"/></svg>Juegos</a>
+          <a href="#"><svg class="lock"><use href="#i-lock"/></svg>Espacio personal</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="prop">
+      <div class="prop-h"><span class="n">Propuesta E</span>
+        <h2>Sin sección de accesos</h2>
+        <p>Contenidos y Juegos ya están en el menú y al final de sus propias secciones, así que la home
+          solo conserva lo que aporta algo: el aviso de verificación, que desaparece al verificarse.</p>
+        <p class="desk">En escritorio: igual; la página se queda con una sección menos.</p>
+      </div>
+      <div class="phone"><div class="cap">390 px</div>
+        <div class="pe-note">
+          <span class="ico-sq"><svg><use href="#i-lock"/></svg></span>
+          <span class="t"><strong>Te falta verificar tu identidad</strong>
+            <p>Hasta entonces no podemos enseñarte informes, citas ni servicios.</p>
+            <button class="btn btn-primary btn-sm">Verificar</button></span>
+        </div>
+        <p class="pe-after">Verificado, este aviso desaparece y la home empieza directamente por el plan del día.</p>
+      </div>
+    </section>
+
+    <section class="prop">
+      <div class="prop-h"><span class="n">Propuesta F</span>
+        <h2>Accesos con imagen</h2>
+        <p>Contenidos y Juegos con foto, como las tarjetas de producto de Apple. Entra mejor por el ojo,
+          pero compite con las tarjetas de contenido que vienen justo debajo.</p>
+        <p class="desk">En escritorio: tres columnas, con la de Espacio personal a lo ancho.</p>
+      </div>
+      <div class="phone"><div class="cap">390 px</div>
+        <div class="pf">
+          <a href="#"><span class="im" style="background-image:url('https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=500&q=80&auto=format&fit=crop')"></span><span>Contenidos</span></a>
+          <a href="#"><span class="im" style="background-image:url('https://images.unsplash.com/photo-1606503153255-59d8b8b82176?w=500&q=80&auto=format&fit=crop')"></span><span>Juegos</span></a>
+          <a href="#" class="wide"><svg style="width:20px;height:20px;color:#fff"><use href="#i-user"/></svg>
+            <span style="color:#fff">Espacio personal</span>
+            <span class="lock-pill"><svg><use href="#i-lock"/></svg>Verificar</span></a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div></div></main>
+</body>
+</html>
