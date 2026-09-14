@@ -1126,6 +1126,26 @@
     setTimeout(update, 120);
   }
 
+  // -------- Ocultar header al hacer scroll hacia abajo (móvil/tablet) --------
+  function initHideHeaderOnScroll() {
+    let lastY = window.scrollY || 0;
+    let ticking = false;
+    const TH = 6;
+    function update() {
+      const y = window.scrollY || 0;
+      const diff = y - lastY;
+      if (Math.abs(diff) > TH) {
+        if (y > 90 && diff > 0) document.body.classList.add('hdr-hidden');
+        else if (diff < 0 || y <= 90) document.body.classList.remove('hdr-hidden');
+        lastY = y;
+      }
+      ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+  }
+
   // -------- Init --------
   document.addEventListener('DOMContentLoaded', () => {
     renderContent();
@@ -1142,6 +1162,7 @@
     initA11yMenus();
     initTextSizeSwitchers();
     initContrastToggles();
+    initHideHeaderOnScroll();
     route();
   });
 })();
