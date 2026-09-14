@@ -1,0 +1,8 @@
+Guarda aquí las tres imágenes de la tarjeta de Juegos, con estos nombres exactos:
+
+  juegos-sudoku.jpg   → la foto del sudoku a lápiz
+  juegos-compra.jpg   → la foto de la frutería
+  juegos-viajes.jpg   → la foto del templo de Kioto
+
+Mientras falten, cada hueco se ve como un cuadro tintado (no se rompe nada).
+Las de Contenidos salen de Unsplash y no hay que tocarlas.

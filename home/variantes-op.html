@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qida — Propuestas para la ficha de la Orientadora</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=38" />
+<style>
+  .page{padding:28px 0 90px}
+  .lead{font-size:16px;color:var(--text-muted);margin:-6px 0 34px;max-width:820px}
+  .props{display:grid;grid-template-columns:repeat(auto-fill,minmax(430px,1fr));gap:40px;align-items:start}
+  .prop{background:#fff;border-radius:var(--card-r);box-shadow:var(--card-sh);overflow:hidden}
+  .prop-h{padding:22px 24px 0}
+  .prop-h .n{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:#fff;background:var(--primary-500);border-radius:var(--r-pill);padding:3px 10px;margin-bottom:10px}
+  .prop-h h2{font-size:19px;letter-spacing:-.01em}
+  .prop-h p{font-size:14px;color:var(--text-muted);margin-top:8px;line-height:1.5}
+  .prop-h .why{font-size:13.5px;color:var(--primary-500);margin-top:10px;font-weight:600}
+  .stage{margin:20px;padding:18px;background:var(--bg);border-radius:20px}
+  .stage .cap{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--text-subtle);margin-bottom:12px}
+
+  /* piezas comunes */
+  .c{background:#fff;border-radius:var(--card-r);box-shadow:var(--card-sh);overflow:hidden}
+  .ph{background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=240&q=80&auto=format&fit=crop');
+    background-size:cover;background-position:center;background-color:var(--accent-peach-bg);flex:none}
+  .nm{font-size:19px;font-weight:600;letter-spacing:-.01em;color:var(--neutral-900)}
+  .rol{font-size:15px;color:var(--text-muted)}
+  .cred{font-size:14px;color:var(--text-muted);margin-top:8px}
+  .acts{display:flex;gap:10px;flex-wrap:wrap}
+  .acts .btn{flex:1;justify-content:center}
+  .ico-btn{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .ico-btn svg{width:20px;height:20px}
+  .ico-btn.p{background:var(--primary-500);color:#fff}
+  .ico-btn.s{box-shadow:inset 0 0 0 1.5px var(--primary-500);color:var(--primary-500)}
+
+  /* A actual */
+  .a{padding:26px;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+  .a .ph{width:72px;height:72px;border-radius:50%}
+  .a .meta{display:flex;gap:28px;margin-top:12px}
+  .a dt{font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-subtle)}
+  .a dd{margin:2px 0 0;font-size:15px}
+
+  /* B equilibrada */
+  .b{padding:26px;display:flex;gap:20px;align-items:center}
+  .b .ph{width:88px;height:88px;border-radius:50%}
+  .b .t{flex:1;min-width:0}
+  .b .acts{margin-top:14px}
+
+  /* C foto a sangre */
+  .cc{display:flex;align-items:stretch}
+  .cc .ph{width:132px;min-height:190px}
+  .cc .t{padding:24px;flex:1}
+  .cc .acts{margin-top:16px}
+
+  /* D centrada */
+  .d{padding:28px 24px;text-align:center}
+  .d .ph{width:96px;height:96px;border-radius:50%;margin:0 auto 14px}
+  .d .acts{margin-top:18px}
+
+  /* E con mensaje */
+  .e{padding:26px}
+  .e blockquote{margin:0 0 18px;font-size:18px;line-height:1.4;letter-spacing:-.01em;
+    color:var(--neutral-900);font-weight:500}
+  .e .row{display:flex;align-items:center;gap:14px}
+  .e .ph{width:56px;height:56px;border-radius:50%}
+  .e .acts{margin-top:18px}
+
+  /* F compacta */
+  .f{padding:20px 22px;display:flex;align-items:center;gap:16px}
+  .f .ph{width:56px;height:56px;border-radius:50%}
+  .f .t{flex:1;min-width:0}
+  .f .nm{font-size:17px}
+  .f .rol{font-size:14px}
+
+  /* G con cita */
+  .g{padding:26px}
+  .g .row{display:flex;align-items:center;gap:16px}
+  .g .ph{width:64px;height:64px;border-radius:50%}
+  .g .next{display:flex;align-items:center;gap:10px;margin-top:18px;padding:14px 16px;
+    background:var(--brand-50);border-radius:14px;font-size:15px;color:var(--neutral-900)}
+  .g .next svg{width:18px;height:18px;color:var(--primary-500);flex:none}
+  .g .acts{margin-top:16px}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+<symbol id="i-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+</defs></svg>
+
+<header class="app-header">
+  <div class="container"><a href="index.html" class="brand" style="font-size:26px;font-weight:600;letter-spacing:-.02em;color:var(--primary-500)">Qida</a>
+    <div class="header-right"><a href="index.html" class="btn btn-secondary btn-sm">Volver al prototipo</a></div>
+  </div>
+</header>
+
+<main><div class="container"><div class="page">
+  <h1 class="pagetitle">Ficha de la Orientadora personal</h1>
+  <p class="lead">Siete maneras de resolverla, a 390 px. Recuerda que aparece en dos sitios: arriba en la
+    primera visita, presentándose, y al final de la página el resto de las veces.</p>
+  <div class="props" id="props"></div>
+</div></div></main>
+
+<script>
+const FOTO = '<span class="ph"></span>';
+const BTNS = '<div class="acts">' +
+  '<button class="btn btn-primary"><svg width="16" height="16"><use href="#i-message"/></svg>Mensaje</button>' +
+  '<button class="btn btn-secondary"><svg width="16" height="16"><use href="#i-phone"/></svg>Llamar</button></div>';
+
+const P = [
+ {n:'A', t:'Como está hoy', d:'Foto pequeña, el titular con "Soy…", el horario y dos datos etiquetados. Los botones quedan lejos, a la derecha del todo.', w:'Referencia para comparar.',
+  html:`<div class="c a">${FOTO}<div style="flex:1;min-width:220px">
+    <div class="nm">Soy Sofía Millán, tu Orientadora personal</div><div class="rol">L-V de 9:00 a 18:00</div>
+    <dl class="meta"><div><dt>Título académico</dt><dd>Trabajadora social</dd></div>
+    <div><dt>Número de colegiado</dt><dd>12616</dd></div></dl></div>${BTNS}</div>`},
+
+ {n:'B', t:'Equilibrada', d:'Foto más grande, el nombre como titular y las credenciales en una sola línea discreta. Los botones, debajo del texto.', w:'Quita el hueco muerto del centro y baja de cuatro bloques de texto a dos.',
+  html:`<div class="c b">${FOTO}<div class="t"><div class="nm">Sofía Millán</div>
+    <div class="rol">Tu Orientadora personal</div>
+    <div class="cred">Trabajadora social · Colegiada 12616<br>Te atiende de lunes a viernes, de 9 a 18 h</div>
+    ${BTNS}</div></div>`},
+
+ {n:'C', t:'Foto a sangre', d:'La foto ocupa todo el alto de la tarjeta por la izquierda; el texto y las acciones, a su derecha.', w:'La cara gana presencia: es la persona que la acompaña, no un dato más.',
+  html:`<div class="c cc">${FOTO}<div class="t"><div class="nm">Sofía Millán</div>
+    <div class="rol">Tu Orientadora personal</div>
+    <div class="cred">Trabajadora social · Colegiada 12616<br>L-V de 9 a 18 h</div>${BTNS}</div></div>`},
+
+ {n:'D', t:'Centrada', d:'Foto arriba, datos centrados y dos botones a todo el ancho.', w:'Es idéntica en móvil y en escritorio: una sola versión que mantener.',
+  html:`<div class="c d">${FOTO}<div class="nm">Sofía Millán</div>
+    <div class="rol">Tu Orientadora personal</div>
+    <div class="cred">Trabajadora social · Colegiada 12616 · L-V de 9 a 18 h</div>${BTNS}</div>`},
+
+ {n:'E', t:'Con mensaje suyo', d:'Empieza por una frase de Sofía y debajo su foto, su nombre y las acciones.', w:'Convierte una ficha de credenciales en una invitación a escribirle.',
+  html:`<div class="c e"><blockquote>«Cuando tengas una duda, escríbeme y lo vemos juntas.»</blockquote>
+    <div class="row">${FOTO}<div><div class="nm">Sofía Millán</div>
+    <div class="rol">Tu Orientadora personal · Trabajadora social</div></div></div>${BTNS}</div>`},
+
+ {n:'F', t:'Compacta', d:'Una fila: foto, nombre y dos botones redondos. Las credenciales se ven al entrar en su ficha.', w:'Para el final de la página, donde ya no hace falta presentarla otra vez.',
+  html:`<div class="c f">${FOTO}<div class="t"><div class="nm">Sofía Millán</div>
+    <div class="rol">Tu Orientadora personal</div></div>
+    <span class="ico-btn p"><svg><use href="#i-message"/></svg></span>
+    <span class="ico-btn s"><svg><use href="#i-phone"/></svg></span></div>`},
+
+ {n:'G', t:'Con la próxima cita', d:'Los mismos datos, más lo único que cambia cada semana: cuándo la ve.', w:'Deja de ser una ficha y pasa a servir para algo: recordar la cita y poder moverla.',
+  html:`<div class="c g"><div class="row">${FOTO}<div><div class="nm">Sofía Millán</div>
+    <div class="rol">Tu Orientadora personal · Trabajadora social</div></div></div>
+    <div class="next"><svg><use href="#i-calendar"/></svg>Próxima cita: jueves 18, a las 10:30</div>${BTNS}</div>`}
+];
+
+document.getElementById('props').innerHTML = P.map(p => `
+  <section class="prop">
+    <div class="prop-h"><span class="n">Opción ${p.n}</span><h2>${p.t}</h2>
+      <p>${p.d}</p><p class="why">${p.w}</p></div>
+    <div class="stage"><div class="cap">390 px</div>${p.html}</div>
+  </section>`).join('');
+</script>
+</body>
+</html>
