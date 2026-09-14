@@ -501,8 +501,8 @@
     var card = $('#legal-card');
     if (!state.testDone) {
       card.classList.remove('done');
-      $('#legal-title').textContent = '¿Tienes decidido quién cuidará de tus cosas si tú no puedes?';
-      $('#legal-text').textContent = '4 preguntas para saberlo. El servicio con un abogado está incluido en tu póliza.';
+      $('#legal-title').textContent = '¿Están tus decisiones importantes protegidas para el futuro?';
+      $('#legal-text').textContent = 'Descúbrelo en solo dos minutos y conoce las opciones que tienes a tu alcance.';
       $('#legal-cta').textContent = 'Empezar';
       return;
     }
