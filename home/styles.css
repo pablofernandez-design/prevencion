@@ -671,7 +671,8 @@ body.notes-on .has-note{outline:2px dashed rgba(199,163,0,.55);outline-offset:6p
 .state-bar .lbl{font-weight:700;color:var(--text-muted);letter-spacing:.03em;text-transform:uppercase;font-size:11px;
   padding:4px 6px;border-radius:var(--r-pill)}
 .state-bar .lbl:hover{background:var(--surface-2);color:var(--text)}
-.state-bar.mini > *:not(.lbl){display:none}
+.state-bar .lbl-plain{cursor:default}
+.state-bar.mini > *:not([data-statetoggle]){display:none}
 .state-bar button{border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;font-size:12.5px;
   font-weight:600;color:var(--text-muted)}
 .state-bar button:hover{border-color:var(--brand-500);color:var(--brand-700)}

@@ -332,7 +332,11 @@
       '<button data-visita="seguimiento">Con seguimientos</button>' +
       '<span class="sep"></span>' +
       '<button data-momento="manana">Mañana</button>' +
-      '<button data-momento="tarde">Tarde</button>';
+      '<button data-momento="tarde">Tarde</button>' +
+      '<span class="sep"></span>' +
+      '<span class="lbl lbl-plain">Acceso</span>' +
+      '<button data-verifset="1">Verificado</button>' +
+      '<button data-verifset="0">Sin verificar</button>';
     document.body.appendChild(bar);
     if (window.innerWidth <= 720) bar.classList.add('mini');
     syncStateBar();
@@ -340,13 +344,23 @@
   function syncStateBar() {
     $$('.state-bar [data-visita]').forEach(function (b) { b.classList.toggle('on', b.dataset.visita === state.visita); });
     $$('.state-bar [data-momento]').forEach(function (b) { b.classList.toggle('on', b.dataset.momento === state.momento); });
+    $$('.state-bar [data-verifset]').forEach(function (b) {
+      b.classList.toggle('on', (b.dataset.verifset === '1') === !!state.verificado);
+    });
   }
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-statetoggle]')) { $('.state-bar').classList.toggle('mini'); return; }
     var v = e.target.closest('.state-bar [data-visita]');
     if (v) { state.visita = v.dataset.visita; save(); syncStateBar(); applyState(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     var m = e.target.closest('.state-bar [data-momento]');
-    if (m) { state.momento = m.dataset.momento; save(); syncStateBar(); renderGoal(); }
+    if (m) { state.momento = m.dataset.momento; save(); syncStateBar(); renderGoal(); return; }
+    var vf = e.target.closest('.state-bar [data-verifset]');
+    if (vf) {
+      state.verificado = vf.dataset.verifset === '1'; save();
+      syncStateBar(); renderVerifUI();
+      toast(state.verificado ? 'Espacio personal desbloqueado.' : 'Espacio personal bloqueado otra vez.');
+      if (state.verificado) go('espacio');
+    }
   });
 
   /* ---------- Test de tranquilidad (servicio legal) ---------- */
@@ -943,6 +957,11 @@
   /* ---------- Init ---------- */
   renderOP(); renderPlan(); renderWeeks(); renderLegal(); renderVerifUI(); applyState(); buildStateBar(); buildPins();
   if (state.big) document.body.style.fontSize = '17px';
+
+  /* atajo: ?verificado entra sin pasar por el código */
+  if (/[?&]verificado/.test(location.search) && !state.verificado) {
+    state.verificado = true; save(); renderVerifUI();
+  }
 
   /* atajo: ?reset limpia el estado guardado */
   if (location.search.indexOf('reset') >= 0) { localStorage.removeItem(LS); location.replace(location.pathname); }
