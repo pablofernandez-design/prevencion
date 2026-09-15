@@ -336,7 +336,11 @@
       '<span class="sep"></span>' +
       '<span class="lbl lbl-plain">Acceso</span>' +
       '<button data-verifset="1">Verificado</button>' +
-      '<button data-verifset="0">Sin verificar</button>';
+      '<button data-verifset="0">Sin verificar</button>' +
+      '<span class="sep"></span>' +
+      '<span class="lbl lbl-plain">Test legal</span>' +
+      '<button data-testset="0">Pendiente</button>' +
+      '<button data-testset="1">Hecho</button>';
     document.body.appendChild(bar);
     if (window.innerWidth <= 720) bar.classList.add('mini');
     syncStateBar();
@@ -347,6 +351,9 @@
     $$('.state-bar [data-verifset]').forEach(function (b) {
       b.classList.toggle('on', (b.dataset.verifset === '1') === !!state.verificado);
     });
+    $$('.state-bar [data-testset]').forEach(function (b) {
+      b.classList.toggle('on', (b.dataset.testset === '1') === !!state.testDone);
+    });
   }
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-statetoggle]')) { $('.state-bar').classList.toggle('mini'); return; }
@@ -354,6 +361,14 @@
     if (v) { state.visita = v.dataset.visita; save(); syncStateBar(); applyState(); window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     var m = e.target.closest('.state-bar [data-momento]');
     if (m) { state.momento = m.dataset.momento; save(); syncStateBar(); renderGoal(); return; }
+    var ts = e.target.closest('.state-bar [data-testset]');
+    if (ts) {
+      state.testDone = ts.dataset.testset === '1';
+      if (!state.testDone) { state.testOutcome = null; state.test = {}; }
+      save(); syncStateBar(); renderLegal();
+      toast(state.testDone ? 'Test hecho: la sección desaparece de la home.' : 'Test pendiente: la sección vuelve a la home.');
+      return;
+    }
     var vf = e.target.closest('.state-bar [data-verifset]');
     if (vf) {
       state.verificado = vf.dataset.verifset === '1'; save();
@@ -491,7 +506,7 @@
       e.preventDefault();
       var to = g.dataset.testgo;
       state.testDone = true; state.testOutcome = to; save(); renderLegal();
-      if (to === 'none') { closeAll(); toast('Gracias. Puedes retomar el test cuando quieras.'); return; }
+      if (to === 'none') { closeAll(); toast('Listo. El test queda en Mis servicios por si lo necesitas.'); return; }
       testIdx = stepById(to); renderTest(); return;
     }
     if (e.target.closest('#test-close')) { closeAll(); }
@@ -499,6 +514,9 @@
 
   function renderLegal() {
     var card = $('#legal-card');
+    var sec = $('#legal-section');
+    /* Hecho el test, la home no vuelve a pedirlo: el resultado vive en Mis servicios. */
+    if (sec) sec.style.display = state.testDone ? 'none' : '';
     if (!state.testDone) {
       card.classList.remove('done');
       $('#legal-title').textContent = '¿Están tus decisiones importantes protegidas para el futuro?';
