@@ -78,16 +78,23 @@
   .landing{display:grid;grid-template-columns:288px 1fr;gap:16px;align-items:start}
   .side{display:flex;flex-direction:column;gap:14px}
   .navcard{
-    background:#fff;color:var(--green);border-radius:var(--radius);padding:15px;
-    min-height:112px;display:flex;flex-direction:column;gap:8px;
-    text-align:left;border:2px solid var(--green);width:100%;position:relative;transition:transform .08s;
-  }
-  .navcard:hover{transform:translateY(-1px)}
-  .navcard .top{display:flex;align-items:flex-start;justify-content:space-between}
+    background:#E6ECEB;color:#004039;border:2px solid #B0C4C2;border-radius:12px;padding:16px;
+    min-height:128px;display:flex;flex-direction:column;gap:10px;
+    text-align:left;width:100%;position:relative;cursor:pointer;transition:background .12s,border-color .12s}
+  .navcard .ci,.navcard .arrow{color:#004039}
+  .navcard:hover{background:#B0C4C2;border-color:#8AA7A4}
+  .navcard:active{background:#8AA7A4;border-color:#336661}
+  .navcard:active .arrow{color:#FFFFFF}
+  .navcard .top{display:flex;align-items:flex-start;justify-content:space-between;min-height:26px}
   .navcard .ci{width:24px;height:24px}
-  .navcard .badge{background:var(--success-100);color:var(--n900);font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
-  .navcard h3{margin:0;font-size:22px;font-weight:500}
-  .navcard .arrow{align-self:flex-end;margin-top:auto;opacity:.95}
+  .navcard .ci svg{width:24px;height:24px}
+  .navcard .badge{background:#B6E9CD;color:#333333;font-size:14px;font-weight:500;line-height:20px;padding:2px 8px;border-radius:4px}
+  .navcard h3{margin:0;font-size:22px;font-weight:500;color:inherit}
+  .navcard .arrow{align-self:flex-end;margin-top:auto}
+  .navcard .arrow svg{width:24px;height:24px}
+  .navcard.disabled{background:#F5F5F5;border-color:#E5E5E5;color:#666666;cursor:not-allowed;pointer-events:none}
+  .navcard.disabled .ci,.navcard.disabled .arrow{color:#666666}
+  .navcard.disabled .badge{background:#E5E5E5;color:#333333}
 
   .main{display:flex;flex-direction:column;gap:16px}
   .card{background:var(--white);border:1px solid var(--n200);border-radius:var(--radius);box-shadow:var(--shadow)}
@@ -173,6 +180,42 @@
   .radio input{accent-color:var(--green);width:18px;height:18px}
   .checkrow{display:flex;align-items:center;gap:10px;font-size:14px;background:#fff;border:1px solid var(--n300);border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer}
   .checkrow input{accent-color:var(--green);width:16px;height:16px}
+  /* análisis: subencabezado desplegable + preguntas anidadas */
+  .q-sub{background:#EEF1F4;border-radius:12px;padding:16px;margin-bottom:16px}
+  .q-sub-head{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:15px;font-weight:600;color:var(--n900)}
+  .q-sub-head svg{width:20px;height:20px;color:var(--n700);transition:transform .15s}
+  .q-sub-body{margin-top:12px}
+  .q-sub-body .fieldgroup{background:#fff}
+  .q-sub-body .fieldgroup:last-child{margin-bottom:0}
+  .q-sub.collapsed .q-sub-body{display:none}
+  .q-sub.collapsed .q-sub-head svg{transform:rotate(-90deg)}
+  .q-input{width:100%;height:44px;border:1px solid var(--n300);border-radius:8px;padding:0 12px;font:inherit;font-size:14px;outline:none;color:var(--n900);background:#fff}
+  .q-textarea{width:100%;min-height:80px;border:1px solid var(--n300);border-radius:8px;padding:10px 12px;font:inherit;font-size:14px;outline:none;resize:vertical;color:var(--n900);background:#fff}
+  .tagsbox{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#fff;border:1px solid var(--n300);border-radius:8px;padding:10px 12px;min-height:44px}
+  .tagsbox > svg{margin-left:auto;width:20px;height:20px;color:var(--n700)}
+  .tagchip{display:inline-flex;align-items:center;gap:6px;background:#EDF1EF;border:1px solid var(--n200);border-radius:6px;padding:3px 9px;font-size:13px;color:var(--green)}
+  .tagchip b{color:var(--n700);font-weight:400}
+  /* header histórico: próximo informe + botón disabled (estilo DS) */
+  .list-head-right{display:flex;align-items:center;gap:16px}
+  .prox{display:flex;align-items:center;gap:10px}
+  .prox-lbl{font-size:14px;color:var(--n700)}
+  .prox-pill{background:#E3EEE8;color:var(--green);font-size:14px;font-weight:600;padding:6px 14px;border-radius:8px;white-space:nowrap}
+  .btn.primary.disabled,.btn.primary:disabled,.btn.primary[disabled]{background:#E7E9EC;color:#9BA1A7;border-color:#E7E9EC;opacity:1;cursor:not-allowed;pointer-events:none}
+  .btn.primary[disabled] svg{color:#9BA1A7}
+  /* selector de escenario: FAB flotante (demo) abajo a la derecha, oculta/expande */
+  .scen-fab{position:fixed;right:16px;bottom:16px;z-index:70}
+  .scen-fab-btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;border:none;border-radius:24px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.2)}
+  .scen-fab-btn svg{width:18px;height:18px;color:#fff}
+  .scen-panel{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--n200);border-radius:12px;padding:10px 12px 10px 16px;box-shadow:0 12px 34px rgba(0,0,0,.18);flex-wrap:wrap;max-width:calc(100vw - 32px)}
+  .scen-lbl{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--green)}
+  .scen-opts{display:flex;gap:6px}
+  .scen{width:30px;height:30px;border-radius:8px;border:1px solid var(--n300);background:#fff;color:var(--n700);font-size:13px;font-weight:600;cursor:pointer}
+  .scen:hover{border-color:var(--green)}
+  .scen.on{background:var(--green);color:#fff;border-color:var(--green)}
+  .scen-desc{font-size:13px;color:var(--n900);font-weight:500;max-width:260px}
+  .scen-x{background:none;border:none;cursor:pointer;color:var(--n700);display:flex;padding:4px;border-radius:6px}
+  .scen-x:hover{background:var(--n100,#f0f0f0)}
+  .scen-x svg{width:20px;height:20px}
 
   .notespanel{background:var(--white);border:1px solid var(--n200);border-radius:var(--radius);padding:18px 20px}
   .notespanel h4{font-size:15px;font-weight:500;margin:0 0 12px}
@@ -397,6 +440,8 @@ const I = {
   warnFill:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10.3 3.6 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0Zm1.7 4.9a1 1 0 0 1 1 1v3.5a1 1 0 0 1-2 0V9.5a1 1 0 0 1 1-1Zm0 8a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"/></svg>',
   alertCircle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5h.01"/></svg>',
   m_sleep:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9v10M2 13h15a4 4 0 0 1 4 4v2M2 17h20M6 9h5a2.5 2.5 0 0 1 2.5 2.5V13"/></svg>',
+  m_funcional:'<svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><g transform="translate(4.5 1.5)"><path d="M7.5 1.5C8.24168 1.5 8.9667 1.71993 9.58339 2.13199C10.2001 2.54404 10.6807 3.12971 10.9645 3.81494C11.2484 4.50016 11.3226 5.25416 11.1779 5.98159C11.0332 6.70902 10.6761 7.3772 10.1516 7.90165C9.6272 8.4261 8.95902 8.78325 8.23159 8.92795C7.50416 9.07264 6.75016 8.99838 6.06494 8.71455C5.37971 8.43072 4.79404 7.95007 4.38199 7.33339C3.96993 6.7167 3.75 5.99168 3.75 5.25C3.75 4.25544 4.14509 3.30161 4.84835 2.59835C5.55161 1.89509 6.50544 1.5 7.5 1.5ZM7.5 0C6.46165 0 5.44661 0.307907 4.58326 0.884785C3.7199 1.46166 3.04699 2.2816 2.64963 3.24091C2.25227 4.20022 2.1483 5.25582 2.35088 6.27422C2.55345 7.29262 3.05346 8.22808 3.78769 8.96231C4.52191 9.69654 5.45737 10.1966 6.47577 10.3991C7.49418 10.6017 8.54977 10.4977 9.50909 10.1004C10.4684 9.70301 11.2883 9.0301 11.8652 8.16674C12.4421 7.30339 12.75 6.28835 12.75 5.25C12.75 3.85761 12.1969 2.52226 11.2123 1.53769C10.2277 0.553123 8.89239 0 7.5 0Z"/><path d="M15 21H13.5V17.25C13.5 16.7575 13.403 16.2699 13.2145 15.8149C13.0261 15.36 12.7499 14.9466 12.4017 14.5983C12.0534 14.2501 11.64 13.9739 11.1851 13.7855C10.7301 13.597 10.2425 13.5 9.75 13.5H5.25C4.25544 13.5 3.30161 13.8951 2.59835 14.5983C1.89509 15.3016 1.5 16.2554 1.5 17.25V21H0V17.25C0 15.8576 0.553124 14.5223 1.53769 13.5377C2.52226 12.5531 3.85761 12 5.25 12H9.75C11.1424 12 12.4777 12.5531 13.4623 13.5377C14.4469 14.5223 15 15.8576 15 17.25V21Z"/></g></svg>',
+  m_luna:'<svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M25 10H17C16.4698 10.0006 15.9614 10.2115 15.5865 10.5865C15.2115 10.9614 15.0006 11.4698 15 12V18H4V8H2V24H4V20H28V24H30V15C29.9984 13.6744 29.4712 12.4035 28.5338 11.4662C27.5965 10.5288 26.3256 10.0016 25 10ZM28 18H17V12H25C25.7954 12.0009 26.5579 12.3172 27.1204 12.8796C27.6828 13.4421 27.9991 14.2046 28 15V18Z"/><path d="M9.5 11C9.79667 11 10.0867 11.088 10.3334 11.2528C10.58 11.4176 10.7723 11.6519 10.8858 11.926C10.9994 12.2001 11.0291 12.5017 10.9712 12.7926C10.9133 13.0836 10.7704 13.3509 10.5607 13.5607C10.3509 13.7704 10.0836 13.9133 9.79264 13.9712C9.50167 14.0291 9.20007 13.9994 8.92598 13.8858C8.65189 13.7723 8.41762 13.58 8.2528 13.3334C8.08797 13.0867 8 12.7967 8 12.5C8.00045 12.1023 8.15863 11.721 8.43984 11.4398C8.72105 11.1586 9.10231 11.0004 9.5 11ZM9.5 9C8.80777 9 8.13108 9.20527 7.55551 9.58986C6.97993 9.97444 6.53133 10.5211 6.26642 11.1606C6.00152 11.8001 5.9322 12.5039 6.06725 13.1828C6.2023 13.8617 6.53564 14.4854 7.02513 14.9749C7.51461 15.4644 8.13825 15.7977 8.81718 15.9327C9.49612 16.0678 10.1999 15.9985 10.8394 15.7336C11.4789 15.4687 12.0256 15.0201 12.4101 14.4445C12.7947 13.8689 13 13.1922 13 12.5C13 11.5717 12.6313 10.6815 11.9749 10.0251C11.3185 9.36875 10.4283 9 9.5 9Z"/></svg>',
   report:'<svg viewBox="0 0 11 14" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 8H2.5V9H6.5V8Z"/><path d="M8.5 5.5H2.5V6.5H8.5V5.5Z"/><path d="M5 10.5H2.5V11.5H5V10.5Z"/><path d="M10 1.5H8.5V1C8.5 0.734784 8.39464 0.48043 8.20711 0.292893C8.01957 0.105357 7.76522 0 7.5 0H3.5C3.23478 0 2.98043 0.105357 2.79289 0.292893C2.60536 0.48043 2.5 0.734784 2.5 1V1.5H1C0.734784 1.5 0.48043 1.60536 0.292893 1.79289C0.105357 1.98043 0 2.23478 0 2.5V13C0 13.2652 0.105357 13.5196 0.292893 13.7071C0.48043 13.8946 0.734784 14 1 14H10C10.2652 14 10.5196 13.8946 10.7071 13.7071C10.8946 13.5196 11 13.2652 11 13V2.5C11 2.23478 10.8946 1.98043 10.7071 1.79289C10.5196 1.60536 10.2652 1.5 10 1.5ZM3.5 1H7.5V3H3.5V1ZM10 13H1V2.5H2.5V4H8.5V2.5H10V13Z"/></svg>',
   dots:'<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><circle cx="12" cy="5" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="19" r="1.6"/></svg>',
   sort:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16M7 4 4 7M7 4l3 3M17 20V4M17 20l-3-3M17 20l3-3"/></svg>',
@@ -431,7 +476,28 @@ function useHeaderPortal(){ /* única cabecera del portal */ }
 function goInforme(){ state.wizard=false; renderLanding(); }
 function goList(){ el('fab').classList.remove('show'); renderList(); }
 // Nuevo informe: arranca un informe inicial y va DIRECTO al Análisis inicial
-function startNuevo(){ const now=new Date(); state=fresh(); state.tCreacion=now; el('fab').classList.add('show'); openAnalisis(); }
+function startNuevo(){ startNuevoTipo('inicial'); }
+function startNuevoTipo(key){
+  const now=new Date(); state=fresh(); const info=TIPO_INFO[key];
+  state.type=info.type; state.title=TIPO_BASE[key]; state.tCreacion=now; el('fab').classList.add('show');
+  if(info.analisis==='inicial') openAnalisis();
+  else if(info.analisis==='anual') openSeguimiento();
+  else openAnalisisTBD(info.label);
+}
+function noop(){}
+function openAnalisisTBD(titulo){ useHeaderPortal();
+  el('view').innerHTML=`
+  <div class="page">
+    <div class="subhead"><button class="back" onclick="goInforme()">${I.back}</button><h1>Análisis</h1></div>
+    <div class="three">
+      ${sidecolHTML(SECCIONES,SECCIONES[0],SEC_ICON,'noop',{patient:true,toggle:false})}
+      <div class="panel"><div class="act-empty" style="padding:64px 20px"><div class="act-emptyic">${I.report}</div><b>Análisis pendiente de definir</b><p>Las lógicas de análisis del ${titulo.toLowerCase()} son diferentes a las del informe inicial y anual, y se definirán más adelante.</p></div></div>
+      ${rightNotes()}
+    </div>
+    <div class="subfoot"><button class="btn primary" onclick="saveAnalisis()">${state.wizard?'Guardar y continuar':'Guardar y volver atrás'}</button></div>
+  </div>`;
+  window.scrollTo(0,0);
+}
 // Informe inicial ya generado (visto desde el histórico) — notas y fechas del histórico
 // Informe abierto desde el histórico: el estado depende de la label de la fila
 // (fact = facturado; pdte = pendiente de facturar → sin fecha/método, con alerta)
@@ -448,49 +514,76 @@ function startInicial(name,row){ openReport('inicial',name,row); }
 function startSeguimiento(name,row){ openReport('seguimiento',name,row); }
 
 /* ---------- Histórico de análisis list (Cliente - Análisis) ---------- */
-const LIST_ROWS=[
-  {fecha:'14/07/2026', informe:'Informe de seguimiento 2 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento', estado:'pdte'},
-  {fecha:'14/07/2025', informe:'Informe de seguimiento 1 - 2026', metodo:'Correo electrónico y postal', type:'seguimiento', estado:'fact'},
-  {fecha:'14/07/2024', informe:'Informe inicial', metodo:'Correo electrónico y postal', type:'inicial', estado:'fact'},
+// Ciclo de vida del informe: inicial → seguimiento 1 (+4m) → seguimiento 2 (+4m) → anual (+4m) → seguimiento 1 del año siguiente…
+// El análisis del inicial y del anual usan las lógicas ya montadas; seguimiento 1 y 2 tienen lógicas propias (pendientes).
+const TIPO_INFO={
+  inicial:{label:'Informe inicial', type:'inicial', analisis:'inicial'},
+  seg1:{label:'Informe de seguimiento 1', type:'seguimiento', analisis:'seg'},
+  seg2:{label:'Informe de seguimiento 2', type:'seguimiento', analisis:'seg'},
+  anual:{label:'Informe anual', type:'seguimiento', analisis:'anual'},
+};
+const SCENARIOS=[
+ {t:'Vacío · siguiente = informe inicial', reports:[], next:{key:'inicial',available:true}},
+ {t:'Inicial creado · seguimiento 1 en 4 meses (bloqueado)', reports:[['inicial','15/01/2025']], next:{key:'seg1',available:false,fecha:'15/05/2025'}},
+ {t:'Inicial creado · se puede hacer seguimiento 1', reports:[['inicial','15/01/2025']], next:{key:'seg1',available:true}},
+ {t:'Inicial + Seg. 1 · seguimiento 2 en 4 meses (bloqueado)', reports:[['inicial','15/01/2025'],['seg1','15/05/2025']], next:{key:'seg2',available:false,fecha:'15/09/2025'}},
+ {t:'Inicial + Seg. 1 · se puede hacer seguimiento 2', reports:[['inicial','15/01/2025'],['seg1','15/05/2025']], next:{key:'seg2',available:true}},
+ {t:'Inicial + Seg. 1 + Seg. 2 · informe anual en 4 meses (bloqueado)', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025']], next:{key:'anual',available:false,fecha:'15/01/2026'}},
+ {t:'Inicial + Seg. 1 + Seg. 2 · se puede hacer informe anual', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025']], next:{key:'anual',available:true}},
+ {t:'Año 1 completo · seguimiento 1 del año siguiente en 4 meses (bloqueado)', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025'],['anual','15/01/2026']], next:{key:'seg1',available:false,fecha:'15/05/2026'}},
 ];
+let scenario=0, CURRENT_ROWS=[], scenCollapsed=true;
+function setScenario(i){ scenario=i; renderList(); }
+function toggleScen(){ scenCollapsed=!scenCollapsed; renderList(); }
+const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const MES_ABR=['ene','feb','mar','abr','may','jun','jul','ago','sept','oct','nov','dic'];
+function mesAno(dmy){ const [d,m,y]=dmy.split('/').map(Number); return MESES[m-1]+' '+y; }
+function mesAnoAbr(dmy){ const [d,m,y]=dmy.split('/').map(Number); return MES_ABR[m-1]+' '+y; }
+const TIPO_BASE={inicial:'Plan de Prevención', anual:'Plan de Prevención', seg1:'1º seguimiento', seg2:'2º seguimiento'};
+function labelFor(key,fecha){ return TIPO_BASE[key]+' - '+mesAnoAbr(fecha); }
 const ESTADO_LABEL={fact:'Facturado', pdte:'Pendiente de facturar'};
-function openRow(i){ const r=LIST_ROWS[i]; r.type==='seguimiento' ? startSeguimiento(r.informe,r) : startInicial(r.informe,r); }
+function openRow(i){ const r=CURRENT_ROWS[i]; r.type==='seguimiento' ? startSeguimiento(r.informe,r) : startInicial(r.informe,r); }
 function renderList(){
+  const sc=SCENARIOS[scenario];
+  CURRENT_ROWS = sc.reports.slice().reverse().map(([key,fecha])=>({fecha, informe:labelFor(key,fecha), metodo:'Correo electrónico y postal', type:TIPO_INFO[key].type, estado:'fact', key}));
+  const nx=sc.next, ni=nx&&nx.key?TIPO_INFO[nx.key]:null;
+  let headRight='';
+  if(ni){
+    if(nx.available){ headRight=`<button class="btn primary" onclick="startNuevoTipo('${nx.key}')">${I.plus} Nuevo informe</button>`; }
+    else { headRight=`<div class="prox"><span class="prox-lbl">Próximo informe:</span><span class="prox-pill">${mesAno(nx.fecha)}</span></div><button class="btn primary disabled" disabled>${I.plus} Nuevo informe</button>`; }
+  }
+  const body = CURRENT_ROWS.length ? `<table class="tbl">
+        <thead><tr><th>Fecha</th><th>Informe</th><th>Método de envío</th><th>Informe</th><th>Estado</th><th></th></tr></thead>
+        <tbody>${CURRENT_ROWS.map((r,i)=>`<tr onclick="openRow(${i})"><td class="date">${r.fecha}</td><td>${r.informe}</td><td>${r.metodo}</td><td><a class="pdf" onclick="event.stopPropagation();previewInforme(${i})">informe.pdf</a></td><td><span class="rowtag ${r.estado}">${ESTADO_LABEL[r.estado]}</span></td><td class="chev">${I.chev}</td></tr>`).join('')}</tbody>
+      </table>` : `<div class="act-empty" style="padding:48px 20px"><div class="act-emptyic">${I.report}</div><b>Aún no hay informes</b><p>Crea el primer informe (inicial) para empezar el seguimiento del cliente.</p></div>`;
+  const scenSel=`<div class="scen-fab">${scenCollapsed
+    ? `<button class="scen-fab-btn" onclick="toggleScen()" title="Escenarios demo">${I.dots}<span>Escenario ${scenario+1}</span></button>`
+    : `<div class="scen-panel"><span class="scen-lbl">Escenario</span><div class="scen-opts">${SCENARIOS.map((s,i)=>`<button class="scen ${i===scenario?'on':''}" title="${s.t}" onclick="setScenario(${i})">${i+1}</button>`).join('')}</div><span class="scen-desc">${sc.t}</span><button class="scen-x" onclick="toggleScen()" title="Ocultar">${I.chevdown}</button></div>`
+  }</div>`;
   el('view').innerHTML=`
   <div class="page">
-    <div class="crumbs">
-      <span>Clientes</span> ${I.chev}
-      <span>Pablo Fernández</span> ${I.chev}
-      <span class="cur">Histórico de análisis</span>
-    </div>
+    <div class="crumbs"><span>Clientes</span> ${I.chev} <span>Pablo Fernández</span> ${I.chev} <span class="cur">Histórico de análisis</span></div>
     <div class="pagehead"><h1>Histórico de análisis</h1></div>
     <div class="card listcard">
-      <div class="list-head">
-        <h2>Histórico de análisis</h2>
-        <button class="btn primary" onclick="startNuevo()">${I.plus} Nuevo informe</button>
-      </div>
-      <table class="tbl">
-        <thead><tr><th>Fecha</th><th>Informe</th><th>Método de envío</th><th>Informe</th><th>Estado</th><th></th></tr></thead>
-        <tbody>
-          ${LIST_ROWS.map((r,i)=>`
-          <tr onclick="openRow(${i})">
-            <td class="date">${r.fecha}</td>
-            <td>${r.informe}</td>
-            <td>${r.metodo}</td>
-            <td><a class="pdf" onclick="event.stopPropagation();previewInforme(${i})">informe.pdf</a></td>
-            <td><span class="rowtag ${r.estado}">${ESTADO_LABEL[r.estado]}</span></td>
-            <td class="chev">${I.chev}</td>
-          </tr>`).join('')}
-        </tbody>
-      </table>
+      <div class="list-head"><h2>Histórico de análisis</h2><div class="list-head-right">${headRight}</div></div>
+      ${body}
     </div>
-  </div>`;
+  </div>${scenSel}`;
   window.scrollTo(0,0);
 }
 
 // Alerta "pendiente de facturar" (estilo componente Alert del DS)
 function alertHTML(inModal){
   return `<div class="alert${inModal?' in-modal':''}">${I.alertCircle}<span>Este informe está listo para facturar.</span></div>`;
+}
+
+/* Tarjeta de acción (PdP - Análisis - Cards secciones): Normal / Completado / Disable */
+function navCardHTML(key, icon, label, onclick, enabled, s){
+  const done = s.done[key];
+  const cls = 'navcard' + (done?' done':'') + (enabled?'':' disabled');
+  const tag = done ? '<span class="badge">Completado</span>' : '';
+  const attr = enabled ? `onclick="${onclick}"` : 'disabled';
+  return `<button class="${cls}" ${attr}><div class="top"><span class="ci">${icon}</span>${tag}</div><h3>${label}</h3><span class="arrow">${I.arrow}</span></button>`;
 }
 
 /* ---------- Landing render (screens 1,2,3,4,6,7) ---------- */
@@ -538,21 +631,9 @@ function renderLanding(){
 
     <div class="landing">
       <div class="side">
-        <button class="navcard" onclick="${s.type==='seguimiento'?'openSeguimiento()':'openAnalisis()'}">
-          <div class="top"><span class="ci">${I.chart}</span>${badge('analisis')}</div>
-          <h3>${s.type==='seguimiento'?'Análisis de seguimiento':'Análisis inicial'}</h3>
-          <span class="arrow">${I.arrow}</span>
-        </button>
-        <button class="navcard" onclick="openResumen()">
-          <div class="top"><span class="ci">${I.doc}</span>${badge('resumen')}</div>
-          <h3>Resumen Ejecutivo</h3>
-          <span class="arrow">${I.arrow}</span>
-        </button>
-        <button class="navcard" onclick="openObjetivos()">
-          <div class="top"><span class="ci">${I.target}</span>${badge('objetivos')}</div>
-          <h3>Objetivos</h3>
-          <span class="arrow">${I.arrow}</span>
-        </button>
+        ${navCardHTML('analisis', I.chart, 'Análisis', (s.type==='seguimiento'?'openSeguimiento()':'openAnalisis()'), true, s)}
+        ${navCardHTML('resumen', I.doc, 'Resumen Ejecutivo', 'openResumen()', s.done.analisis, s)}
+        ${navCardHTML('objetivos', I.target, 'Objetivos', 'openObjetivos()', s.done.resumen, s)}
       </div>
 
       <div class="main">
@@ -639,22 +720,94 @@ function emptySection(name){
 }
 
 /* ---------- Screen 1.1 : Análisis inicial (form) ---------- */
-const ANALISIS_MENU=['Antecedentes','Clínica','Funcional','Cognitiva','Nutricional','Social'];
-const ANALISIS_ICON={Antecedentes:'m_ante',Clínica:'m_clin',Funcional:'m_func',Cognitiva:'m_cogn',Nutricional:'m_nutr',Social:'m_soc'};
-function analisisContent(sec){
-  if(sec==='Antecedentes') return `<h2>Antecedentes</h2>
-        <div class="fieldgroup">
-          <label class="q">Biological Sex <span class="req">*</span></label>
-          <div class="selectbox"><select><option>Woman</option><option>Man</option></select>${I.chevdown}</div>
-        </div>
-        <div class="fieldgroup">
-          <label class="q">Do you have a family history of neurodegenerative diseases? <span class="req">*</span></label>
-          <div class="radios">
-            <label class="radio"><input type="radio" name="fam"> Yes</label>
-            <label class="radio"><input type="radio" name="fam" checked> No</label>
-          </div>
-        </div>`;
-  return emptySection(sec);
+const SECCIONES=['Antecedentes','Clínica','Auditivo y ocular','Hábitos tóxicos','Actividad física','Funcional','Cognitiva','Bienestar emocional','Sueño','Nutricional','Social'];
+const SEC_ICON={'Antecedentes':'m_ante','Clínica':'m_clin','Auditivo y ocular':'m_aud','Hábitos tóxicos':'m_tab','Actividad física':'m_act','Funcional':'m_funcional','Cognitiva':'m_cogn','Bienestar emocional':'m_emo','Sueño':'m_luna','Nutricional':'m_nutr','Social':'m_soc'};
+// Helpers de campo
+const _y=l=>({t:'yesno',l}), _s=l=>({t:'sel',l}), _t=l=>({t:'text',l}), _ta=l=>({t:'textarea',l}), _sub=l=>({t:'sub',l});
+const ANALISIS_DATA={
+ 'Antecedentes':[_sub('Antecedentes familiares'),
+   _y('¿Hay o ha habido alguna persona en tu familia diagnosticada de enfermedad neurodegenerativa? (por ejemplo: Parkinson, Alzheimer, demencia…)'),
+   _s('¿Qué relación de parentesco tenéis?'), _t('¿Algún otro familiar que recuerdes?')],
+ 'Clínica':[_sub('Condiciones de salud'),
+   {t:'check',l:'¿Tienes alguna enfermedad crónica?',o:['Oncológica activa','Respiratoria (EPOC, neumopatía restrictiva…)','Cardiovascular (insuficiencia cardíaca, cardiopatía isquémica, arritmia)','Neurológica (Parkinson, ELA…)','Digestiva (hepatopatía crónica, cirrosis, pancreatitis crónica, EII…)','Diabetes','Aparato locomotor (artrosis, artritis, osteoporosis, cervicalgia, escoliosis, lumbalgia)','Dislipemia','Enfermedad mental diagnosticada (depresión, ansiedad, bipolar, esquizofrenia, anorexia, otros)']},
+   _t('Enfermedad mental diagnosticada: ¿hace cuánto? ¿ahora se ha normalizado?'),
+   _sub('Antecedentes clínicos'), _y('¿Has tenido alguna lesión en la cabeza por la que hayas perdido el conocimiento durante más de 15 segundos?'),
+   _sub('Otras exposiciones'), _y('¿Has participado alguna vez en ocupaciones que requieran mezclar, cargar o aplicar pesticidas, herbicidas o fungicidas?'),
+   _sub('Alergias'), _y('¿Tienes alergia o intolerancia a algún alimento?'), _y('¿Tienes alergia o intolerancia a algún alérgeno medioambiental?'),
+   _sub('Medicación'), _y('¿Tomas alguna medicación?'), _s('Tipo de medicamento'), _t('Nombre del medicamento'), _t('Dosis'), _s('Frecuencia')],
+ 'Auditivo y ocular':[_sub('Ocular'),
+   _y('¿Tienes algún problema de la vista o enfermedad ocular diagnosticada?'),
+   _y('¿Has tenido algún síntoma de aparición aguda no tratado (disminución de la agudeza visual, pérdida de visión súbita, intolerancia a la luz, secreción, dolor, sangre…)?'),
+   _sub('Auditivo'), _y('¿Tienes algún problema de audición que dificulte tu día a día?'), _y('¿Te han realizado un diagnóstico previo?'), _y('¿Eres portador de audífono?'), _y('¿Implante auditivo?')],
+ 'Hábitos tóxicos':[_sub('Tabaco'), _y('¿Consumo de nicotina/tabaco?'), _s('Tipo de tabaco que fuma'), _t('Edad de inicio del consumo regular'), _y('¿Has intentado dejar de fumar previamente?'),
+   _sub('Grado de dependencia a la nicotina'), _s('¿Cuánto tiempo pasa desde que te levantas y fumas el primer cigarrillo?'), _t('¿Cuántos cigarrillos fumas cada día?'),
+   _sub('Estadio de cambio'), _t('En el último año, ¿cuántas veces dejaste de fumar durante al menos 24 horas?'),
+   {t:'check',l:'Selecciona la opción que mejor te describe',o:['Actualmente fumo, pero tengo la intención de dejarlo dentro de los próximos 15 días','Actualmente fumo, pero tengo la intención de dejarlo dentro de los próximos 6 meses','Actualmente fumo y NO tengo la intención de dejarlo dentro de los próximos 6 meses']},
+   _sub('Grado de motivación para dejar de fumar'), _y('¿Te gustaría dejar de fumar si lo pudieras hacer con facilidad?'), _s('¿Cuánto interés tienes en dejar de fumar?'), _y('¿Intentarás dejar de fumar en las próximas dos semanas?'), _y('¿Piensas que puedes conseguirlo en los próximos seis meses?'), _t('¿Cuál es tu razón para dejar de fumar?'),
+   _sub('Alcohol'), _y('¿Consumes alcohol?'), _s('¿Con qué frecuencia consumes alguna bebida alcohólica?'), _s('¿Cuántas consumiciones de bebidas alcohólicas sueles realizar en un día de consumo normal?'), _s('¿Con qué frecuencia tomas 6 o más bebidas alcohólicas en un solo día?'), _ta('Situaciones especiales de consumo de alcohol')],
+ 'Actividad física':[{t:'tags',l:'¿Tienes alguna contraindicación médica para realizar ejercicio físico?',o:['Paraplejia','Movilidad reducida en tren inferior','Movilidad reducida en tren superior']},
+   _t('¿Alguna actividad física que no puedas realizar?'),
+   _s('Durante los últimos 7 días, ¿en cuántos realizaste actividades físicas intensas (levantar pesos pesados, cavar, aeróbicos o andar rápido en bicicleta)? (días)'),
+   _s('Durante los últimos 7 días, ¿en cuántos días hiciste actividades físicas moderadas (transportar pesos livianos o andar en bicicleta a velocidad regular; no incluye caminar)? (días)'),
+   _s('Habitualmente, ¿cuánto tiempo en total dedicaste a una actividad física moderada en uno de esos días?'),
+   _s('Durante los últimos 7 días, ¿en cuántos días caminaste por lo menos 10 minutos seguidos? (días)'),
+   _s('Habitualmente, ¿cuánto tiempo en total dedicaste a caminar en uno de esos días?'),
+   _s('Durante los últimos 7 días, ¿cuánto tiempo pasaste sentado durante un día hábil?'),
+   _y('Regularmente, ¿realizas periodos de tiempo sedentario de más de 2 horas seguidas a lo largo del día?'), _t('¿Qué actividad te gustaría hacer?')],
+ 'Funcional':[_y('¿Tienes algún tipo de limitación funcional?'), _y('¿Necesitas ayuda para realizar las actividades de la vida diaria?'),
+   _sub('Actividades básicas – Comer'), _y('¿Necesitas ayuda para comer?'), _y('¿Requieres de productos de apoyo (cubiertos adaptados, platos con bordes elevados, etc.)?'), _y('¿Necesitas ayuda para hidratarte?'),
+   _sub('Lavarse (bañarse)'), _y('¿Necesitas ayuda para la higiene personal (p. ej. ducha/bañera)?'), _y('¿Requieres de algún producto de apoyo (silla de ducha, asideros, esponja con alargador, etc.)?'),
+   _sub('Vestirse'), _y('¿Necesitas ayuda para ponerte y quitarte la ropa (vestirte)?'),
+   _sub('Arreglo personal'), _y('¿Necesitas ayuda para arreglarte (aseo personal): lavarte la cara, las manos, peinarte, afeitarte, etc.?'),
+   _sub('Micción'), _y('¿Presentas episodios de incontinencia urinaria?'), _y('¿Requieres de productos sanitarios o productos de apoyo?'), _y('¿Requieres de ayuda para poner/reemplazar los productos sanitarios frente a la incontinencia urinaria (absorbentes)?'),
+   _sub('Deposición'), _y('¿Presentas episodios de incontinencia fecal?'), _y('¿Requieres de productos sanitarios o productos de apoyo?'), _y('¿Requieres de ayuda para poner/reemplazar los productos sanitarios frente a la incontinencia fecal (absorbentes)?'), _y('¿Haces menos de 3 deposiciones a la semana y/o te cuesta evacuar y/o necesitas medidas/tratamiento específicos?'), _y('¿Requieres de enemas o supositorios para facilitar la evacuación?'), _y('¿Necesitas ayuda para la aplicación de lavativas?'),
+   _sub('Deambulación / transferencias'), _s('¿Cuál es tu situación habitual? (caminas, vida cama-sofá, etc.)'),
+   _sub('Ir al retrete'), _y('¿Necesitas ayuda para ir al retrete/inodoro?'), _y('¿Requieres de productos de apoyo (barras laterales de inodoro o elevador de inodoro)?'),
+   _sub('Traslado sillón-cama (transferencias)'), _y('¿Necesitas ayuda para levantarte en la cama?'), _y('¿Necesitas ayuda para acostarte en la cama?'), _y('¿Requieres de productos de apoyo (grúa, elevador, tabla de transferencias, etc.)?'),
+   _sub('Deambulación'), _y('¿Necesitas ayuda para la deambulación en la vivienda (p. ej. del sofá a la cocina)?'), _y('¿Necesitas ayuda para la deambulación fuera de la vivienda en terreno llano (50 metros)?'), _y('¿Requieres de productos de apoyo (bastón, andador, silla de ruedas, scooter, etc.)?'),
+   _sub('Uso de escaleras'), _y('¿Necesitas ayuda para subir escaleras?'), _y('¿Requieres de productos de apoyo (salvaescaleras, plataforma elevadora, etc.)?'),
+   _sub('Actividades instrumentales de la vida diaria'), _y('¿Necesitas ayuda para utilizar el teléfono?'), _y('¿Necesitas ayuda para realizar la compra?'), _y('¿Necesitas ayuda para preparar y servir la comida?'), _y('¿Necesitas ayuda para realizar un mantenimiento básico de la vivienda (limpieza y organización)?'), _y('¿Realizas de manera autónoma el lavado de tu ropa personal?'), _y('¿Viajas solo en transporte público o utilizas tu propio coche de manera autónoma?'), _y('¿Eres el responsable de tu toma de medicación, en dosis y horas correctas?')],
+ 'Cognitiva':[_sub('Alteraciones cognitivas'), _y('¿Tienes falta de sensibilidad táctil? (frío/calor o no identificar fricción en algunas partes del cuerpo)'), _y('¿Tienes alteraciones sensoperceptivas? (alucinaciones o visiones)'),
+   _sub('Alteraciones de la comunicación'), _y('¿Has presentado dificultad para mantener una conversación coherente?'), _y('¿Tienes alguna dificultad para expresarte? (p. ej. uso de monosílabos y/o repeticiones inconexas)'), _y('¿Has perdido la habilidad de leer?'), _y('¿Has perdido la capacidad de escribir?')],
+ 'Bienestar emocional':[_sub('Subescala ansiedad'), _y('¿Te has sentido muy excitado, nervioso o en tensión?'), _y('¿Has estado muy preocupado por algo?'), _y('¿Te has sentido muy irritable?'), _y('¿Has tenido dificultad para relajarte?'), _y('¿Has dormido mal o has tenido dificultades para dormir?'), _y('¿Has tenido dolores de cabeza o nuca?'), _y('¿Has tenido alguno de los siguientes síntomas: temblores, hormigueos, mareos, sudores o diarrea?'), _y('¿Has estado preocupado por tu salud?'), _y('¿Has tenido alguna dificultad para conciliar el sueño?'),
+   _sub('Subescala depresión'), _y('¿Te has sentido con poca energía?'), _y('¿Has perdido tu interés por las cosas?'), _y('¿Has perdido la confianza en ti mismo?'), _y('¿Te has sentido desesperado, sin esperanza?'), _y('¿Has tenido dificultades para concentrarte?'), _y('¿Has perdido peso (a causa de tu falta de apetito)?'), _y('¿Te has despertado demasiado temprano?'), _y('¿Te has sentido enlentecido?'), _y('¿Crees que has tenido tendencia a encontrarte peor por las mañanas?'), _y('¿Estás pasando por una situación de duelo y/o has sufrido alguna situación traumática que te esté afectando?'), _y('¿Ha existido alguna ideación suicida?'),
+   _sub('Durante la última semana…'), _s('¿Cuántas veces te has sentido deprimido?'), _s('¿Cuántas veces has sentido que todo lo que hacías era un esfuerzo?'), _s('¿Cuántas veces te has sentido esperanzado/optimista en cuanto al futuro?'), _s('¿Cuántas veces te has sentido asustado?'), _s('¿Cuántas veces te has sentido feliz?'), _s('¿Cuántas veces te has sentido solo?'), _s('¿Cuántas veces has sentido que «no podías continuar»?')],
+ 'Sueño':[_s('Durante el último mes, ¿cuál ha sido, normalmente, tu hora de acostarte?'), _t('¿Cuánto tiempo habrás tardado en dormirte, normalmente, las noches del último mes? (en minutos)'), _s('Durante el último mes, ¿a qué hora te has levantado habitualmente por la mañana?'), _t('¿Cuántas horas calculas que habrás dormido verdaderamente cada noche durante el último mes?'),
+   _sub('Durante el último mes, ¿cuántas veces has tenido problemas para dormir a causa de…'), _s('No poder conciliar el sueño en la primera media hora'), _s('Despertarse durante la noche o de madrugada'), _s('Tener que levantarse para ir al baño'), _s('No poder respirar bien'), _s('Toser o roncar ruidosamente'), _s('Sentir frío'), _s('Sentir demasiado calor'), _s('Tener pesadillas o malos sueños'), _s('Sufrir dolores'), _t('Otras razones (descríbelas)'),
+   _s('Durante el último mes, ¿cómo valorarías, en conjunto, la calidad de tu sueño?'), _s('Durante el último mes, ¿cuántas veces habrás tomado medicinas (por tu cuenta o recetadas por el médico) para dormir?'), _s('Durante el último mes, ¿cuántas veces has sentido somnolencia mientras conducías, comías o desarrollabas alguna otra actividad?'), _s('Durante el último mes, ¿ha representado para ti mucho problema el tener ánimos para realizar alguna de las actividades detalladas en la pregunta anterior?')],
+ 'Nutricional':[_t('¿Cuánto mides aproximadamente? (estatura)'), _t('¿Cuánto pesas ahora aproximadamente? (peso)'), _y('¿Tienes algún problema en la digestión (para digerir/deglutir, etc.)?'), _s('¿Qué tipo de dieta sigues habitualmente? (p. ej., diabética, baja en grasa, mediterránea, etc.)'),
+   _sub('Adherencia a la dieta mediterránea'), _y('¿Usas el aceite de oliva principalmente para cocinar?'), _s('¿Cuánto aceite de oliva consumes en total al día (incluyendo frituras, comidas fuera de casa, ensaladas, etc.)?'), _s('¿Cuántas raciones de verdura u hortalizas consumes al día (las guarniciones cuentan como ½ ración)?'), _s('¿Cuántas piezas de fruta (incluyendo zumo natural) consumes al día?'), _s('¿Cuántas raciones de carnes rojas, hamburguesas, salchichas o embutidos consumes al día (1 ración = 100-150 g)?'), _s('¿Cuántas raciones de mantequilla, margarina o nata consumes al día (1 porción individual = 12 g)?'), _s('¿Cuántas bebidas carbonatadas y/o azucaradas (refrescos, colas, tónicas, bíter) consumes al día?'), _s('¿Bebes vino? ¿Cuánto consumes a la semana?'), _s('¿Cuántas raciones de legumbres consumes a la semana (1 ración o plato = 150 g)?'), _s('¿Cuántas raciones de pescado o marisco consumes a la semana?'), _s('¿Cuántas veces consumes repostería comercial (no casera) como galletas, flanes, dulces o pasteles a la semana?'), _s('¿Cuántas veces consumes frutos secos a la semana (1 ración = 30 g)?'), _y('¿Consumes preferentemente carne de pollo, pavo o conejo en vez de ternera, cerdo, hamburguesas o salchichas?'), _s('¿Cuántas veces a la semana consumes vegetales cocinados, pasta, arroz u otros platos aderezados con sofrito (salsa de tomate, ajo, cebolla o puerro a fuego lento con aceite de oliva)?'),
+   _sub('Otros'), _y('¿A lo largo de los últimos meses has perdido peso y/o apetito?'), _y('¿Realizas conductas restrictivas?'), _y('¿Realizas conductas purgativas?'), _y('¿Sigues un aporte de líquidos correcto?'), _y('¿Restringes la ingesta de líquidos por algún motivo?')],
+ 'Social':[_s('¿Cuál es tu nivel educativo?'), _t('¿Y tu profesión/ocupación a la que te dedicas o te has dedicado?'), _s('En cuanto a tu estado civil, ¿estás casado, soltero, viudo…?'),
+   _sub('Tiempo de ocio'), _s('¿Aproximadamente cuántas horas pasas leyendo cada día, incluida la lectura en línea?'),
+   _sub('Durante el último año…'), _s('¿Con qué frecuencia te dedicaste a leer libros, periódicos o revistas?'), _s('¿Con qué frecuencia te dedicaste a jugar a juegos (p. ej. juegos de palabras, damas, rompecabezas, etc.)?'), _s('¿Con qué frecuencia escribiste cartas o correos electrónicos?'), _s('¿Con qué frecuencia utilizaste actividades de redes sociales en línea?'), _s('¿Con qué frecuencia participaste en actividades de «entrenamiento cerebral»?'), _s('¿Con qué frecuencia visitaste un museo?'), _s('¿Con qué frecuencia asististe a un concierto, obra de teatro o musical?'), _s('¿Con qué frecuencia visitaste una biblioteca?'),
+   _ta('¿Participas en otras actividades que no hayamos mencionado de forma regular? ¿Podrías indicarme cuáles y con qué frecuencia?'), _ta('¿Alguna actividad de ocio y tiempo libre que no realices actualmente pero te gustaría retomar o implementar en tu rutina?'),
+   _sub('Amigos y familiares'), _s('¿A cuántos de tus amigos ves o escuchas al menos una vez al mes?'), _y('¿Estás satisfecho con tus relaciones con amigos y familiares?'), _s('¿Con qué frecuencia participas en servicios religiosos o grupos sociales, políticos o comunitarios?'), _s('¿Vives solo o con otras personas?'),
+   {t:'tags',l:'¿Qué tipo de actividades sociales practicas habitualmente?',o:['Rutas culturales','Club social','Talleres grupales']}, _t('¿Alguna actividad de este tipo que no realices y te gustaría comenzar a hacer?')],
+};
+const COGNITIVA_ANUAL=[_sub('Valoración cognitiva'), _y('¿Tienes algún problema de memoria u orientación (p. ej., no sabes dónde estás o qué día es)?'),
+  _sub('Test Pfeiffer'), _t('¿Cuál es la fecha de hoy? (día del mes, mes, año)'), _t('¿Qué día de la semana es?'), _t('¿En qué lugar estás?'), _t('¿Cuál es tu número de teléfono? (si no tienes teléfono, ¿cuál es tu dirección completa?)'), _t('¿Cuántos años tienes?'), _t('¿Dónde naciste?'), _t('¿Cuál es el nombre del presidente del gobierno?'), _t('¿Y el del presidente anterior?'), _t('¿Cuáles son los dos apellidos de tu madre?'), _t('Resta de tres en tres desde 29 hasta llegar a 0.')];
+let _qid=0;
+function renderField(f){
+  let ctrl='';
+  if(f.t==='yesno'){ const n='r'+(_qid++); ctrl=`<div class="radios"><label class="radio"><input type="radio" name="${n}"> Sí</label><label class="radio"><input type="radio" name="${n}"> No</label></div>`; }
+  else if(f.t==='sel'||f.t==='multi'){ ctrl=`<div class="selectbox"><select><option value="" disabled selected>Selecciona…</option>${(f.o||[]).map(o=>`<option>${o}</option>`).join('')}</select>${I.chevdown}</div>`; }
+  else if(f.t==='tags'){ ctrl=`<div class="tagsbox">${(f.o||[]).map(o=>`<span class="tagchip">${o} <b>✕</b></span>`).join('')}${I.chevdown}</div>`; }
+  else if(f.t==='check'){ ctrl=(f.o||[]).map(o=>`<label class="checkrow"><input type="checkbox"> ${o}</label>`).join(''); }
+  else if(f.t==='text'){ ctrl=`<input class="q-input" placeholder="Escribe aquí…">`; }
+  else if(f.t==='textarea'){ ctrl=`<textarea class="q-textarea" placeholder="Escribe aquí…"></textarea>`; }
+  return `<div class="fieldgroup"><label class="q">${f.l} <span class="req">*</span></label>${ctrl}</div>`;
+}
+function renderFields(fields){
+  let html=''; let g=null;
+  const flush=()=>{ if(g){ html+=`<div class="q-sub"><div class="q-sub-head" onclick="this.parentNode.classList.toggle('collapsed')"><span>${g.l}</span>${I.chevdown}</div><div class="q-sub-body">${g.items.join('')}</div></div>`; g=null; } };
+  for(const f of fields){ if(f.t==='sub'){ flush(); g={l:f.l,items:[]}; } else { const h=renderField(f); if(g) g.items.push(h); else html+=h; } }
+  flush(); return html;
+}
+function analisisContent(sec, anual){
+  let fields=(ANALISIS_DATA[sec]||[]).slice();
+  if(anual && sec==='Cognitiva') fields=fields.concat(COGNITIVA_ANUAL);
+  return `<h2>${sec}</h2>${renderFields(fields)}`;
 }
 function openAnalisis(active){
   active=active||'Antecedentes'; useHeaderPortal();
@@ -662,11 +815,11 @@ function openAnalisis(active){
   <div class="page">
     <div class="subhead">
       <button class="back" onclick="goInforme()">${I.back}</button>
-      <h1>Análisis inicial</h1>
+      <h1>Análisis</h1>
     </div>
     <div class="three">
-      ${sidecolHTML(ANALISIS_MENU,active,ANALISIS_ICON,'openAnalisis',{patient:true,toggle:false})}
-      <div class="panel">${analisisContent(active)}</div>
+      ${sidecolHTML(SECCIONES,active,SEC_ICON,'openAnalisis',{patient:true,toggle:false})}
+      <div class="panel">${analisisContent(active,false)}</div>
       ${rightNotes()}
     </div>
     <div class="subfoot">
@@ -679,48 +832,17 @@ function openAnalisis(active){
 function saveAnalisis(){ state.done.analisis=true; state.tActualizacion=new Date(); state.wizard ? openResumen() : renderLanding(); }
 
 /* ---------- Análisis de seguimiento (form) ---------- */
-const SEG_MENU=['Seguimiento','Antecedentes','Clínica','Funcional','Cognitiva','Pfeiffer','Nutricional','Social'];
-const SEG_ICON={Seguimiento:'m_seg',Antecedentes:'m_ante',Clínica:'m_clin',Funcional:'m_func',Cognitiva:'m_cogn',Pfeiffer:'m_pfeiffer',Nutricional:'m_nutr',Social:'m_soc'};
-function seguimientoContent(sec){
-  if(sec!=='Seguimiento') return emptySection(sec);
-  const areas=['Physical activity','Nutrition','Active mind','Emotional well-being','Social participation','Tobacco and alcohol'];
-  const helped=['Physical activity','Nutrition','Active mind','Emotional well-being','Social participation','Hearing and eye care','Tobacco and alcohol'];
-  return `<h2>Seguimiento</h2>
-        <div class="fieldgroup">
-          <label class="q" style="margin-bottom:14px">Compared to last year, indicate how you think you are doing in the following areas:</label>
-          ${areas.map(a=>`
-          <div style="margin-bottom:12px">
-            <label class="q" style="font-weight:400;margin-bottom:6px">${a} <span class="req">*</span></label>
-            <div class="selectbox"><select><option value="" disabled selected>Escribe aquí...</option><option>Better</option><option>The same</option><option>Worse</option></select>${I.chevdown}</div>
-          </div>`).join('')}
-        </div>
-        <div class="fieldgroup">
-          <label class="q">Have you followed the recommendations of your prevention plan? <span class="req">*</span></label>
-          <div class="selectbox"><select><option value="" disabled selected>Selecciona...</option><option>Yes, fully</option><option>Partially</option><option>No</option></select>${I.chevdown}</div>
-        </div>
-        <div class="fieldgroup">
-          <label class="q">Have you had follow-ups with your Personal Advisor this year? <span class="req">*</span></label>
-          <div class="radios">
-            <label class="radio"><input type="radio" name="segfu"> Yes</label>
-            <label class="radio"><input type="radio" name="segfu"> No</label>
-          </div>
-        </div>
-        <div class="fieldgroup">
-          <label class="q" style="margin-bottom:12px">In which of these areas do you feel Qida's prevention services (the Plan's recommendations, your Personal Advisor, the client portal content, the newsletter...) have helped you adopt or strengthen healthy habits? <span class="req">*</span></label>
-          ${helped.map(h=>`<label class="checkrow"><input type="checkbox"> ${h}</label>`).join('')}
-        </div>`;
-}
 function openSeguimiento(active){
-  active=active||'Seguimiento'; useHeaderPortal();
+  active=active||SECCIONES[0]; useHeaderPortal();
   el('view').innerHTML=`
   <div class="page">
     <div class="subhead">
       <button class="back" onclick="goInforme()">${I.back}</button>
-      <h1>Análisis de seguimiento</h1>
+      <h1>Análisis</h1>
     </div>
     <div class="three">
-      ${sidecolHTML(SEG_MENU,active,SEG_ICON,'openSeguimiento',{patient:true,toggle:false})}
-      <div class="panel">${seguimientoContent(active)}</div>
+      ${sidecolHTML(SECCIONES,active,SEC_ICON,'openSeguimiento',{patient:true,toggle:false})}
+      <div class="panel">${analisisContent(active,true)}</div>
       ${rightNotes()}
     </div>
     <div class="subfoot">
@@ -948,7 +1070,7 @@ function confirmSalir(){
 
 /* ---------- Vista previa del informe (columna INFORME del histórico) ---------- */
 function previewInforme(i){
-  const r=LIST_ROWS[i];
+  const r=CURRENT_ROWS[i];
   const ov=document.createElement('div');
   ov.className='overlay open'; ov.id='overlay';
   ov.onclick=(e)=>{ if(e.target===ov) closeModal(); };
