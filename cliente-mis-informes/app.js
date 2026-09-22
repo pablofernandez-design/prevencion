@@ -1021,7 +1021,12 @@
         </div>
       </div>
       <div class="area-body">
-        <nav class="area-side" aria-label="Secciones"><div class="area-side-inner">
+        <nav class="area-side" aria-label="Secciones">
+          <div class="area-mini" style="background:${AREA_COLOR[slug]||'#004039'}">
+            <div class="area-mini-top"><span class="area-mini-ico">${AREA_ICONS[slug]||''}</span><span class="area-mini-name">${esc(a.name)}</span></div>
+            <span class="area-tag ${a.status}">${esc(a.statusLabel)}</span>
+          </div>
+          <div class="area-side-inner">
           <a href="javascript:void(0)" data-target="a-escalas" class="area-side-link is-active"><span>Resultado de las escalas</span></a>
           <a href="javascript:void(0)" data-target="a-pautas" class="area-side-link"><span>Pautas clave</span></a>
           <a href="javascript:void(0)" data-target="a-info" class="area-side-link"><span>Información ampliada</span></a>
@@ -1030,10 +1035,6 @@
           <a href="javascript:void(0)" data-target="a-biblio" class="area-side-link"><span>Bibliografía</span></a>
         </div></nav>
         <div class="area-doc">
-          <div class="area-mini" style="background:${AREA_COLOR[slug]||'#004039'}">
-            <div class="area-mini-top"><span class="area-mini-ico">${AREA_ICONS[slug]||''}</span><span class="area-mini-name">${esc(a.name)}</span></div>
-            <span class="area-tag ${a.status}">${esc(a.statusLabel)}</span>
-          </div>
           <section id="a-escalas" class="area-card"><h2 class="area-h2">Resultado de las escalas</h2>${escSection}</section>
           <section id="a-pautas" class="area-card"><h2 class="area-h2">Pautas clave</h2>${pautasHTML(slug)}</section>
           <section id="a-info" class="area-card"><h2 class="area-h2">Información ampliada</h2>${infoHTML()}</section>
@@ -1043,17 +1044,20 @@
         </div>
       </div>
     </article>`;
-    // Altura del chrome fijo superior (header + tab-bar visible + mini-cabecera pegajosa)
-    const mini = host.querySelector('.area-mini');
-    const setMiniVar = ()=>{ host.style.setProperty('--area-mini-h', (mini ? mini.offsetHeight : 0) + 'px'); };
-    setMiniVar();
-    window.addEventListener('resize', setMiniVar, { passive:true });
+    // Altura del chrome fijo superior (header + tab-bar visible)
+    const hero = host.querySelector('.area-hero');
+    const side = host.querySelector('.area-side');
     const chromeH = ()=>{
       const h = document.querySelector('.app-header')?.offsetHeight || 0;
       const tb = document.querySelector('.tab-bar');
       const tbh = (tb && tb.offsetParent !== null) ? tb.offsetHeight : 0;
-      const mh = mini ? mini.offsetHeight : 0;
-      return h + tbh + mh;
+      return h + tbh;
+    };
+    // El header completo se transforma en la mini-cabecera (sobre la columna lateral)
+    // cuando el header sale de la vista al hacer scroll. Nunca se ven los dos a la vez.
+    const toggleMini = ()=>{
+      if(!hero || !side) return;
+      side.classList.toggle('show-mini', hero.getBoundingClientRect().bottom <= chromeH() + 8);
     };
     const links = [...host.querySelectorAll('.area-side-link')];
     links.forEach(l=>l.addEventListener('click', ()=>{
@@ -1065,6 +1069,7 @@
     if(window.__areaSpy) window.removeEventListener('scroll', window.__areaSpy);
     const secs = links.map(l=>document.getElementById(l.dataset.target)).filter(Boolean);
     const spy = ()=>{
+      toggleMini();
       const off = chromeH() + 24;
       let idx = 0;
       secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top <= off) idx = i; });

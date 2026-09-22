@@ -4575,12 +4575,14 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 .area-tag{ display:inline-flex; align-items:center; border-radius:12px; padding:5px 13px; font-size:15px; font-weight:700; letter-spacing:.02em; color:#fff; white-space:nowrap; }
 .area-tag.amber{ background:#C7961F; } .area-tag.green{ background:#0E8343; } .area-tag.red{ background:#A52222; }
 
-/* Mini-cabecera pegajosa: mantiene visible el área al hacer scroll */
-.area-mini{ position:sticky; top:calc(var(--sticky-top) + 12px); z-index:20; display:flex; flex-direction:column; gap:8px; padding:14px 18px; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06); }
+/* Mini-cabecera: el header completo se transforma en esta card sobre la columna
+   lateral al hacer scroll. Oculta por defecto; visible solo con .show-mini. */
+.area-mini{ display:none; flex-direction:column; gap:8px; padding:14px 16px; margin-bottom:12px; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06); }
+.area-side.show-mini .area-mini{ display:flex; }
 .area-mini-top{ display:flex; align-items:center; gap:12px; min-width:0; }
 .area-mini-ico{ flex:none; display:block; line-height:0; }
-.area-mini-ico svg{ width:38px; height:38px; display:block; }
-.area-mini-name{ font-size:19px; font-weight:600; color:#333; letter-spacing:-.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.area-mini-ico svg{ width:36px; height:36px; display:block; }
+.area-mini-name{ font-size:17px; font-weight:600; color:#333; letter-spacing:-.01em; line-height:1.2; }
 .area-mini .area-tag{ align-self:flex-start; font-size:12px; padding:3px 11px; }
 
 .area-body{ display:flex; gap:24px; align-items:flex-start; }
@@ -4591,7 +4593,7 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 .area-side-link.is-active{ background:#004039; color:#fff; }
 .area-doc{ flex:1; min-width:0; display:flex; flex-direction:column; gap:24px; }
 
-.area-card{ background:#fff; border-radius:16px; padding:40px; display:flex; flex-direction:column; gap:20px; scroll-margin-top:calc(var(--sticky-top) + var(--area-mini-h, 0px) + 24px); }
+.area-card{ background:#fff; border-radius:16px; padding:40px; display:flex; flex-direction:column; gap:20px; scroll-margin-top:calc(var(--sticky-top) + 24px); }
 .area-h2{ margin:0; font-size:26px; font-weight:700; color:#0F1B17; letter-spacing:-.01em; }
 .area-p{ margin:0; font-size:15px; line-height:1.55; color:#0F1B17; }
 .area-lbl{ font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; color:#8A969B; display:block; margin-bottom:6px; }
@@ -4697,6 +4699,7 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
   .area-hero-name{ font-size:26px; }
   .area-body{ flex-direction:column; gap:16px; }
   .area-side{ width:100%; position:static; }
+  .area-mini{ display:none !important; }
   .area-side-inner{ flex-direction:row; flex-wrap:wrap; gap:6px; }
   .area-side-link{ padding:8px 12px; }
   .area-card{ padding:28px 24px; }
