@@ -693,6 +693,11 @@
       viewName = 'habito';
       renderHabito(parts[2]);
     }
+    // Sub-route: #/informes/area/<slug> renders the full area detail
+    if (r === 'informes' && parts[1] === 'area' && parts[2]) {
+      viewName = 'area';
+      renderArea(parts[2]);
+    }
 
     document.querySelectorAll('.view').forEach(v => {
       v.classList.toggle('is-active', v.dataset.view === viewName);
@@ -724,6 +729,136 @@
   }
 
   window.addEventListener('hashchange', route);
+
+  // ==================== DETALLE DE ÁREA ====================
+  const AREAS = {
+    'actividad-fisica': { name:'Actividad Física', cat:'cat-fisica', icon:'i-running', fg:'dark', score:'7/10', status:'amber', statusLabel:'MEJORA',
+      escalas:[ {t:'Cuestionario internacional de actividad física (IPAQ)', v:'1.100 MET-min/semana', variant:'amber', d:'IPAQ es un cuestionario internacional de actividad física que indica el tipo y nivel de actividad física que realizas en tu vida cotidiana.', rangos:['Bajo (nivel bajo o inactivo): 0 – 600 MET-min/semana.','Moderado: 600 – 1500 MET-min/semana.','Alto: 1500 – 3000 MET-min/semana (o superior).'] } ] },
+    'nutricion': { name:'Nutrición', cat:'cat-nutricion', icon:'i-apple', fg:'dark', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ',
+      escalas:[ {t:'Índice de Masa Corporal (IMC)', v:'22,0 kg/m²', variant:'green', d:'El IMC es una medida para evaluar si una persona tiene un peso saludable en relación con su altura (kg/m²).', rangos:['<18,5: Peso insuficiente','18,5–24,9: Peso saludable','25–29,9: Sobrepeso','30–34,9: Obesidad tipo I','35–39,9: Obesidad tipo II','40–49,9: Obesidad tipo III','>50: Obesidad tipo IV']},
+                {t:'Cuestionario MEDAS: adherencia a la dieta mediterránea', v:'11 / 14 puntos', variant:'green', d:'MEDAS evalúa el grado de adherencia a la dieta mediterránea mediante 14 ítems sobre frecuencia y tipo de alimentos.', rangos:['Baja adherencia (<9 puntos)','Buena adherencia (≥9 puntos)']} ] },
+    'mente-activa': { name:'Mente Activa', cat:'cat-mente', icon:'i-brain', fg:'light', score:'9/10', status:'green', statusLabel:'SIGUE ASÍ',
+      escalas:[ {t:'Test de Pfeiffer', v:'1 error', variant:'green', d:'Prueba de cribado para detectar posibles signos de deterioro cognitivo (10 preguntas: memoria, atención, razonamiento y cálculo).', rangos:['8–10: posible deterioro cognitivo severo.','5–7: posible deterioro cognitivo moderado.','3–4: posible deterioro cognitivo leve.','0–2: ausencia de posible deterioro cognitivo.']} ] },
+    'bienestar-emocional': { name:'Bienestar Emocional', cat:'cat-bienestar', icon:'i-heart', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ',
+      escalas:[ {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', v:'Ansiedad 2 · Depresión 1', variant:'green', d:'Evalúa la presencia y gravedad de los síntomas de ansiedad y depresión (dos subescalas de 9 ítems cada una).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']} ] },
+    'sueno': { name:'Sueño', cat:'cat-sueno', icon:'i-clock', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
+    'participacion-social': { name:'Participación Social', cat:'cat-social', icon:'i-users', fg:'light', score:'6/10', status:'amber', statusLabel:'MEJORA', escalas:[] },
+    'auditivo-ocular': { name:'Cuidado Ocular y Auditivo', cat:'cat-auditivo', icon:'i-ear', fg:'light', score:'10/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
+    'tabaco-alcohol': { name:'Tabaco y Alcohol', cat:'cat-tabaco', icon:'i-leaf', fg:'light', score:'10/10', status:'green', statusLabel:'SIGUE ASÍ',
+      escalas:[ {t:'Test de Fagerström', v:'1 punto', variant:'green', d:'Evalúa la dependencia física y psicológica hacia la nicotina.', rangos:['0–2: dependencia baja a la nicotina.','3–4: dependencia moderada a la nicotina.','5–6: dependencia alta a la nicotina.']},
+                {t:'Test de Richmond', v:'9 puntos', variant:'green', d:'Evalúa el grado de motivación para el abandono del tabaco (10 preguntas).', rangos:['0–3: motivación nula o baja.','4–5: motivación dudosa.','6–7: motivación moderada.','8–10: motivación alta.']},
+                {t:'AUDIT-C', v:'2 puntos', variant:'green', d:'Cuestionario breve (OMS) para detectar problemas relacionados con el consumo de alcohol (3 preguntas).', rangos:['0–4: Consumo de bajo riesgo','5–12: Consumo de riesgo']} ] },
+  };
+  // cat-* (report rows) -> area slug
+  const CAT_TO_SLUG = { 'cat-fisica':'actividad-fisica','cat-nutricion':'nutricion','cat-mente':'mente-activa','cat-bienestar':'bienestar-emocional','cat-sueno':'sueno','cat-social':'participacion-social','cat-auditivo':'auditivo-ocular','cat-tabaco':'tabaco-alcohol' };
+
+  // Contenido compartido por todas las áreas (recomendaciones, enlaces, fichas, avisos, OMS)
+  const REC = [
+    { name:'Aeróbica', sub:'Movimiento rítmico y sostenido. Ej: andar, correr, nadar, ir en bici, patinar.',
+      obj:['Mejorar la capacidad funcional','Reducir factores de riesgo cardiovascular','Controlar peso y composición corporal'],
+      dur:['Entre 2,5 y 5 horas semanales (moderado)','O 75–150 min/semana a intensidad vigorosa','5 días/semana'],
+      tipo:['Caminar y/o senderismo','Trotar, correr, ir en bici, bailar','Natación, aquagym, gimnasio','Pádel, tenis'] },
+    { name:'Fuerza y resistencia', sub:'Ejercicios que refuerzan la musculatura. Ej: subir escaleras, levantar cargas, saltar.',
+      obj:['Mejorar capacidad funcional para AVD','Mantener masa muscular y densidad ósea'],
+      dur:['2 sesiones semanales como mínimo, no consecutivas','20–30 min por sesión'],
+      tipo:['Subir y bajar escaleras','Levantarse y sentarse en la silla','Ejercicios con bandas elásticas','Cargar peso ligero'] },
+    { name:'Flexibilidad', sub:'Aumentan la amplitud articular. Ej: yoga, taichí, pilates, aquagym.',
+      obj:['Mejorar la amplitud articular','Reducir rigidez y dolor'],
+      dur:['2–3 veces por semana','10–20 min por sesión'],
+      tipo:['Yoga','Taichí','Pilates','Estiramientos'] },
+    { name:'Equilibrio y coordinación', sub:'Previenen caídas. Ej: apoyo en un pie, paso talón-punta, lanzar y coger pelotas.',
+      obj:['Mejorar el equilibrio y coordinación','Evitar caídas'],
+      dur:['10–15 minutos por sesión','2–3 veces a la semana'],
+      tipo:['Paso talón-punta','Apoyo en un solo pie','Lanzar y coger pelotas','Saltar','Yoga, taichí'] },
+  ];
+  const ENLACES = ['Ejercicios de calentamiento','La importancia de la hidratación en la actividad física','Ejercicio físico para realizar en casa','Ejercicio en verano: precauciones','Ejercicio para realizar en el exterior'];
+  const FICHAS = [['Aprende a crear hábitos saludables','Crea tu propio plan de actividad física'],['Comienza el fortalecimiento muscular','Ejercita tu musculatura con ejercicios moderados'],['Mejora tu coordinación y equilibrio','Potencia tu condición física mediante la fuerza y la coordinación'],['5 razones para lanzarse al agua','La natación como forma de actividad física aeróbica de intensidad'],['Ejercicios para realizar desde casa','Comienza a activarte y practica estos ejercicios en tu rutina diaria'],['Estiramientos','Movimientos para aumentar la flexibilidad y prevenir lesiones musculares']];
+  const TENCUENTA = ['El riesgo de lesión se minimiza cuando la actividad física aumenta progresivamente: primero la duración, después la intensidad, finalmente la frecuencia.','Comunica a tu Orientador/a Personal cualquier factor de riesgo, síntoma o enfermedad no informada previamente.','Haz siempre ejercicios de calentamiento y estiramientos para reducir el riesgo de lesiones.','Si durante el ejercicio aparece dolor articular o muscular, disnea intensa, mareo, cefalea, dolor torácico o calambres, reduce el ritmo o para y consulta con tu profesional de salud.'];
+  const OMS_BENEFITS = ['Reducción del riesgo de mortalidad por múltiples causas.','Prevención y control de enfermedades cardiovasculares, diabetes, síndrome metabólico, sobrepeso y obesidad.','Mejora la salud ósea: reduce el riesgo de caídas y fracturas.','Mejora la salud mental y el sueño. Reduce ansiedad y depresión.','Disminuye los síntomas de estrés y aumenta la autoestima.','Mejora de la salud cognitiva.'];
+  const OMS_REC = 'La OMS recomienda firmemente realizar actividad física para mantener una función cognitiva normal y reducir el riesgo de deterioro cognitivo.';
+
+  const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  function escalaHTML(e){
+    return `<div class="area-esc">
+      <div class="area-esc-head"><span class="area-esc-t">${esc(e.t)}</span><span class="area-esc-val ${e.variant}">${esc(e.v)}</span></div>
+      <p class="area-esc-d">${esc(e.d)}</p>
+      <div class="area-esc-f"><span class="area-lbl">Fecha de valoración</span><span>21/09/2026</span></div>
+      <div class="area-esc-r"><span class="area-lbl">Rangos e interpretación</span><ul>${e.rangos.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></div>
+      <p class="area-esc-note">El resultado no representa un diagnóstico médico ni pretende sustituir un servicio de atención médica.</p>
+    </div>`;
+  }
+  function accHTML(){
+    return REC.map(r=>`<details class="area-acc-item">
+      <summary><span class="area-acc-tt"><span class="area-acc-name">${esc(r.name)}</span><span class="area-acc-sub">${esc(r.sub)}</span></span><svg class="area-acc-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
+      <div class="area-acc-body">
+        <div class="area-acc-col"><span class="area-lbl">Objetivo</span><ul>${r.obj.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div class="area-acc-col"><span class="area-lbl">Duración / Frecuencia</span><ul>${r.dur.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+        <div class="area-acc-col"><span class="area-lbl">Tipo de actividad</span><ul>${r.tipo.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
+      </div>
+    </details>`).join('');
+  }
+  function infoHTML(){
+    return `<div class="area-links">${ENLACES.map(e=>`<div class="area-link"><span>${esc(e)}</span><span class="area-link-cta">Acceder →</span></div>`).join('')}</div>
+      <h3 class="area-h3">Fichas de trabajo</h3>
+      <div class="area-fichas">${FICHAS.map(([t,d])=>`<div class="area-ficha"><span class="area-ficha-t">${esc(t)}</span><span class="area-ficha-d">${esc(d)}</span><span class="area-ficha-btn">Abrir ficha →</span></div>`).join('')}</div>`;
+  }
+  function checkList(items){ return `<ul class="area-checks">${items.map(i=>`<li><span class="area-check">✓</span><span>${esc(i)}</span></li>`).join('')}</ul>`; }
+
+  function renderArea(slug){
+    const a = AREAS[slug];
+    const host = document.getElementById('area-content');
+    const bc = document.getElementById('area-breadcrumb');
+    if(!a || !host){ if(host) host.innerHTML = '<p class="area-empty">Área no encontrada.</p>'; return; }
+    if(bc) bc.textContent = a.name;
+    const escSection = a.escalas.length
+      ? a.escalas.map(escalaHTML).join('')
+      : '<p class="area-empty">Esta área no incluye escalas de valoración en este informe.</p>';
+    host.innerHTML = `<article class="area-detail">
+      <div class="area-hero ${a.cat} fg-${a.fg}">
+        <div class="area-hero-main"><span class="area-ico"><svg width="26" height="26"><use href="#${a.icon}"/></svg></span><h1 class="area-hero-name">${esc(a.name)}</h1></div>
+        <div class="area-hero-meta"><span class="area-hero-score">${esc(a.score)}</span><span class="area-pill ${a.status}">${esc(a.statusLabel)}</span></div>
+      </div>
+      <div class="area-body">
+        <nav class="area-side" aria-label="Secciones"><div class="area-side-inner">
+          <a href="javascript:void(0)" data-target="a-escalas" class="area-side-link is-active"><span>Resultado de las escalas</span></a>
+          <a href="javascript:void(0)" data-target="a-rec" class="area-side-link"><span>Recomendaciones específicas</span></a>
+          <a href="javascript:void(0)" data-target="a-info" class="area-side-link"><span>Información ampliada</span></a>
+          <a href="javascript:void(0)" data-target="a-ten" class="area-side-link"><span>Ten en cuenta</span></a>
+          <a href="javascript:void(0)" data-target="a-oms" class="area-side-link"><span>Recomendaciones de salud de la OMS</span></a>
+        </div></nav>
+        <div class="area-doc">
+          <section id="a-escalas" class="area-sec"><span class="area-eyebrow">A · Valoración</span><h2 class="area-h2">Resultado de las escalas</h2>${escSection}</section>
+          <section id="a-rec" class="area-sec"><span class="area-eyebrow">B · Pautas clave</span><h2 class="area-h2">Recomendaciones específicas</h2><div class="area-acc">${accHTML()}</div></section>
+          <section id="a-info" class="area-sec"><span class="area-eyebrow">C · Enlaces y fichas</span><h2 class="area-h2">Información ampliada</h2>${infoHTML()}</section>
+          <section id="a-ten" class="area-sec"><span class="area-eyebrow">D · Recuerda</span><h2 class="area-h2">Ten en cuenta</h2>${checkList(TENCUENTA)}</section>
+          <section id="a-oms" class="area-sec area-sec--last"><span class="area-eyebrow">E · Por qué</span><h2 class="area-h2">Recomendaciones de salud de la OMS</h2><p class="area-p">Según la Organización Mundial de la Salud (OMS), los beneficios de realizar actividad física regular son múltiples:</p>${checkList(OMS_BENEFITS)}<div class="area-oms-box"><span class="area-lbl">Recomendación de la OMS</span><p>${esc(OMS_REC)}</p></div></section>
+        </div>
+      </div>
+    </article>`;
+    // side-nav scroll + active state
+    const links = host.querySelectorAll('.area-side-link');
+    links.forEach(l=>l.addEventListener('click', ()=>{
+      const el = document.getElementById(l.dataset.target);
+      if(el){ const hdr=document.querySelector('.app-header')?.offsetHeight||0; window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - hdr - 16, behavior:'smooth'}); }
+      links.forEach(x=>x.classList.toggle('is-active', x===l));
+    }));
+  }
+
+  // Inyecta el botón terciario "Saber más" en cada área de la sección Resultados (informes inicial y anual)
+  function initSaberMas(){
+    document.querySelectorAll('.view[data-view="informes"] .rep-habit').forEach(row=>{
+      if(row.querySelector('.saber-mas')) return;
+      const cat = [...row.classList].find(c=>c.startsWith('cat-'));
+      const slug = CAT_TO_SLUG[cat];
+      if(!slug) return;
+      const inner = row.querySelector('.in') || row;
+      const a = document.createElement('a');
+      a.className = 'saber-mas';
+      a.href = '#/informes/area/' + slug;
+      a.innerHTML = 'Saber más <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+      inner.appendChild(a);
+    });
+  }
 
   // -------- Accordion (Mi evolución) --------
   document.addEventListener('click', (e) => {
@@ -1163,6 +1298,7 @@
     initTextSizeSwitchers();
     initContrastToggles();
     initHideHeaderOnScroll();
+    initSaberMas();
     route();
   });
 })();
