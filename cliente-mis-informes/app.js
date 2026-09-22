@@ -733,21 +733,22 @@
   // ==================== DETALLE DE ÁREA ====================
   const AREAS = {
     'actividad-fisica': { name:'Actividad Física', cat:'cat-fisica', icon:'i-running', fg:'dark', score:'7/10', status:'amber', statusLabel:'MEJORA',
-      escalas:[ {t:'Cuestionario internacional de actividad física (IPAQ)', v:'1.100 MET-min/semana', variant:'amber', d:'IPAQ es un cuestionario internacional de actividad física que indica el tipo y nivel de actividad física que realizas en tu vida cotidiana.', rangos:['Bajo (nivel bajo o inactivo): 0 – 600 MET-min/semana.','Moderado: 600 – 1500 MET-min/semana.','Alto: 1500 – 3000 MET-min/semana (o superior).'] } ] },
+      escalas:[ {t:'Cuestionario internacional de actividad física (IPAQ)', tag:'Moderado', variant:'amber', d:'IPAQ es un cuestionario internacional de actividad física que indica el tipo y nivel de actividad física que realizas en tu vida cotidiana.', rangos:['Bajo (nivel bajo o inactivo): 0 – 600 MET-min/semana.','Moderado: 600 – 1500 MET-min/semana.','Alto: 1500 – 3000 MET-min/semana (o superior).'], nota:'Nota: la clasificación completa del IPAQ tiene en cuenta también los días y la frecuencia semanal de actividad, además de los MET-min/semana.' } ] },
     'nutricion': { name:'Nutrición', cat:'cat-nutricion', icon:'i-apple', fg:'dark', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ',
-      escalas:[ {t:'Índice de Masa Corporal (IMC)', v:'22,0 kg/m²', variant:'green', d:'El IMC es una medida para evaluar si una persona tiene un peso saludable en relación con su altura (kg/m²).', rangos:['<18,5: Peso insuficiente','18,5–24,9: Peso saludable','25–29,9: Sobrepeso','30–34,9: Obesidad tipo I','35–39,9: Obesidad tipo II','40–49,9: Obesidad tipo III','>50: Obesidad tipo IV']},
-                {t:'Cuestionario MEDAS: adherencia a la dieta mediterránea', v:'11 / 14 puntos', variant:'green', d:'MEDAS evalúa el grado de adherencia a la dieta mediterránea mediante 14 ítems sobre frecuencia y tipo de alimentos.', rangos:['Baja adherencia (<9 puntos)','Buena adherencia (≥9 puntos)']} ] },
+      escalas:[ {t:'Índice de Masa Corporal (IMC)', tag:'Peso saludable', variant:'green', d:'El IMC es una medida para evaluar si una persona tiene un peso saludable en relación con su altura (kg/m²).', rangos:['<18,5: Peso insuficiente','18,5–24,9: Peso saludable','25–29,9: Sobrepeso','30–34,9: Obesidad tipo I','35–39,9: Obesidad tipo II','40–49,9: Obesidad tipo III','>50: Obesidad tipo IV']},
+                {t:'Cuestionario MEDAS: adherencia a la dieta mediterránea', tag:'Baja adherencia', variant:'amber', d:'MEDAS evalúa el grado de adherencia a la dieta mediterránea mediante 14 ítems sobre frecuencia y tipo de alimentos.', rangos:['Baja adherencia (<9 puntos)','Buena adherencia (≥9 puntos)']} ] },
     'mente-activa': { name:'Mente Activa', cat:'cat-mente', icon:'i-brain', fg:'light', score:'9/10', status:'green', statusLabel:'SIGUE ASÍ',
-      escalas:[ {t:'Test de Pfeiffer', v:'1 error', variant:'green', d:'Prueba de cribado para detectar posibles signos de deterioro cognitivo (10 preguntas: memoria, atención, razonamiento y cálculo).', rangos:['8–10: posible deterioro cognitivo severo.','5–7: posible deterioro cognitivo moderado.','3–4: posible deterioro cognitivo leve.','0–2: ausencia de posible deterioro cognitivo.']} ] },
+      escalas:[ {t:'Test de Pfeiffer', tag:'Posible deterioro cognitivo moderado', variant:'red', d:'Prueba de cribado para detectar posibles signos de deterioro cognitivo (10 preguntas: memoria, atención, razonamiento y cálculo).', rangos:['8–10: posible deterioro cognitivo severo.','5–7: posible deterioro cognitivo moderado.','3–4: posible deterioro cognitivo leve.','0–2: ausencia de posible deterioro cognitivo.']} ] },
     'bienestar-emocional': { name:'Bienestar Emocional', cat:'cat-bienestar', icon:'i-heart', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ',
-      escalas:[ {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', v:'Ansiedad 2 · Depresión 1', variant:'green', d:'Evalúa la presencia y gravedad de los síntomas de ansiedad y depresión (dos subescalas de 9 ítems cada una).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']} ] },
+      escalas:[ {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', tag:'Probabilidad baja de tener ansiedad', variant:'green', d:'La EADG evalúa la presencia y gravedad de los síntomas de ansiedad y depresión. Consta de dos subescalas: una de ansiedad (9 ítems) y otra de depresión (9 ítems).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']},
+                {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', tag:'Probabilidad baja de tener depresión', variant:'green', d:'La EADG evalúa la presencia y gravedad de los síntomas de ansiedad y depresión. Consta de dos subescalas: una de ansiedad (9 ítems) y otra de depresión (9 ítems).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']} ] },
     'sueno': { name:'Sueño', cat:'cat-sueno', icon:'i-clock', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
     'participacion-social': { name:'Participación Social', cat:'cat-social', icon:'i-users', fg:'light', score:'6/10', status:'amber', statusLabel:'MEJORA', escalas:[] },
     'auditivo-ocular': { name:'Cuidado Ocular y Auditivo', cat:'cat-auditivo', icon:'i-ear', fg:'light', score:'10/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
     'tabaco-alcohol': { name:'Tabaco y Alcohol', cat:'cat-tabaco', icon:'i-leaf', fg:'light', score:'10/10', status:'green', statusLabel:'SIGUE ASÍ',
-      escalas:[ {t:'Test de Fagerström', v:'1 punto', variant:'green', d:'Evalúa la dependencia física y psicológica hacia la nicotina.', rangos:['0–2: dependencia baja a la nicotina.','3–4: dependencia moderada a la nicotina.','5–6: dependencia alta a la nicotina.']},
-                {t:'Test de Richmond', v:'9 puntos', variant:'green', d:'Evalúa el grado de motivación para el abandono del tabaco (10 preguntas).', rangos:['0–3: motivación nula o baja.','4–5: motivación dudosa.','6–7: motivación moderada.','8–10: motivación alta.']},
-                {t:'AUDIT-C', v:'2 puntos', variant:'green', d:'Cuestionario breve (OMS) para detectar problemas relacionados con el consumo de alcohol (3 preguntas).', rangos:['0–4: Consumo de bajo riesgo','5–12: Consumo de riesgo']} ] },
+      escalas:[ {t:'Test de Fagerström', tag:'Dependencia baja a la nicotina', variant:'green', d:'Evalúa la dependencia física y psicológica hacia la nicotina.', rangos:['0–2: dependencia baja a la nicotina.','3–4: dependencia moderada a la nicotina.','5–6: dependencia alta a la nicotina.']},
+                {t:'Test de Richmond', tag:'Motivación moderada para dejar de fumar', variant:'amber', d:'Evalúa el grado de motivación para el abandono del tabaco (10 preguntas).', rangos:['0–3: motivación nula o baja.','4–5: motivación dudosa.','6–7: motivación moderada.','8–10: motivación alta.']},
+                {t:'AUDIT-C', tag:'Consumo de bajo riesgo', variant:'green', d:'Cuestionario breve (OMS) para detectar problemas relacionados con el consumo de alcohol (3 preguntas).', rangos:['0–4: Consumo de bajo riesgo','5–12: Consumo de riesgo'], nota:'Nota: se aplica un punto de corte único; no se diferencia por sexo.'} ] },
   };
   // cat-* (report rows) -> area slug
   const CAT_TO_SLUG = { 'cat-fisica':'actividad-fisica','cat-nutricion':'nutricion','cat-mente':'mente-activa','cat-bienestar':'bienestar-emocional','cat-sueno':'sueno','cat-social':'participacion-social','cat-auditivo':'auditivo-ocular','cat-tabaco':'tabaco-alcohol' };
@@ -757,7 +758,7 @@
     { name:'Aeróbica', sub:'Movimiento rítmico y sostenido. Ej: andar, correr, nadar, ir en bici, patinar.',
       obj:['Mejorar la capacidad funcional','Reducir factores de riesgo cardiovascular','Controlar peso y composición corporal'],
       dur:['Entre 2,5 y 5 horas semanales (moderado)','O 75–150 min/semana a intensidad vigorosa','5 días/semana'],
-      tipo:['Caminar y/o senderismo','Trotar, correr, ir en bici, bailar','Natación, aquagym, gimnasio','Pádel, tenis'] },
+      tipo:['Caminar y/o senderismo','Trotar, correr, ir en bici, bailar','Natación, aquagym, gimnasio'] },
     { name:'Fuerza y resistencia', sub:'Ejercicios que refuerzan la musculatura. Ej: subir escaleras, levantar cargas, saltar.',
       obj:['Mejorar capacidad funcional para AVD','Mantener masa muscular y densidad ósea'],
       dur:['2 sesiones semanales como mínimo, no consecutivas','20–30 min por sesión'],
@@ -777,8 +778,23 @@
   const OMS_BENEFITS = ['Reducción del riesgo de mortalidad por múltiples causas.','Prevención y control de enfermedades cardiovasculares, diabetes, síndrome metabólico, sobrepeso y obesidad.','Mejora la salud ósea: reduce el riesgo de caídas y fracturas.','Mejora la salud mental y el sueño. Reduce ansiedad y depresión.','Disminuye los síntomas de estrés y aumenta la autoestima.','Mejora de la salud cognitiva.'];
   const OMS_REC = 'La OMS recomienda firmemente realizar actividad física para mantener una función cognitiva normal y reducir el riesgo de deterioro cognitivo.';
 
-  // Bibliografía (común a todas las áreas, según Figma "Saber más")
-  const BIBLIO = 'Organización Mundial de la Salud. Reducción del riesgo de deterioro cognitivo y demencia: directrices de la OMS. Ginebra, Suiza: Organización Mundial de la Salud; 2019. Integrated care for older people (ICOPE): Guidance for person-centred assessment and pathways in primary care. Geneva: World Health Organization; 2019 (WHO/FWC/ALC/19.1). Licence: CC BY-NC-SA 3.0 IGO. Livingston G, Huntley J, Liu KY, Costafreda SG, Selbæk G, Alladi S, Ames D, Banerjee S, Burns A, Brayne C, Fox NC, Ferri CP, Gitlin LN, Howard R, Kales HC, Kivimäki M, Larson EB, Nakasujja N, Rockwood K, Samus Q, Shirai K, Singh-Manoux A, Schneider LS, Walsh S, Yao Y, Sommerlad A, Mukadam N. Dementia prevention, intervention, and care: 2024 report of the Lancet standing Commission. Lancet. 2024 Jul 30:S0140-6736(24)01296-0. doi: 10.1016/S0140-6736(24)01296-0. Epub ahead of print. PMID: 39096926. Livingston, G., Huntley, J., Sommerlad, A., Ames, D., Ballard, C., Banerjee, S., ... & Mukadam, N. (2020). Dementia prevention, intervention, and care: 2020 report of the Lancet Commission. The Lancet, 396(10248), 413-446. Yassine, H. N., Samieri, C., Livingston, G., Glass, K., Wagner, M., Tangney, C., ... & Schneider, L. S. (2022). Nutrition state of science and dementia prevention: recommendations of the Nutrition for Dementia Prevention Working Group. The Lancet Healthy Longevity, 3(7), e501-e512. Informe mundial sobre la visión [World report on vision]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0 IGO Directrices de la OMS sobre actividad física y hábitos sedentarios: de un vistazo [WHO guidelines on physical activity and sedentary behaviour: at a glance]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0 IGO. Ministerio de Sanidad. Alimentación saludable. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/alimentacionSaludable Organización Mundial de la Salud. Tabaco: beneficios para la salud de dejar de fumar. 25 de febrero de 2020.Disponible en : https://www.who.int/es/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation Ministerio de Sanidad. Estilos de vida saludables. Prevención del tabaquismo. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/tabaco/home.htm Alcohol. Organización Mundial de la salud. 9 de mayo de 2022. Disponible en: https://www.who.int/es/news-room/fact-sheets/detail/alcohol Estilos de vida saludables. Ministerio de sanidad. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/consumo/falsosMitos/estres/home.htm Global status report on alcohol and health 2018. Geneva: World Health Organization; 2018. Licence: CC BY-NC-SA 3.0 IGO. Manual básico de cuidado del oído y la audición [Basic ear and hearing care resource]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0';
+  // Bibliografía (común a todas las áreas, según Figma "Saber más") — lista con viñetas
+  const BIBLIO = [
+    'Organización Mundial de la Salud. Reducción del riesgo de deterioro cognitivo y demencia: directrices de la OMS. Ginebra, Suiza: Organización Mundial de la Salud; 2019.',
+    'Integrated care for older people (ICOPE): Guidance for person-centred assessment and pathways in primary care. Geneva: World Health Organization; 2019 (WHO/FWC/ALC/19.1). Licence: CC BY-NC-SA 3.0 IGO.',
+    'Livingston G, Huntley J, Liu KY, Costafreda SG, Selbæk G, Alladi S, Ames D, Banerjee S, Burns A, Brayne C, Fox NC, Ferri CP, Gitlin LN, Howard R, Kales HC, Kivimäki M, Larson EB, Nakasujja N, Rockwood K, Samus Q, Shirai K, Singh-Manoux A, Schneider LS, Walsh S, Yao Y, Sommerlad A, Mukadam N. Dementia prevention, intervention, and care: 2024 report of the Lancet standing Commission. Lancet. 2024 Jul 30:S0140-6736(24)01296-0. doi: 10.1016/S0140-6736(24)01296-0. Epub ahead of print. PMID: 39096926.',
+    'Livingston, G., Huntley, J., Sommerlad, A., Ames, D., Ballard, C., Banerjee, S., ... & Mukadam, N. (2020). Dementia prevention, intervention, and care: 2020 report of the Lancet Commission. The Lancet, 396(10248), 413-446.',
+    'Yassine, H. N., Samieri, C., Livingston, G., Glass, K., Wagner, M., Tangney, C., ... & Schneider, L. S. (2022). Nutrition state of science and dementia prevention: recommendations of the Nutrition for Dementia Prevention Working Group. The Lancet Healthy Longevity, 3(7), e501-e512.',
+    'Informe mundial sobre la visión [World report on vision]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0 IGO',
+    'Directrices de la OMS sobre actividad física y hábitos sedentarios: de un vistazo [WHO guidelines on physical activity and sedentary behaviour: at a glance]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0 IGO.',
+    'Ministerio de Sanidad. Alimentación saludable. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/alimentacionSaludable',
+    'Organización Mundial de la Salud. Tabaco: beneficios para la salud de dejar de fumar. 25 de febrero de 2020. Disponible en: https://www.who.int/es/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation',
+    'Ministerio de Sanidad. Estilos de vida saludables. Prevención del tabaquismo. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/tabaco/home.htm',
+    'Alcohol. Organización Mundial de la salud. 9 de mayo de 2022. Disponible en: https://www.who.int/es/news-room/fact-sheets/detail/alcohol',
+    'Estilos de vida saludables. Ministerio de sanidad. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/consumo/falsosMitos/estres/home.htm',
+    'Global status report on alcohol and health 2018. Geneva: World Health Organization; 2018. Licence: CC BY-NC-SA 3.0 IGO.',
+    'Manual básico de cuidado del oído y la audición [Basic ear and hearing care resource]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0',
+  ];
 
   // Nota para áreas cuya valoración es cualitativa (sin escala numérica)
   const NOTE_CUALITATIVA = 'La valoración de esta área se basa en información cualitativa, por lo que los resultados no se expresan mediante la puntuación numérica de una escala.';
@@ -790,8 +806,21 @@
       cards:REC,
       closing:'Los cambios saludables comienzan con sencillos pasos. Nunca ha habido mejor momento para cuidar tu salud. ¡Hagámoslo!' },
     'nutricion': { type:'numbered',
-      intro:'En base a las indicaciones de la OMS, se facilitan 12 recomendaciones y consejos nutricionales prácticos para mantener una alimentación saludable:',
-      items:['Verduras y hortalizas','Fruta','Legumbres','Frutos secos','Cereales integrales','Aceite de oliva virgen','Pescado y huevos','Carne roja procesada','Sal','Azúcar','Bebidas','Lácteos'] },
+      intros:['Según la Organización Mundial de la Salud (OMS), la composición exacta de una alimentación variada, equilibrada y saludable estará determinada por las características de cada persona (edad, sexo, hábitos de vida y grado de actividad física), el contexto cultural, los alimentos disponibles en el lugar y los hábitos alimentarios. No obstante, los principios básicos de la alimentación saludable siguen siendo los mismos.','En base a las indicaciones de la OMS, se facilitan 12 recomendaciones y consejos nutricionales prácticos para mantener una alimentación saludable:'],
+      items:['Verduras y hortalizas','Fruta','Legumbres','Frutos secos','Cereales integrales','Aceite de oliva virgen','Pescado y huevos','Carne roja procesada','Sal','Azúcar','Bebidas','Lácteos'],
+      table:{ title:'Resumen de la frecuencia de consumo recomendada por cada grupo de alimentos', rows:[
+        ['Verduras y hortalizas','Mínimo 2 veces al día'],
+        ['Frutas','Al menos 3 raciones de fruta al día.'],
+        ['Legumbres','De 3 a 4 veces a la semana'],
+        ['Frutos secos','Un puñado cada día es buena opción. Se aconseja consumirlos crudos (no tostados ni con sal).'],
+        ['Cereales integrales','En cada comida. Son opciones recomendables el maíz, mijo, avena, trigo o arroz integral sin procesar.'],
+        ['Aceite de oliva virgen','Consumo de entre 4 y 6 raciones al día.'],
+        ['Pescado y huevos','Consumo pescado 2-3 veces a la semana. Huevos 3-4 veces a la semana.'],
+        ['Carne','Las grasas presentes en el pescado y alimentos de origen vegetal son preferibles. Se puede consumir carne de 3 a 4 veces a la semana (máximo de 1 a 2 raciones de carne roja).'],
+        ['Sal','No añadas sal a las comidas.'],
+        ['Azúcar','No existe un consumo seguro de azúcar; cuanto menos mejor. La OMS recomienda que la ingesta de azúcares libres no sobrepase el 10% de la energía total consumida al día, a pesar de que se indica que una ingesta de menos del 5% tendría beneficios para la salud adicionales.'],
+        ['Bebidas','A diario. La mejor opción siempre es el agua, ya que no contiene alcohol, ni azúcares, ni edulcorantes.'],
+        ['Lácteos','A diario, sin azúcar.'] ] } },
     'mente-activa': { type:'titled',
       intro:'Te recomendamos realizar de forma habitual actividades que permitan mantener la mente activa y entrenar diferentes habilidades cognitivas:',
       closing:'Se aconseja alternar las distintas propuestas y mantener una práctica regular, de manera que la actividad sea variada y pueda incorporarse con facilidad a la rutina diaria.',
@@ -898,10 +927,10 @@
   const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   function escalaHTML(e){
     return `<div class="area-esc">
-      <div class="area-esc-head"><span class="area-esc-t">${esc(e.t)}</span><span class="area-esc-val ${e.variant}">${esc(e.v)}</span></div>
+      <div class="area-esc-head"><span class="area-esc-t">${esc(e.t)}</span><span class="area-esc-val ${e.variant}">${esc(e.tag)}</span></div>
       <p class="area-esc-d">${esc(e.d)}</p>
       <div class="area-esc-f"><span class="area-lbl">Fecha de valoración</span><span>21/09/2026</span></div>
-      <div class="area-esc-r"><span class="area-lbl">Rangos e interpretación</span><ul>${e.rangos.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></div>
+      <div class="area-esc-r"><span class="area-lbl">Rangos e interpretación</span><ul>${e.rangos.map(r=>`<li>${esc(r)}</li>`).join('')}</ul>${e.nota?`<p class="area-esc-rnote">${esc(e.nota)}</p>`:''}</div>
       <p class="area-esc-note">El resultado no representa un diagnóstico médico ni pretende sustituir un servicio de atención médica.</p>
     </div>`;
   }
@@ -937,11 +966,15 @@
     const p = PAUTAS[slug];
     if(!p) return '';
     let html = '';
+    if(p.intros) html += p.intros.map(t=>`<p class="area-p">${esc(t)}</p>`).join('');
     if(p.intro) html += `<p class="area-p">${esc(p.intro)}</p>`;
     if(p.type==='cols'){
       html += `<div class="area-acc">${accHTML(p.cards)}</div>`;
     } else if(p.type==='numbered'){
       html += `<div class="area-pnum">${p.items.map((t,i)=>`<div class="area-pnum-row"><span class="area-pnum-n">${i+1}</span><span class="area-pnum-t">${esc(t)}</span></div>`).join('')}</div>`;
+      if(p.table){
+        html += `<details class="area-acc-item area-ptable"><summary><span class="area-acc-name">${esc(p.table.title)}</span><svg class="area-acc-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary><div class="area-acc-body area-ptable-body"><table><tbody>${p.table.rows.map(([g,f])=>`<tr><th scope="row">${esc(g)}</th><td>${esc(f)}</td></tr>`).join('')}</tbody></table></div></details>`;
+      }
     } else if(p.type==='titled'){
       html += `<div class="area-pcards">${p.cards.map(c=>`<div class="area-pcard"><span class="area-pcard-t">${esc(c.t)}</span>${c.b?`<p class="area-pcard-b">${esc(c.b)}</p>`:''}${c.list?`<ul class="area-pcard-list">${c.list.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</div>`).join('')}</div>`;
     } else if(p.type==='grouped'){
@@ -982,21 +1015,28 @@
           <section id="a-info" class="area-card"><h2 class="area-h2">Información ampliada</h2>${infoHTML()}</section>
           <section id="a-ten" class="area-card"><h2 class="area-h2">Ten en cuenta</h2>${tenHTML()}</section>
           <section id="a-oms" class="area-card"><h2 class="area-h2">Recomendaciones de salud de la OMS</h2><p class="area-p">Según la Organización Mundial de la Salud (OMS), los beneficios de realizar actividad física regular son múltiples:</p>${omsHTML()}<p class="area-p">${esc(OMS_REC)}</p></section>
-          <section id="a-biblio" class="area-card"><h2 class="area-h2">Bibliografía</h2><p class="area-biblio">${esc(BIBLIO)}</p></section>
+          <section id="a-biblio" class="area-card"><h2 class="area-h2">Bibliografía</h2><ul class="area-biblio">${BIBLIO.map(b=>`<li>${esc(b)}</li>`).join('')}</ul></section>
         </div>
       </div>
     </article>`;
+    // Altura del chrome fijo superior (header + tab-bar visible) para no tapar el destino al hacer scroll
+    const chromeH = ()=>{
+      const h = document.querySelector('.app-header')?.offsetHeight || 0;
+      const tb = document.querySelector('.tab-bar');
+      const tbh = (tb && tb.offsetParent !== null) ? tb.offsetHeight : 0;
+      return h + tbh;
+    };
     const links = [...host.querySelectorAll('.area-side-link')];
     links.forEach(l=>l.addEventListener('click', ()=>{
       const el = document.getElementById(l.dataset.target);
-      if(el){ const hdr=document.querySelector('.app-header')?.offsetHeight||0; window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - hdr - 28, behavior:'smooth'}); }
+      if(el){ window.scrollTo({top: el.getBoundingClientRect().top + window.scrollY - chromeH() - 20, behavior:'smooth'}); }
       links.forEach(x=>x.classList.toggle('is-active', x===l));
     }));
     // scroll-spy: resalta la sección visible
     if(window.__areaSpy) window.removeEventListener('scroll', window.__areaSpy);
     const secs = links.map(l=>document.getElementById(l.dataset.target)).filter(Boolean);
     const spy = ()=>{
-      const off = (document.querySelector('.app-header')?.offsetHeight||0) + 130;
+      const off = chromeH() + 24;
       let idx = 0;
       secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top <= off) idx = i; });
       links.forEach((x,i)=>x.classList.toggle('is-active', i===idx));
