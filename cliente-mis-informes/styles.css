@@ -4564,16 +4564,16 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 
 /* ==================== DETALLE DE ÁREA ==================== */
 .area-detail{ display:flex; flex-direction:column; gap:24px; padding-top:8px; }
-.area-hero{ display:flex; align-items:stretch; border-radius:24px; overflow:hidden; }
-.area-hero-main{ flex:1 1 62%; min-width:0; background:var(--cat); display:flex; align-items:center; gap:18px; padding:24px 28px; color:#fff; }
-.area-hero.fg-dark .area-hero-main{ color:#1F2A28; }
+/* Header de área (Figma "Saber más": panel color sólido, sin puntuación, tag en badge) */
+.area-hero{ border-radius:40px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06); }
+.area-hero-panel{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:24px; }
+.area-hero-left{ display:flex; align-items:center; gap:24px; min-width:0; }
 .area-ico{ flex:none; display:block; line-height:0; }
-.area-ico svg{ width:56px; height:56px; display:block; }
-.area-hero-name{ margin:0; font-size:30px; font-weight:700; letter-spacing:-.01em; color:inherit; }
-.area-hero-meta{ flex:none; min-width:250px; display:flex; align-items:center; justify-content:flex-end; gap:16px; padding:24px 28px; }
-.area-hero-score{ font-size:22px; font-weight:600; color:#0F1B17; }
-.area-pill{ flex:none; border-radius:999px; padding:6px 14px; font-size:12.5px; font-weight:700; letter-spacing:.04em; color:#fff; white-space:nowrap; }
-.area-pill.amber{ background:#C7961F; } .area-pill.green{ background:#0E8343; } .area-pill.red{ background:#A52222; }
+.area-ico svg{ width:64px; height:64px; display:block; }
+.area-hero-name{ margin:0; font-size:32px; font-weight:600; letter-spacing:-.01em; color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.area-tag-badge{ flex:none; display:inline-flex; align-items:center; padding:16px; border-radius:24px; }
+.area-tag{ display:inline-flex; align-items:center; border-radius:12px; padding:5px 13px; font-size:15px; font-weight:700; letter-spacing:.02em; color:#fff; white-space:nowrap; }
+.area-tag.amber{ background:#C7961F; } .area-tag.green{ background:#0E8343; } .area-tag.red{ background:#A52222; }
 
 .area-body{ display:flex; gap:24px; align-items:flex-start; }
 .area-side{ flex:none; width:236px; position:sticky; top:calc(var(--header-h) + 32px); align-self:flex-start; }
@@ -4614,6 +4614,30 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 .area-acc-item[open] .area-acc-body{ display:grid; }
 .area-acc-col .area-lbl{ margin-bottom:10px; }
 
+/* Escala cualitativa (áreas sin escala numérica) */
+.area-esc-cuali{ background:#EEF1F0; border-radius:12px; padding:18px 20px; font-size:15px; line-height:1.55; color:#5B6A6F; }
+
+/* Pautas clave */
+.area-p-closing{ color:#5B6A6F; }
+.area-pcards{ display:flex; flex-direction:column; gap:12px; }
+.area-pcard{ background:#E6ECEB; border:1.5px solid #E1E5E4; border-radius:16px; padding:20px 24px; display:flex; flex-direction:column; gap:8px; }
+.area-pcard-t{ font-size:18px; font-weight:700; color:#0F1B17; }
+.area-pcard-b{ margin:0; font-size:15px; line-height:1.55; color:#0F1B17; }
+.area-pcard-list{ margin:2px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
+.area-pcard-list li{ font-size:15px; line-height:1.55; color:#0F1B17; padding-left:18px; position:relative; }
+.area-pcard-list li::before{ content:"•"; position:absolute; left:2px; color:#336661; }
+.area-pgroup{ gap:16px; }
+.area-pblock{ display:flex; flex-direction:column; gap:6px; }
+.area-pblock-h{ font-size:15px; font-weight:700; color:#0F1B17; }
+/* Numeradas (Nutrición) */
+.area-pnum{ display:flex; flex-direction:column; gap:10px; }
+.area-pnum-row{ display:flex; align-items:center; gap:16px; background:#E6ECEB; border:1.5px solid #E1E5E4; border-radius:14px; padding:16px 20px; }
+.area-pnum-n{ flex:none; width:32px; height:32px; border-radius:10px; background:#004039; color:#fff; font-size:15px; font-weight:700; display:grid; place-items:center; }
+.area-pnum-t{ font-size:16px; font-weight:600; color:#0F1B17; }
+
+/* Bibliografía */
+.area-biblio{ margin:0; font-size:13px; line-height:1.6; color:#5B6A6F; word-break:break-word; }
+
 .area-info-block{ display:flex; flex-direction:column; gap:14px; }
 .area-info-block + .area-info-block{ margin-top:12px; }
 .area-subhead{ display:flex; align-items:center; gap:12px; font-size:20px; font-weight:700; color:#0F1B17; }
@@ -4643,7 +4667,8 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 .saber-mas:hover svg{ transform:translateX(3px); }
 
 @media (max-width:1023px){
-  .area-hero-name{ font-size:24px; }
+  .area-hero{ border-radius:28px; }
+  .area-hero-name{ font-size:26px; }
   .area-body{ flex-direction:column; gap:16px; }
   .area-side{ width:100%; position:static; }
   .area-side-inner{ flex-direction:row; flex-wrap:wrap; gap:6px; }
@@ -4653,9 +4678,12 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
   .area-fichas{ grid-template-columns:1fr; }
 }
 @media (max-width:767px){
-  .area-hero{ flex-direction:column; }
-  .area-hero-meta{ min-width:0; justify-content:flex-start; }
-  .area-hero-name{ font-size:22px; }
+  .area-hero-panel{ padding:16px; gap:12px; }
+  .area-hero-left{ gap:14px; }
+  .area-ico svg{ width:52px; height:52px; }
+  .area-hero-name{ font-size:20px; }
+  .area-tag-badge{ padding:10px; border-radius:18px; }
+  .area-tag{ font-size:13px; }
   .area-card{ padding:24px 18px; }
   .area-esc-head{ flex-direction:column; }
 }

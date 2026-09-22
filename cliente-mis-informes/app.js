@@ -777,6 +777,103 @@
   const OMS_BENEFITS = ['Reducción del riesgo de mortalidad por múltiples causas.','Prevención y control de enfermedades cardiovasculares, diabetes, síndrome metabólico, sobrepeso y obesidad.','Mejora la salud ósea: reduce el riesgo de caídas y fracturas.','Mejora la salud mental y el sueño. Reduce ansiedad y depresión.','Disminuye los síntomas de estrés y aumenta la autoestima.','Mejora de la salud cognitiva.'];
   const OMS_REC = 'La OMS recomienda firmemente realizar actividad física para mantener una función cognitiva normal y reducir el riesgo de deterioro cognitivo.';
 
+  // Bibliografía (común a todas las áreas, según Figma "Saber más")
+  const BIBLIO = 'Organización Mundial de la Salud. Reducción del riesgo de deterioro cognitivo y demencia: directrices de la OMS. Ginebra, Suiza: Organización Mundial de la Salud; 2019. Integrated care for older people (ICOPE): Guidance for person-centred assessment and pathways in primary care. Geneva: World Health Organization; 2019 (WHO/FWC/ALC/19.1). Licence: CC BY-NC-SA 3.0 IGO. Livingston G, Huntley J, Liu KY, Costafreda SG, Selbæk G, Alladi S, Ames D, Banerjee S, Burns A, Brayne C, Fox NC, Ferri CP, Gitlin LN, Howard R, Kales HC, Kivimäki M, Larson EB, Nakasujja N, Rockwood K, Samus Q, Shirai K, Singh-Manoux A, Schneider LS, Walsh S, Yao Y, Sommerlad A, Mukadam N. Dementia prevention, intervention, and care: 2024 report of the Lancet standing Commission. Lancet. 2024 Jul 30:S0140-6736(24)01296-0. doi: 10.1016/S0140-6736(24)01296-0. Epub ahead of print. PMID: 39096926. Livingston, G., Huntley, J., Sommerlad, A., Ames, D., Ballard, C., Banerjee, S., ... & Mukadam, N. (2020). Dementia prevention, intervention, and care: 2020 report of the Lancet Commission. The Lancet, 396(10248), 413-446. Yassine, H. N., Samieri, C., Livingston, G., Glass, K., Wagner, M., Tangney, C., ... & Schneider, L. S. (2022). Nutrition state of science and dementia prevention: recommendations of the Nutrition for Dementia Prevention Working Group. The Lancet Healthy Longevity, 3(7), e501-e512. Informe mundial sobre la visión [World report on vision]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0 IGO Directrices de la OMS sobre actividad física y hábitos sedentarios: de un vistazo [WHO guidelines on physical activity and sedentary behaviour: at a glance]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0 IGO. Ministerio de Sanidad. Alimentación saludable. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/alimentacionSaludable Organización Mundial de la Salud. Tabaco: beneficios para la salud de dejar de fumar. 25 de febrero de 2020.Disponible en : https://www.who.int/es/news-room/questions-and-answers/item/tobacco-health-benefits-of-smoking-cessation Ministerio de Sanidad. Estilos de vida saludables. Prevención del tabaquismo. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/tabaco/home.htm Alcohol. Organización Mundial de la salud. 9 de mayo de 2022. Disponible en: https://www.who.int/es/news-room/fact-sheets/detail/alcohol Estilos de vida saludables. Ministerio de sanidad. Disponible en: https://estilosdevidasaludable.sanidad.gob.es/consumo/falsosMitos/estres/home.htm Global status report on alcohol and health 2018. Geneva: World Health Organization; 2018. Licence: CC BY-NC-SA 3.0 IGO. Manual básico de cuidado del oído y la audición [Basic ear and hearing care resource]. Ginebra: Organización Mundial de la Salud; 2020. Licencia: CC BY-NC-SA 3.0';
+
+  // Nota para áreas cuya valoración es cualitativa (sin escala numérica)
+  const NOTE_CUALITATIVA = 'La valoración de esta área se basa en información cualitativa, por lo que los resultados no se expresan mediante la puntuación numérica de una escala.';
+
+  // Pautas clave — contenido específico por área (Figma "Saber más")
+  const PAUTAS = {
+    'actividad-fisica': { type:'cols',
+      intro:'Los tipos más importantes de actividad física se pueden clasificar en 4 grandes grupos según la capacidad trabajada:',
+      cards:REC,
+      closing:'Los cambios saludables comienzan con sencillos pasos. Nunca ha habido mejor momento para cuidar tu salud. ¡Hagámoslo!' },
+    'nutricion': { type:'numbered',
+      intro:'En base a las indicaciones de la OMS, se facilitan 12 recomendaciones y consejos nutricionales prácticos para mantener una alimentación saludable:',
+      items:['Verduras y hortalizas','Fruta','Legumbres','Frutos secos','Cereales integrales','Aceite de oliva virgen','Pescado y huevos','Carne roja procesada','Sal','Azúcar','Bebidas','Lácteos'] },
+    'mente-activa': { type:'titled',
+      intro:'Te recomendamos realizar de forma habitual actividades que permitan mantener la mente activa y entrenar diferentes habilidades cognitivas:',
+      closing:'Se aconseja alternar las distintas propuestas y mantener una práctica regular, de manera que la actividad sea variada y pueda incorporarse con facilidad a la rutina diaria.',
+      cards:[
+        {t:'Lectura',b:'Leer libros, prensa, revistas u otros textos y comentar o resumir después su contenido.'},
+        {t:'Escritura',b:'Redactar pequeños textos, relatos, cartas, recuerdos o experiencias personales.'},
+        {t:'Pasatiempos',b:'Realizar crucigramas, sudokus, sopas de letras, puzles, acertijos y otros juegos de lógica.'},
+        {t:'Juegos de mesa',b:'Jugar a cartas, dominó, ajedrez, damas u otros juegos que impliquen seguir reglas y tomar decisiones.'},
+        {t:'Cálculo',b:'Realizar operaciones sencillas, series numéricas o pequeños problemas relacionados con situaciones cotidianas.'},
+        {t:'Juegos de palabras',b:'Realizar actividades de vocabulario, formar palabras, buscar sinónimos o encontrar palabras relacionadas.'},
+        {t:'Aprendizaje',b:'Adquirir nuevos conocimientos o aprender habilidades nuevas, como un idioma o una actividad diferente.'},
+        {t:'Juegos interactivos',b:'Utilizar de forma habitual las diferentes propuestas disponibles en el Portal del Cliente, variando los ejercicios y su nivel de dificultad.'},
+        {t:'Fichas de estimulación',b:'Completar los materiales disponibles en la plataforma de contenidos, siguiendo las indicaciones y adaptando la dificultad cuando sea necesario.'} ] },
+    'bienestar-emocional': { type:'titled',
+      intro:'A continuación, se recogen una serie de recomendaciones orientadas a promover y mantener el bienestar emocional:',
+      cards:[
+        {t:'Conexiones sociales',b:'Mantener relaciones sociales y establecer conexiones con otras personas es fundamental para el bienestar emocional.'},
+        {t:'Hábitos saludables',b:'Hacer ejercicio físico de manera regular, llevar una dieta equilibrada y saludable, evitar el consumo de alcohol y tabaco, serían ejemplos de hábitos saludables que pueden mejorar la salud emocional.'},
+        {t:'Motivación',b:'Identificar actividades, intereses y objetivos que resulten significativos puede favorecer la motivación y la satisfacción personal. Es recomendable reservar tiempo para aquellas actividades que proporcionen interés, disfrute o sensación de realización.'},
+        {t:'Objetivos alcanzables',b:'Plantear objetivos alcanzables y adaptados a las circunstancias personales ayuda a evitar la frustración y el desánimo.'},
+        {t:'Emociones positivas',b:'Prestar atención a las experiencias agradables y reconocer los propios logros puede contribuir al bienestar emocional. Se recomienda valorar los pequeños avances, disfrutar de los momentos positivos y dedicar tiempo a actividades gratificantes.'},
+        {t:'Manejo del estrés',b:'Desarrollar estrategias para afrontar el estrés y gestionar las emociones puede facilitar la adaptación a las demandas de la vida cotidiana. Técnicas como la respiración, la relajación, la meditación o el mindfulness pueden ser recursos útiles.'},
+        {t:'Lista de actividades para una mente sana', list:['Yoga.','Taichí.','Pilates.','Meditación.','Musicoterapia o terapia artística.','Contacto social: quedar para comer con un amigo/a de forma regular; visitar a familiares, participar en eventos, acudir a un club social, etc.'] } ] },
+    'sueno': { type:'titled',
+      intro:'A continuación, te recomendamos las siguientes pautas de higiene del sueño:',
+      cards:[
+        {t:'Horario',b:'Establece un horario regular tanto para irte a dormir como para despertarte.'},
+        {t:'Desconexión digital',b:'Evita realizar otras actividades en la cama como ver la TV, escuchar la radio, usar dispositivos móviles.'},
+        {t:'Sustancias excitantes',b:'Evita la ingesta de bebidas estimulantes que contengan cafeína, teína o cacao y evita el tabaco, el alcohol y las cenas copiosas.'},
+        {t:'Actividad física',b:'Haz ejercicio regularmente, pero no 3 horas antes de dormir.'},
+        {t:'Indumentaria',b:'Usa ropa de cama cómoda y acogedora.'},
+        {t:'Entorno',b:'Duerme en ambientes tranquilos y no ruidosos, con adecuada temperatura, ventilación y oscuridad.'} ] },
+    'participacion-social': { type:'titled',
+      intro:'A continuación, se proponen una serie de recomendaciones orientadas a establecer una rutina significativa que favorezca la conexión con otras personas y la realización de actividades gratificantes:',
+      cards:[
+        {t:'Contacto social',b:'Mantener contacto regular con familiares, amistades y otras personas del entorno, mediante encuentros presenciales, llamadas u otras formas de comunicación.'},
+        {t:'Participación social y voluntariado',b:'Apuntarte a algún club, voluntariado o formar parte de alguna asociación ligada a tus intereses.'},
+        {t:'Rutas culturales',b:'Puedes encontrar una variedad de opciones turísticas en la página web de tu comunidad.'},
+        {t:'Visitar espacios al aire libre',b:'Hay numerosas posibilidades para disfrutar de parques, plazas, jardines, rutas verdes y realizar actividades al aire libre.'} ] },
+    'tabaco-alcohol': { type:'grouped',
+      intro:'A continuación, se recogen algunas recomendaciones relacionadas con el consumo de alcohol y tabaco, orientadas a favorecer hábitos saludables:',
+      groups:[
+        {t:'Tabaco', blocks:[
+          {h:'Evitar el consumo de tabaco', b:'Se recomienda no fumar ni utilizar productos de tabaco, evitando también mantener este hábito en espacios cotidianos.'},
+          {h:'Vivir en un ambiente libre de humo', b:'No existe un nivel seguro de exposición al humo del tabaco. Se recomienda evitar los espacios donde se fuma y procurar que no se fume en casa ni en el coche, protegiendo así tanto la propia salud como la de las personas del entorno.'} ]},
+        {t:'Alcohol', blocks:[
+          {h:'Evitar el consumo de alcohol', b:'Se recomienda evitar el consumo de bebidas alcohólicas como parte de un estilo de vida saludable.'} ]} ] },
+    'auditivo-ocular': { type:'grouped',
+      groups:[
+        {intro:'A continuación, te recomendamos una serie de pautas para cuidar tu capacidad auditiva:', t:'Capacidad auditiva', blocks:[
+          {h:'Higiene auditiva', list:[
+            'Mantener una correcta higiene auditiva, es decir, un cuidado óptimo de tus oídos, evitando que se puedan dañar por prácticas perjudiciales que mantenemos en el tiempo.',
+            'Lava y seca tus oídos con una toalla. Deja algo de cera para protegerte.',
+            'Evita introducir objetos o bastoncillos de algodón para evitar tapones o lesiones.',
+            'Evita los sonidos fuertes o ruidos de alta intensidad.',
+            'Utiliza protección auditiva en entornos ruidosos.',
+            'No escuches música a alto volumen a través de auriculares. Mantén el volumen por debajo del 60% del máximo y limita el tiempo de exposición.',
+            'Usa tapones cuando practiques deportes acuáticos y evita nadar en agua sucia.',
+            'Acude a un profesional de la salud si el oído supura líquido o si tienes un tapón o cuerpo extraño.',
+            'No uses aceite, hierbas o remedios caseros, solo medicamentos prescritos por un profesional de salud.'] },
+          {h:'Seguimiento y valoración periódica', b:'Un seguimiento y valoración periódica para la prevención, la identificación y el tratamiento oportuno de la pérdida de audición.'},
+          {h:'Conciencia e información', b:'Tomar conciencia de la importancia de la pérdida de audición e informarse acerca de los beneficios de la rehabilitación auditiva (ver enlaces de ampliación).'},
+          {h:'Medicación', b:'Revisar la medicación con tu profesional de la salud de referencia para detectar posibles ototoxicidades.'} ]},
+        {intro:'A continuación, te proponemos una serie de pautas para cuidar tu capacidad ocular:', t:'Capacidad ocular', blocks:[
+          {h:'Higiene ocular', b:'Mantener una correcta higiene ocular ayuda a mejorar el bienestar visual:', list:[
+            'Mantén una buena hidratación ocular con lágrimas artificiales.',
+            'Mantén un ambiente ventilado y una temperatura confortable.',
+            'Mantén una buena iluminación, trabaja con luz natural. De utilizar luz artificial, evita la luz directamente a los ojos y las sombras, que producen fatiga ocular.',
+            'Evitar fumar ya que es un factor de riesgo para desarrollar degeneración macular.',
+            'Realiza una alimentación rica en vitamina A (lácteos, carne, pescado, huevos, legumbres, verduras como zanahorias).',
+            'Evita la visualización prolongada de medios electrónicos.',
+            'Descansar la vista cada 20 minutos.',
+            'Realiza actividades al aire libre para reducir el estrés visual.',
+            'Lávate las manos frecuentemente y evita frotar los ojos y usar cosméticos.',
+            'Protege tus ojos de la luz solar usando gafas de sol con filtro UV y sombreros.',
+            'Acude a revisiones periódicas con profesionales de la salud.'] },
+          {h:'Seguimiento y valoración periódica', b:'Un seguimiento y valoración periódica para la prevención, la identificación y el tratamiento oportuno de la pérdida de visión.'},
+          {h:'Conciencia e información', b:'Tomar conciencia de la importancia de la pérdida de visión y fomentar la prevención de las afecciones oculares y la deficiencia visual, a través de una atención oftalmológica integrada y centrada en la persona.'} ]} ] },
+  };
+  // Color sólido de cada área (fondo del panel del header)
+  const AREA_COLOR = { 'actividad-fisica':'#FEC646','nutricion':'#9EC938','mente-activa':'#16AA9C','bienestar-emocional':'#C763B0','sueno':'#5E56B0','participacion-social':'#DF353F','auditivo-ocular':'#EE5A20','tabaco-alcohol':'#4BA8DF' };
+
   // Tintes exactos de cada área (fondo del panel derecho del header + fondo del icono)
   const AREA_TINT = { 'actividad-fisica':'#FCF6E3','nutricion':'#F2F7E5','mente-activa':'#E4F3F1','bienestar-emocional':'#F7ECF4','sueno':'#ECEBF5','participacion-social':'#FBEDEE','auditivo-ocular':'#FDF0E9','tabaco-alcohol':'#EAF4FB' };
   // Iconos exactos exportados de Figma (64x64, incluyen su fondo tinte)
@@ -808,8 +905,8 @@
       <p class="area-esc-note">El resultado no representa un diagnóstico médico ni pretende sustituir un servicio de atención médica.</p>
     </div>`;
   }
-  function accHTML(){
-    return REC.map(r=>`<details class="area-acc-item">
+  function accHTML(cards){
+    return (cards||REC).map(r=>`<details class="area-acc-item">
       <summary><span class="area-acc-tt"><span class="area-acc-name">${esc(r.name)}</span><span class="area-acc-sub">${esc(r.sub)}</span></span><svg class="area-acc-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></summary>
       <div class="area-acc-body">
         <div class="area-acc-col"><span class="area-lbl">Objetivo</span><ul>${r.obj.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>
@@ -832,6 +929,27 @@
   function omsHTML(){
     return `<ul class="area-checks area-checks--oms">${OMS_BENEFITS.map(i=>`<li><span class="area-omscheck">${OMS_CHECK}</span><span>${esc(i)}</span></li>`).join('')}</ul>`;
   }
+  // Pautas clave — render específico por tipo de layout de cada área
+  function pautaBlockHTML(b){
+    return `<div class="area-pblock"><span class="area-pblock-h">${esc(b.h)}</span>${b.b?`<p class="area-pcard-b">${esc(b.b)}</p>`:''}${b.list?`<ul class="area-pcard-list">${b.list.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</div>`;
+  }
+  function pautasHTML(slug){
+    const p = PAUTAS[slug];
+    if(!p) return '';
+    let html = '';
+    if(p.intro) html += `<p class="area-p">${esc(p.intro)}</p>`;
+    if(p.type==='cols'){
+      html += `<div class="area-acc">${accHTML(p.cards)}</div>`;
+    } else if(p.type==='numbered'){
+      html += `<div class="area-pnum">${p.items.map((t,i)=>`<div class="area-pnum-row"><span class="area-pnum-n">${i+1}</span><span class="area-pnum-t">${esc(t)}</span></div>`).join('')}</div>`;
+    } else if(p.type==='titled'){
+      html += `<div class="area-pcards">${p.cards.map(c=>`<div class="area-pcard"><span class="area-pcard-t">${esc(c.t)}</span>${c.b?`<p class="area-pcard-b">${esc(c.b)}</p>`:''}${c.list?`<ul class="area-pcard-list">${c.list.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}</div>`).join('')}</div>`;
+    } else if(p.type==='grouped'){
+      html += `<div class="area-pcards">${p.groups.map(g=>`${g.intro?`<p class="area-p">${esc(g.intro)}</p>`:''}<div class="area-pcard area-pgroup"><span class="area-pcard-t">${esc(g.t)}</span>${g.blocks.map(pautaBlockHTML).join('')}</div>`).join('')}</div>`;
+    }
+    if(p.closing) html += `<p class="area-p area-p-closing">${esc(p.closing)}</p>`;
+    return html;
+  }
 
   function renderArea(slug){
     const a = AREAS[slug];
@@ -841,26 +959,30 @@
     if(bc) bc.textContent = a.name;
     const escSection = a.escalas.length
       ? a.escalas.map(escalaHTML).join('')
-      : '<p class="area-empty">Esta área no incluye escalas de valoración en este informe.</p>';
+      : `<div class="area-esc-cuali">${esc(NOTE_CUALITATIVA)}</div>`;
     host.innerHTML = `<article class="area-detail">
-      <div class="area-hero ${a.cat} fg-${a.fg}">
-        <div class="area-hero-main"><span class="area-ico">${AREA_ICONS[slug]||''}</span><h1 class="area-hero-name">${esc(a.name)}</h1></div>
-        <div class="area-hero-meta" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-hero-score">${esc(a.score)}</span><span class="area-pill ${a.status}">${esc(a.statusLabel)}</span></div>
+      <div class="area-hero">
+        <div class="area-hero-panel" style="background:${AREA_COLOR[slug]||'#004039'}">
+          <div class="area-hero-left"><span class="area-ico">${AREA_ICONS[slug]||''}</span><h1 class="area-hero-name">${esc(a.name)}</h1></div>
+          <div class="area-tag-badge" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-tag ${a.status}">${esc(a.statusLabel)}</span></div>
+        </div>
       </div>
       <div class="area-body">
         <nav class="area-side" aria-label="Secciones"><div class="area-side-inner">
           <a href="javascript:void(0)" data-target="a-escalas" class="area-side-link is-active"><span>Resultado de las escalas</span></a>
-          <a href="javascript:void(0)" data-target="a-rec" class="area-side-link"><span>Recomendaciones específicas</span></a>
+          <a href="javascript:void(0)" data-target="a-pautas" class="area-side-link"><span>Pautas clave</span></a>
           <a href="javascript:void(0)" data-target="a-info" class="area-side-link"><span>Información ampliada</span></a>
           <a href="javascript:void(0)" data-target="a-ten" class="area-side-link"><span>Ten en cuenta</span></a>
           <a href="javascript:void(0)" data-target="a-oms" class="area-side-link"><span>Recomendaciones de salud de la OMS</span></a>
+          <a href="javascript:void(0)" data-target="a-biblio" class="area-side-link"><span>Bibliografía</span></a>
         </div></nav>
         <div class="area-doc">
           <section id="a-escalas" class="area-card"><h2 class="area-h2">Resultado de las escalas</h2>${escSection}</section>
-          <section id="a-rec" class="area-card"><h2 class="area-h2">Recomendaciones específicas</h2><div class="area-acc">${accHTML()}</div></section>
+          <section id="a-pautas" class="area-card"><h2 class="area-h2">Pautas clave</h2>${pautasHTML(slug)}</section>
           <section id="a-info" class="area-card"><h2 class="area-h2">Información ampliada</h2>${infoHTML()}</section>
           <section id="a-ten" class="area-card"><h2 class="area-h2">Ten en cuenta</h2>${tenHTML()}</section>
           <section id="a-oms" class="area-card"><h2 class="area-h2">Recomendaciones de salud de la OMS</h2><p class="area-p">Según la Organización Mundial de la Salud (OMS), los beneficios de realizar actividad física regular son múltiples:</p>${omsHTML()}<p class="area-p">${esc(OMS_REC)}</p></section>
+          <section id="a-biblio" class="area-card"><h2 class="area-h2">Bibliografía</h2><p class="area-biblio">${esc(BIBLIO)}</p></section>
         </div>
       </div>
     </article>`;
