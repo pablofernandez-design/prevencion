@@ -4630,22 +4630,30 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 .area-pgroup{ gap:16px; }
 .area-pblock{ display:flex; flex-direction:column; gap:6px; }
 .area-pblock-h{ font-size:15px; font-weight:700; color:#0F1B17; }
-/* Numeradas (Nutrición) */
-.area-pnum{ display:flex; flex-direction:column; gap:10px; }
-.area-pnum-row{ display:flex; align-items:center; gap:16px; background:#E6ECEB; border:1.5px solid #E1E5E4; border-radius:14px; padding:16px 20px; }
-.area-pnum-n{ flex:none; width:32px; height:32px; border-radius:10px; background:#004039; color:#fff; font-size:15px; font-weight:700; display:grid; place-items:center; }
-.area-pnum-t{ font-size:16px; font-weight:600; color:#0F1B17; }
 
-/* Resumen de frecuencia (Nutrición): acordeón con tabla */
-.area-ptable{ margin-top:4px; }
-.area-ptable summary{ align-items:flex-start; }
-.area-ptable .area-acc-name{ font-size:16px; line-height:1.4; }
-.area-ptable-body{ display:none; padding:0; }
-.area-ptable[open] .area-ptable-body{ display:block; }
-.area-ptable table{ width:100%; border-collapse:collapse; }
-.area-ptable th, .area-ptable td{ text-align:left; vertical-align:top; padding:16px 24px; font-size:15px; line-height:1.55; color:#0F1B17; border-top:1px solid #E1E5E4; }
-.area-ptable th{ width:32%; font-weight:700; }
-.area-ptable td{ font-weight:400; color:#3A4A4F; }
+/* Numeradas (Nutrición): acordeón expandible por grupo de alimentos */
+.area-pnum{ display:flex; flex-direction:column; gap:10px; }
+.area-pnum-item{ background:#E6ECEB; border:1.5px solid #E1E5E4; border-radius:14px; overflow:hidden; }
+.area-pnum-item summary{ list-style:none; cursor:pointer; display:flex; align-items:center; gap:16px; padding:16px 20px; }
+.area-pnum-item summary::-webkit-details-marker{ display:none; }
+.area-pnum-n{ flex:none; width:32px; height:32px; border-radius:10px; background:#004039; color:#fff; font-size:15px; font-weight:700; display:grid; place-items:center; }
+.area-pnum-t{ flex:1; font-size:16px; font-weight:600; color:#0F1B17; }
+.area-pnum-chev{ flex:none; color:#5B6A6F; transition:transform .2s; }
+.area-pnum-item[open] .area-pnum-chev{ transform:rotate(180deg); }
+.area-pnum-body{ display:none; padding:0 20px 18px 68px; }
+.area-pnum-item[open] .area-pnum-body{ display:block; }
+.area-pnum-body p{ margin:0; font-size:15px; line-height:1.55; color:#3A4A4F; }
+.area-pnum-body ul{ margin:6px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
+.area-pnum-body li{ position:relative; padding-left:18px; font-size:15px; line-height:1.55; color:#3A4A4F; }
+.area-pnum-body li::before{ content:"•"; position:absolute; left:2px; color:#336661; }
+
+/* Resumen de frecuencia (Nutrición): tarjeta fija con tabla (no colapsa) */
+.area-ptable-static{ background:#fff; border:1.5px solid #E1E5E4; border-radius:16px; overflow:hidden; margin-top:4px; }
+.area-ptable-title{ background:#E6ECEB; padding:20px 24px; font-size:18px; font-weight:700; color:#0F1B17; }
+.area-ptable-static table{ width:100%; border-collapse:collapse; }
+.area-ptable-static th, .area-ptable-static td{ text-align:left; vertical-align:top; padding:16px 24px; font-size:15px; line-height:1.55; border-top:1px solid #E1E5E4; }
+.area-ptable-static th{ width:32%; font-weight:700; color:#0F1B17; }
+.area-ptable-static td{ font-weight:400; color:#3A4A4F; }
 
 /* Bibliografía (lista con viñetas, como en Figma) */
 .area-biblio{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:10px; }
@@ -4701,6 +4709,7 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
   .area-card{ padding:24px 18px; }
   .area-esc-head{ flex-direction:column; }
   .area-esc-val{ white-space:normal; align-self:flex-start; }
-  .area-ptable th, .area-ptable td{ padding:12px 16px; }
-  .area-ptable th{ width:40%; }
+  .area-ptable-static th, .area-ptable-static td{ padding:12px 16px; }
+  .area-ptable-static th{ width:42%; }
+  .area-pnum-body{ padding:0 20px 16px 20px; }
 }
