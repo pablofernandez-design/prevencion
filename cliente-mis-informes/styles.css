@@ -4680,7 +4680,8 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 .area-link-cta,.area-ficha-btn{ flex:none; display:inline-flex; align-items:center; gap:4px; font-size:15px; font-weight:600; color:#1F4E3F; text-decoration:none; white-space:nowrap; }
 .area-chev{ display:inline-block; }
 .area-fichas{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
-.area-ficha{ display:flex; flex-direction:column; gap:8px; border:1px solid var(--border); border-radius:16px; padding:22px 24px; }
+.area-ficha{ display:flex; flex-direction:column; gap:12px; border:1px solid var(--border); border-radius:16px; padding:22px 24px; text-decoration:none; color:inherit; transition:border-color .15s, box-shadow .15s; }
+.area-ficha:hover{ border-color:var(--brand-700); box-shadow:var(--shadow-xs); }
 .area-ficha-t{ font-size:17px; font-weight:700; color:#0F1B17; }
 .area-ficha-d{ font-size:14px; line-height:1.45; color:#5B6A6F; }
 .area-ficha-btn{ align-self:flex-end; margin-top:4px; }

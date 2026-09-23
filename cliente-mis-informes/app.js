@@ -772,8 +772,101 @@
       dur:['10–15 minutos por sesión','2–3 veces a la semana'],
       tipo:['Paso talón-punta','Apoyo en un solo pie','Lanzar y coger pelotas','Saltar','Yoga, taichí'] },
   ];
-  const ENLACES = ['Ejercicios de calentamiento','La importancia de la hidratación en la actividad física','Ejercicio físico para realizar en casa','Ejercicio en verano: precauciones','Ejercicio para realizar en el exterior'];
-  const FICHAS = [['Aprende a crear hábitos saludables','Crea tu propio plan de actividad física'],['Comienza el fortalecimiento muscular','Ejercita tu musculatura con ejercicios moderados'],['Mejora tu coordinación y equilibrio','Potencia tu condición física mediante la fuerza y la coordinación'],['5 razones para lanzarse al agua','La natación como forma de actividad física aeróbica de intensidad'],['Ejercicios para realizar desde casa','Comienza a activarte y practica estos ejercicios en tu rutina diaria'],['Estiramientos','Movimientos para aumentar la flexibilidad y prevenir lesiones musculares']];
+  // Información ampliada por área: enlaces (posts) y fichas (worksheets) del Portal del Cliente
+  const INFO = {
+    'actividad-fisica': {
+      enlaces:[
+        ['Beneficios de la actividad física para la salud','https://portaldecliente.qida.es/post/109'],
+        ['¿Cómo incluir más actividad física en tu día a día?','https://portaldecliente.qida.es/post/60'],
+        ['Transforma tu salud con 7.000 pasos diarios','https://portaldecliente.qida.es/post/424'],
+        ['Ejercicios de calentamiento','https://portaldecliente.qida.es/post/62'],
+      ],
+      fichas:[
+        ['Estiramientos, ¿Por qué hacerlos?','https://portaldecliente.qida.es/worksheet/15'],
+        ['Fortalecimiento muscular y coordinación','https://portaldecliente.qida.es/worksheet/10'],
+        ['¡Da el primer paso!','https://portaldecliente.qida.es/worksheet/1'],
+        ['Resistencia cardiovascular','https://portaldecliente.qida.es/worksheet/50'],
+      ] },
+    'nutricion': {
+      enlaces:[
+        ['La dieta en la prevención de Enfermedades Neurodegenerativas','https://portaldecliente.qida.es/post/181'],
+        ['Transforma tu dieta en 5 sencillos pasos','https://portaldecliente.qida.es/post/54'],
+        ['Las 7 técnicas de cocción más saludables','https://portaldecliente.qida.es/post/72'],
+        ['Dieta mediterránea y sus beneficios','https://portaldecliente.qida.es/post/83'],
+      ],
+      fichas:[
+        ['Menú saludable','https://portaldecliente.qida.es/worksheet/18'],
+        ['Crea tu plato saludable','https://portaldecliente.qida.es/worksheet/63'],
+        ['Mejora tu salud con una compra inteligente','https://portaldecliente.qida.es/worksheet/21'],
+        ['El secreto está en los colores','https://portaldecliente.qida.es/worksheet/150'],
+      ] },
+    'mente-activa': {
+      enlaces:[
+        ['¿Qué es la estimulación cognitiva? ¿Por qué es importante?','https://portaldecliente.qida.es/post/28'],
+        ['8 actividades de estimulación cognitiva','https://portaldecliente.qida.es/post/24'],
+        ['Mente activa como estrategia de prevención de enfermedades neurodegenerativas','https://portaldecliente.qida.es/post/26'],
+        ['El aprendizaje permanente como factor de protección','https://portaldecliente.qida.es/post/201'],
+      ],
+      fichas:[
+        ['Listado de intereses','https://portaldecliente.qida.es/worksheet/5'],
+        ['Fichas de estimulación y mantenimiento cognitivo','https://portaldecliente.qida.es/worksheet/25'],
+      ] },
+    'bienestar-emocional': {
+      enlaces:[
+        ['8 consejos para mejorar el bienestar emocional','https://portaldecliente.qida.es/post/76'],
+        ['Quiérete, desarrolla una imagen positiva de ti mismo/a','https://portaldecliente.qida.es/post/38'],
+        ['Bienestar emocional y dispositivos digitales','https://portaldecliente.qida.es/post/35'],
+        ['¿Qué es la respiración profunda?','https://portaldecliente.qida.es/post/37'],
+      ],
+      fichas:[
+        ['Atención plena','https://portaldecliente.qida.es/worksheet/26'],
+        ['Autorregulación emocional','https://portaldecliente.qida.es/worksheet/27'],
+      ] },
+    'sueno': {
+      enlaces:[
+        ['Diario de sueño - vigilia','https://portaldecliente.qida.es/post/30'],
+        ['Dormir: uno de los factores de prevención básicos ante las enfermedades neurodegenerativas','https://portaldecliente.qida.es/post/200'],
+        ['Técnicas de relajación y respiración para inducir el sueño','https://portaldecliente.qida.es/post/31'],
+        ['¿Qué es la respiración profunda?','https://portaldecliente.qida.es/post/359'],
+      ],
+      fichas:[
+        ['Actividades relajantes antes de dormir','https://portaldecliente.qida.es/worksheet/140'],
+        ['Buenos hábitos para una correcta higiene del sueño','https://portaldecliente.qida.es/worksheet/205'],
+      ] },
+    'participacion-social': {
+      enlaces:[
+        ['Los beneficios de la participación social','https://portaldecliente.qida.es/post/10'],
+        ['La soledad como riesgo de deterioro cognitivo','https://portaldecliente.qida.es/post/12'],
+        ['Recomendaciones de actividades sociales, ocio y tiempo libre','https://portaldecliente.qida.es/post/11'],
+        ['Fases del sueño y riesgos del insomnio','https://portaldecliente.qida.es/post/33'],
+      ],
+      fichas:[
+        ['Listado de roles','https://portaldecliente.qida.es/worksheet/28'],
+        ['Guía de actividades y eventos socioculturales','https://portaldecliente.qida.es/worksheet/266'],
+      ] },
+    'auditivo-ocular': {
+      enlaces:[
+        ['La importancia del cuidado auditivo en la prevención de la enfermedad neurodegenerativa','https://portaldecliente.qida.es/post/53'],
+        ['10 consejos para reconocer la pérdida auditiva','https://portaldecliente.qida.es/post/52'],
+        ['Importancia del cuidado ocular en la prevención de enfermedades neurodegenerativas','https://portaldecliente.qida.es/post/44'],
+        ['Manejo de la pérdida visual: qué puedes hacer','https://portaldecliente.qida.es/post/41'],
+      ],
+      fichas:[
+        ['¿Cuidas la salud de tus oídos?','https://portaldecliente.qida.es/worksheet/29'],
+        ['¿Cuidas la salud de tus ojos?','https://portaldecliente.qida.es/worksheet/30'],
+      ] },
+    'tabaco-alcohol': {
+      enlaces:[
+        ['12 mitos sobre el alcohol que escuchas cada día','https://portaldecliente.qida.es/post/20'],
+        ['10 problemas del consumo de alcohol','https://portaldecliente.qida.es/post/17'],
+        ['12 mitos sobre el tabaquismo que escuchas cada día','https://portaldecliente.qida.es/post/179'],
+        ['Toma la decisión de dejar de fumar','https://portaldecliente.qida.es/post/175'],
+      ],
+      fichas:[
+        ['Cómo reducir tu consumo de alcohol','https://portaldecliente.qida.es/worksheet/33'],
+        ['12 beneficios de dejar de fumar','https://portaldecliente.qida.es/worksheet/35'],
+      ] },
+  };
   const TENCUENTA = ['El riesgo de lesión se minimiza cuando la actividad física aumenta progresivamente: primero la duración, después la intensidad, finalmente la frecuencia.','Comunica a tu Orientador/a Personal cualquier factor de riesgo, síntoma o enfermedad no informada previamente.','Haz siempre ejercicios de calentamiento y estiramientos para reducir el riesgo de lesiones.','Si durante el ejercicio aparece dolor articular o muscular, disnea intensa, mareo, cefalea, dolor torácico o calambres, reduce el ritmo o para y consulta con tu profesional de salud.'];
   const OMS_BENEFITS = ['Reducción del riesgo de mortalidad por múltiples causas.','Prevención y control de enfermedades cardiovasculares, diabetes, síndrome metabólico, sobrepeso y obesidad.','Mejora la salud ósea: reduce el riesgo de caídas y fracturas.','Mejora la salud mental y el sueño. Reduce ansiedad y depresión.','Disminuye los síntomas de estrés y aumenta la autoestima.','Mejora de la salud cognitiva.'];
   const OMS_REC = 'La OMS recomienda firmemente realizar actividad física para mantener una función cognitiva normal y reducir el riesgo de deterioro cognitivo.';
@@ -963,9 +1056,10 @@
   }
   const CHEV = '<svg class="area-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
   function subheadHTML(txt){ return `<div class="area-subhead"><span class="area-subhead-bar"></span><span>${esc(txt)}</span></div>`; }
-  function infoHTML(){
-    const enlaces = ENLACES.map(e=>`<div class="area-link"><span class="area-link-t">${esc(e)}</span><a href="javascript:void(0)" class="area-link-cta">Acceder ${CHEV}</a></div>`).join('');
-    const fichas = FICHAS.map(([t,d])=>`<div class="area-ficha"><span class="area-ficha-t">${esc(t)}</span><span class="area-ficha-d">${esc(d)}</span><a href="javascript:void(0)" class="area-ficha-btn">Abrir ficha ${CHEV}</a></div>`).join('');
+  function infoHTML(slug){
+    const info = INFO[slug] || { enlaces:[], fichas:[] };
+    const enlaces = info.enlaces.map(([t,url])=>`<div class="area-link"><span class="area-link-t">${esc(t)}</span><a href="${esc(url)}" target="_blank" rel="noopener" class="area-link-cta">Acceder ${CHEV}</a></div>`).join('');
+    const fichas = info.fichas.map(([t,url])=>`<a href="${esc(url)}" target="_blank" rel="noopener" class="area-ficha"><span class="area-ficha-t">${esc(t)}</span><span class="area-ficha-btn">Abrir ficha ${CHEV}</span></a>`).join('');
     return `<div class="area-info-block">${subheadHTML('Enlaces de ampliación')}<p class="area-p">Material seleccionado para que profundices en los temas relevantes.</p><div class="area-links">${enlaces}</div></div>
       <div class="area-info-block">${subheadHTML('Fichas')}<div class="area-fichas">${fichas}</div></div>`;
   }
@@ -1040,7 +1134,7 @@
         <div class="area-doc">
           <section id="a-escalas" class="area-card"><h2 class="area-h2">Resultado de las escalas</h2>${escSection}</section>
           <section id="a-pautas" class="area-card"><h2 class="area-h2">Pautas clave</h2>${pautasHTML(slug)}</section>
-          <section id="a-info" class="area-card"><h2 class="area-h2">Información ampliada</h2>${infoHTML()}</section>
+          <section id="a-info" class="area-card"><h2 class="area-h2">Información ampliada</h2>${infoHTML(slug)}</section>
           <section id="a-ten" class="area-card"><h2 class="area-h2">Ten en cuenta</h2>${tenHTML()}</section>
           <section id="a-oms" class="area-card"><h2 class="area-h2">Recomendaciones de salud de la OMS</h2><p class="area-p">Según la Organización Mundial de la Salud (OMS), los beneficios de realizar actividad física regular son múltiples:</p>${omsHTML()}<p class="area-p">${esc(OMS_REC)}</p></section>
           <section id="a-biblio" class="area-card"><h2 class="area-h2">Bibliografía</h2><ul class="area-biblio">${BIBLIO.map(b=>`<li>${esc(b)}</li>`).join('')}</ul></section>
