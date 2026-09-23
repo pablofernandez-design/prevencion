@@ -4571,19 +4571,23 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 .area-ico{ flex:none; display:block; line-height:0; }
 .area-ico svg{ width:64px; height:64px; display:block; }
 .area-hero-name{ margin:0; font-size:32px; font-weight:600; letter-spacing:-.01em; color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.area-hero-panel.fg-white .area-hero-name{ color:#fff; }
 .area-tag-badge{ flex:none; display:inline-flex; align-items:center; padding:16px; border-radius:24px; }
 .area-tag{ display:inline-flex; align-items:center; border-radius:12px; padding:5px 13px; font-size:15px; font-weight:700; letter-spacing:.02em; color:#fff; white-space:nowrap; }
 .area-tag.amber{ background:#C7961F; } .area-tag.green{ background:#0E8343; } .area-tag.red{ background:#A52222; }
 
 /* Mini-cabecera: el header completo se transforma en esta card sobre la columna
-   lateral al hacer scroll. Oculta por defecto; visible solo con .show-mini. */
-.area-mini{ display:none; flex-direction:column; gap:8px; padding:14px 16px; margin-bottom:12px; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06); }
+   lateral al hacer scroll. Mismo diseño que el header (icono+nombre a la izquierda,
+   chip de estado en su recuadro a la derecha). Oculta hasta .show-mini. */
+.area-mini{ display:none; align-items:center; justify-content:space-between; gap:10px; padding:10px; margin-bottom:12px; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06); }
 .area-side.show-mini .area-mini{ display:flex; }
-.area-mini-top{ display:flex; align-items:center; gap:12px; min-width:0; }
+.area-mini-left{ display:flex; align-items:center; gap:10px; min-width:0; }
 .area-mini-ico{ flex:none; display:block; line-height:0; }
 .area-mini-ico svg{ width:36px; height:36px; display:block; }
-.area-mini-name{ font-size:17px; font-weight:600; color:#333; letter-spacing:-.01em; line-height:1.2; }
-.area-mini .area-tag{ align-self:flex-start; font-size:12px; padding:3px 11px; }
+.area-mini-name{ font-size:15px; font-weight:600; color:#333; letter-spacing:-.01em; line-height:1.2; min-width:0; }
+.area-mini.fg-white .area-mini-name{ color:#fff; }
+.area-mini .area-tag-badge{ flex:none; padding:7px; border-radius:13px; }
+.area-mini .area-tag{ font-size:11px; padding:3px 9px; }
 
 .area-body{ display:flex; gap:24px; align-items:flex-start; }
 .area-side{ flex:none; width:236px; position:sticky; top:calc(var(--sticky-top) + 24px); align-self:flex-start; }

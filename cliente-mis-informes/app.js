@@ -739,7 +739,7 @@
                 {t:'Cuestionario MEDAS: adherencia a la dieta mediterránea', tag:'Baja adherencia', variant:'amber', d:'MEDAS evalúa el grado de adherencia a la dieta mediterránea mediante 14 ítems sobre frecuencia y tipo de alimentos.', rangos:['Baja adherencia (<9 puntos)','Buena adherencia (≥9 puntos)']} ] },
     'mente-activa': { name:'Mente Activa', cat:'cat-mente', icon:'i-brain', fg:'light', score:'9/10', status:'green', statusLabel:'SIGUE ASÍ',
       escalas:[ {t:'Test de Pfeiffer', tag:'Posible deterioro cognitivo moderado', variant:'red', d:'Prueba de cribado para detectar posibles signos de deterioro cognitivo (10 preguntas: memoria, atención, razonamiento y cálculo).', rangos:['8–10: posible deterioro cognitivo severo.','5–7: posible deterioro cognitivo moderado.','3–4: posible deterioro cognitivo leve.','0–2: ausencia de posible deterioro cognitivo.']} ] },
-    'bienestar-emocional': { name:'Bienestar Emocional', cat:'cat-bienestar', icon:'i-heart', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ',
+    'bienestar-emocional': { name:'Bienestar emocional', cat:'cat-bienestar', icon:'i-heart', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ',
       escalas:[ {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', tag:'Probabilidad baja de tener ansiedad', variant:'green', d:'La EADG evalúa la presencia y gravedad de los síntomas de ansiedad y depresión. Consta de dos subescalas: una de ansiedad (9 ítems) y otra de depresión (9 ítems).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']},
                 {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', tag:'Probabilidad baja de tener depresión', variant:'green', d:'La EADG evalúa la presencia y gravedad de los síntomas de ansiedad y depresión. Consta de dos subescalas: una de ansiedad (9 ítems) y otra de depresión (9 ítems).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']} ] },
     'sueno': { name:'Sueño', cat:'cat-sueno', icon:'i-clock', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
@@ -915,6 +915,8 @@
   };
   // Color sólido de cada área (fondo del panel del header)
   const AREA_COLOR = { 'actividad-fisica':'#FEC646','nutricion':'#9EC938','mente-activa':'#16AA9C','bienestar-emocional':'#C763B0','sueno':'#5E56B0','participacion-social':'#DF353F','auditivo-ocular':'#EE5A20','tabaco-alcohol':'#4BA8DF' };
+  // Áreas con fondo claro → texto en negro; el resto → texto blanco (accesibilidad)
+  const AREA_DARK_TEXT = { 'actividad-fisica':1, 'nutricion':1, 'tabaco-alcohol':1 };
 
   // Tintes exactos de cada área (fondo del panel derecho del header + fondo del icono)
   const AREA_TINT = { 'actividad-fisica':'#FCF6E3','nutricion':'#F2F7E5','mente-activa':'#E4F3F1','bienestar-emocional':'#F7ECF4','sueno':'#ECEBF5','participacion-social':'#FBEDEE','auditivo-ocular':'#FDF0E9','tabaco-alcohol':'#EAF4FB' };
@@ -1013,18 +1015,19 @@
     const escSection = a.escalas.length
       ? a.escalas.map(escalaHTML).join('')
       : `<div class="area-esc-cuali">${esc(NOTE_CUALITATIVA)}</div>`;
+    const fgClass = AREA_DARK_TEXT[slug] ? '' : 'fg-white';
     host.innerHTML = `<article class="area-detail">
       <div class="area-hero">
-        <div class="area-hero-panel" style="background:${AREA_COLOR[slug]||'#004039'}">
+        <div class="area-hero-panel ${fgClass}" style="background:${AREA_COLOR[slug]||'#004039'}">
           <div class="area-hero-left"><span class="area-ico">${AREA_ICONS[slug]||''}</span><h1 class="area-hero-name">${esc(a.name)}</h1></div>
           <div class="area-tag-badge" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-tag ${a.status}">${esc(a.statusLabel)}</span></div>
         </div>
       </div>
       <div class="area-body">
         <nav class="area-side" aria-label="Secciones">
-          <div class="area-mini" style="background:${AREA_COLOR[slug]||'#004039'}">
-            <div class="area-mini-top"><span class="area-mini-ico">${AREA_ICONS[slug]||''}</span><span class="area-mini-name">${esc(a.name)}</span></div>
-            <span class="area-tag ${a.status}">${esc(a.statusLabel)}</span>
+          <div class="area-mini ${fgClass}" style="background:${AREA_COLOR[slug]||'#004039'}">
+            <div class="area-mini-left"><span class="area-mini-ico">${AREA_ICONS[slug]||''}</span><span class="area-mini-name">${esc(a.name)}</span></div>
+            <div class="area-tag-badge" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-tag ${a.status}">${esc(a.statusLabel)}</span></div>
           </div>
           <div class="area-side-inner">
           <a href="javascript:void(0)" data-target="a-escalas" class="area-side-link is-active"><span>Resultado de las escalas</span></a>
