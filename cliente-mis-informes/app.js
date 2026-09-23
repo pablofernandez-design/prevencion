@@ -200,7 +200,7 @@
       }
     },
     'bienestar-emocional':   {
-      num: '04', name: 'Bienestar Emocional', slug: 'bienestar-emocional',
+      num: '04', name: 'Bienestar emocional', slug: 'bienestar-emocional',
       icon: 'i-heart', iconClass: 'habit-bienestar-emocional',
       score: 3, status: 'red', statusLabel: 'Área de Acción',
       evolution: [
@@ -236,7 +236,7 @@
       }
     },
     'participacion-social':  {
-      num: '05', name: 'Participación Social', slug: 'participacion-social',
+      num: '05', name: 'Social', slug: 'participacion-social',
       icon: 'i-users', iconClass: 'habit-participacion-social',
       score: 5, status: 'amber', statusLabel: 'Área de Mejora',
       evolution: [
@@ -260,7 +260,7 @@
       }
     },
     'auditivo-ocular':       {
-      num: '06', name: 'Cuidado Ocular y Auditivo', slug: 'auditivo-ocular',
+      num: '06', name: 'Auditivo y ocular', slug: 'auditivo-ocular',
       icon: 'i-ear', iconClass: 'habit-auditivo-ocular',
       score: 7, status: 'amber', statusLabel: 'Área de Mejora',
       evolution: [
@@ -743,8 +743,8 @@
       escalas:[ {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', tag:'Probabilidad baja de tener ansiedad', variant:'green', d:'La EADG evalúa la presencia y gravedad de los síntomas de ansiedad y depresión. Consta de dos subescalas: una de ansiedad (9 ítems) y otra de depresión (9 ítems).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']},
                 {t:'Escala de Ansiedad y Depresión de Goldberg (EADG)', tag:'Probabilidad baja de tener depresión', variant:'green', d:'La EADG evalúa la presencia y gravedad de los síntomas de ansiedad y depresión. Consta de dos subescalas: una de ansiedad (9 ítems) y otra de depresión (9 ítems).', rangos:['Subescala ansiedad — 0–3: probabilidad baja / 4–9: probabilidad alta.','Subescala depresión — 0–1: probabilidad baja / 2–9: probabilidad alta.']} ] },
     'sueno': { name:'Sueño', cat:'cat-sueno', icon:'i-clock', fg:'light', score:'8/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
-    'participacion-social': { name:'Participación Social', cat:'cat-social', icon:'i-users', fg:'light', score:'6/10', status:'amber', statusLabel:'MEJORA', escalas:[] },
-    'auditivo-ocular': { name:'Cuidado Ocular y Auditivo', cat:'cat-auditivo', icon:'i-ear', fg:'light', score:'10/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
+    'participacion-social': { name:'Social', cat:'cat-social', icon:'i-users', fg:'light', score:'6/10', status:'amber', statusLabel:'MEJORA', escalas:[] },
+    'auditivo-ocular': { name:'Auditivo y ocular', cat:'cat-auditivo', icon:'i-ear', fg:'light', score:'10/10', status:'green', statusLabel:'SIGUE ASÍ', escalas:[] },
     'tabaco-alcohol': { name:'Tabaco y Alcohol', cat:'cat-tabaco', icon:'i-leaf', fg:'light', score:'10/10', status:'green', statusLabel:'SIGUE ASÍ',
       escalas:[ {t:'Test de Fagerström', tag:'Dependencia baja a la nicotina', variant:'green', d:'Evalúa la dependencia física y psicológica hacia la nicotina.', rangos:['0–2: dependencia baja a la nicotina.','3–4: dependencia moderada a la nicotina.','5–6: dependencia alta a la nicotina.']},
                 {t:'Test de Richmond', tag:'Motivación moderada para dejar de fumar', variant:'amber', d:'Evalúa el grado de motivación para el abandono del tabaco (10 preguntas).', rangos:['0–3: motivación nula o baja.','4–5: motivación dudosa.','6–7: motivación moderada.','8–10: motivación alta.']},
