@@ -4579,14 +4579,14 @@ body.high-contrast .rep-side-link.is-active{ background:#000; color:#fff; }
 /* Mini-cabecera: el header completo se transforma en esta card sobre la columna
    lateral al hacer scroll. Mismo diseño que el header (icono+nombre a la izquierda,
    chip de estado en su recuadro a la derecha). Oculta hasta .show-mini. */
-.area-mini{ display:none; align-items:center; justify-content:space-between; gap:10px; padding:10px; margin-bottom:12px; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06); }
+.area-mini{ display:none; flex-direction:column; align-items:stretch; gap:8px; padding:12px 14px; margin-bottom:12px; border-radius:16px; box-shadow:0 1px 3px rgba(0,0,0,.1),0 1px 2px rgba(0,0,0,.06); }
 .area-side.show-mini .area-mini{ display:flex; }
 .area-mini-left{ display:flex; align-items:center; gap:10px; min-width:0; }
 .area-mini-ico{ flex:none; display:block; line-height:0; }
 .area-mini-ico svg{ width:36px; height:36px; display:block; }
-.area-mini-name{ font-size:15px; font-weight:600; color:#333; letter-spacing:-.01em; line-height:1.2; min-width:0; }
+.area-mini-name{ font-size:16px; font-weight:600; color:#333; letter-spacing:-.01em; line-height:1.2; min-width:0; }
 .area-mini.fg-white .area-mini-name{ color:#fff; }
-.area-mini .area-tag-badge{ flex:none; padding:7px; border-radius:13px; }
+.area-mini .area-tag-badge{ align-self:flex-end; padding:7px; border-radius:13px; }
 .area-mini .area-tag{ font-size:11px; padding:3px 9px; }
 
 .area-body{ display:flex; gap:24px; align-items:flex-start; }
