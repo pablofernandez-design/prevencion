@@ -693,10 +693,10 @@
       viewName = 'habito';
       renderHabito(parts[2]);
     }
-    // Sub-route: #/informes/area/<slug> renders the full area detail
+    // Sub-route: #/informes/area/<slug>[/<reporte>] renders the full area detail
     if (r === 'informes' && parts[1] === 'area' && parts[2]) {
       viewName = 'area';
-      renderArea(parts[2]);
+      renderArea(parts[2], parts[3]);
     }
 
     document.querySelectorAll('.view').forEach(v => {
@@ -752,6 +752,17 @@
   };
   // cat-* (report rows) -> area slug
   const CAT_TO_SLUG = { 'cat-fisica':'actividad-fisica','cat-nutricion':'nutricion','cat-mente':'mente-activa','cat-bienestar':'bienestar-emocional','cat-sueno':'sueno','cat-social':'participacion-social','cat-auditivo':'auditivo-ocular','cat-tabaco':'tabaco-alcohol' };
+  // Estado (chip) de cada área por informe: [0]=inicial, [1]=anual. Coincide con los del informe.
+  const AREA_ESTADO = {
+    'actividad-fisica':    [ {l:'ATENCIÓN', s:'red'},   {l:'MEJORA', s:'amber'} ],
+    'nutricion':           [ {l:'MEJORA', s:'amber'},   {l:'SIGUE ASÍ', s:'green'} ],
+    'mente-activa':        [ {l:'SIGUE ASÍ', s:'green'},{l:'SIGUE ASÍ', s:'green'} ],
+    'bienestar-emocional': [ {l:'SIGUE ASÍ', s:'green'},{l:'SIGUE ASÍ', s:'green'} ],
+    'sueno':               [ {l:'MEJORA', s:'amber'},   {l:'SIGUE ASÍ', s:'green'} ],
+    'participacion-social':[ {l:'SIGUE ASÍ', s:'green'},{l:'MEJORA', s:'amber'} ],
+    'auditivo-ocular':     [ {l:'SIGUE ASÍ', s:'green'},{l:'SIGUE ASÍ', s:'green'} ],
+    'tabaco-alcohol':      [ {l:'SIGUE ASÍ', s:'green'},{l:'SIGUE ASÍ', s:'green'} ],
+  };
 
   // Contenido compartido por todas las áreas (recomendaciones, enlaces, fichas, avisos, OMS)
   const REC = [
@@ -1100,12 +1111,16 @@
     return html;
   }
 
-  function renderArea(slug){
+  function renderArea(slug, reporte){
     const a = AREAS[slug];
     const host = document.getElementById('area-content');
     const bc = document.getElementById('area-breadcrumb');
     if(!a || !host){ if(host) host.innerHTML = '<p class="area-empty">Área no encontrada.</p>'; return; }
     if(bc) bc.textContent = a.name;
+    // Estado (chip) según el informe de origen (0=inicial, 1=anual). Por defecto, anual.
+    const estArr = AREA_ESTADO[slug];
+    const ri = (reporte === '0' || reporte === '1') ? Number(reporte) : 1;
+    const est = (estArr && estArr[ri]) ? estArr[ri] : { l:a.statusLabel, s:a.status };
     const escSection = a.escalas.length
       ? a.escalas.map(escalaHTML).join('')
       : `<div class="area-esc-cuali">${esc(NOTE_CUALITATIVA)}</div>`;
@@ -1114,14 +1129,14 @@
       <div class="area-hero">
         <div class="area-hero-panel ${fgClass}" style="background:${AREA_COLOR[slug]||'#004039'}">
           <div class="area-hero-left"><span class="area-ico">${AREA_ICONS[slug]||''}</span><h1 class="area-hero-name">${esc(a.name)}</h1></div>
-          <div class="area-tag-badge" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-tag ${a.status}">${esc(a.statusLabel)}</span></div>
+          <div class="area-tag-badge" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-tag ${est.s}">${esc(est.l)}</span></div>
         </div>
       </div>
       <div class="area-body">
         <nav class="area-side" aria-label="Secciones">
           <div class="area-mini ${fgClass}" style="background:${AREA_COLOR[slug]||'#004039'}">
             <div class="area-mini-left"><span class="area-mini-ico">${AREA_ICONS[slug]||''}</span><span class="area-mini-name">${esc(a.name)}</span></div>
-            <div class="area-tag-badge" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-tag ${a.status}">${esc(a.statusLabel)}</span></div>
+            <div class="area-tag-badge" style="background:${AREA_TINT[slug]||'#F4F7F6'}"><span class="area-tag ${est.s}">${esc(est.l)}</span></div>
           </div>
           <div class="area-side-inner">
           <a href="javascript:void(0)" data-target="a-escalas" class="area-side-link is-active"><span>Resultado de las escalas</span></a>
@@ -1185,9 +1200,10 @@
       const slug = CAT_TO_SLUG[cat];
       if(!slug) return;
       const inner = row.querySelector('.in') || row;
+      const rep = row.closest('.rep')?.dataset.report;
       const a = document.createElement('a');
       a.className = 'saber-mas';
-      a.href = '#/informes/area/' + slug;
+      a.href = '#/informes/area/' + slug + (rep != null ? '/' + rep : '');
       a.innerHTML = 'Saber más <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
       inner.appendChild(a);
     });
