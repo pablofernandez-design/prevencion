@@ -586,7 +586,7 @@ function renderList(){
     // La fecha prevista = fecha de finalización del plan (último informe + duración marcada en Objetivos).
     const lastRep = sc.reports.length ? sc.reports[sc.reports.length-1][1] : null;
     const proxFecha = (!nx.available && lastRep) ? addMonthsDMY(lastRep, PLAN_MESES) : nx.fecha;
-    const prox = nx.available ? '' : `<div class="prox"><span class="prox-lbl">Próximo informe:</span><span class="prox-pill">${mesAno(proxFecha)}</span></div>`;
+    const prox = nx.available ? '' : `<div class="prox"><span class="prox-lbl">Próximo informe:</span><span class="prox-pill">${proxFecha}</span></div>`;
     headRight = `${prox}<button class="btn primary" onclick="startNuevoTipo('${nx.key}')">${I.plus} Nuevo informe</button>`;
   }
   const body = CURRENT_ROWS.length ? `<table class="tbl">
