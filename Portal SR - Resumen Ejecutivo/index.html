@@ -195,6 +195,44 @@
   .tagsbox > svg{margin-left:auto;width:20px;height:20px;color:var(--n700)}
   .tagchip{display:inline-flex;align-items:center;gap:6px;background:#EDF1EF;border:1px solid var(--n200);border-radius:6px;padding:3px 9px;font-size:13px;color:var(--green)}
   .tagchip b{color:var(--n700);font-weight:400}
+  /* Análisis de seguimiento (por objetivo) */
+  .seg-objcard{border:1px solid var(--n200);border-radius:12px;margin-bottom:16px;overflow:hidden}
+  .seg-objtop{display:flex;align-items:center;gap:10px;padding:14px 16px}
+  .seg-sw{width:16px;height:16px;border-radius:4px;flex-shrink:0}
+  .seg-objtop b{font-size:15px;color:var(--n900)}
+  .seg-badge{margin-left:auto;font-size:12px;font-weight:700;letter-spacing:.3px;padding:4px 10px;border-radius:6px;white-space:nowrap}
+  .seg-at{background:#B3261E;color:#fff}
+  .seg-mej{background:#FEC646;color:#3A2F00}
+  .seg-sig{background:#16AA9C;color:#fff}
+  .seg-conseguido{background:#0F7A4F;color:#fff}
+  .seg-progreso{background:#FEC646;color:#3A2F00}
+  .seg-objcols{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:16px;border-top:1px solid var(--n200);background:#fff}
+  .seg-k{font-size:13px;font-weight:600;color:var(--n900);margin-bottom:6px}
+  .seg-v{font-size:13px;color:var(--n700);line-height:1.5}
+  .seg-resh-title{display:flex;align-items:center;gap:10px;min-width:0;font-size:15px;font-weight:600;color:var(--n900)}
+  .seg-resh-title .seg-badge{margin-left:0}
+  .seg-restext{border:1px solid var(--n200);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--n700);line-height:1.6;background:#fff;margin-bottom:12px}
+  .seg-adjust{position:relative;margin-bottom:4px}
+  .seg-adjust .q-input{padding-right:44px}
+  .seg-mic{position:absolute;right:12px;top:11px;color:var(--n700)}
+  .seg-mic svg{width:20px;height:20px}
+  .seg-nuevo{margin-top:14px}
+  .seg-nuevo label.q{display:block;font-size:14px;font-weight:500;margin-bottom:8px;color:var(--n900)}
+  /* Resumen Ejecutivo de seguimiento (estático, por área) */
+  .panel-full{border:1px solid var(--n200);border-radius:var(--radius)}
+  .res-areahead{margin-bottom:16px}
+  .res-areasub{margin:4px 0 0;font-size:14px;color:var(--n700)}
+  .resarea{border-radius:8px;padding:16px 20px;margin-bottom:12px}
+  .resarea-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:10px;flex-wrap:wrap}
+  .resarea-name{display:flex;align-items:center;gap:12px;min-width:0}
+  .resarea-name b{font-size:16px;color:var(--n900);white-space:nowrap}
+  .res-objtag{font-size:12px;font-weight:700;letter-spacing:.3px;padding:4px 10px;border-radius:6px;white-space:nowrap}
+  .resarea-score{display:flex;align-items:center;gap:12px;flex-shrink:0}
+  .rs-num{font-size:14px;color:var(--n900)}
+  .rs-bar{width:88px;height:6px;border-radius:3px;background:#E5E5E5;overflow:hidden;display:inline-block}
+  .rs-bar i{display:block;height:100%;border-radius:3px}
+  .rs-lvl{font-size:12px;font-weight:700;letter-spacing:.3px;color:#fff;padding:4px 12px;border-radius:6px;white-space:nowrap}
+  .resarea-text{font-size:13px;color:var(--n700);line-height:1.6}
   /* header histórico: próximo informe + botón disabled (estilo DS) */
   .list-head-right{display:flex;align-items:center;gap:16px}
   .prox{display:flex;align-items:center;gap:10px}
@@ -221,7 +259,7 @@
   .notespanel h4{font-size:15px;font-weight:500;margin:0 0 12px}
   .notespanel textarea{width:100%;min-height:480px;border:1px solid var(--n200);border-radius:8px;padding:12px;font:inherit;font-size:14px;resize:vertical;outline:none;color:var(--n900)}
 
-  .subfoot{display:flex;justify-content:flex-end;margin-top:18px}
+  .subfoot{position:sticky;bottom:0;z-index:30;display:flex;justify-content:flex-end;margin-top:18px;padding:16px 0 8px;background:linear-gradient(to top,var(--bg) 62%,rgba(246,247,249,0))}
 
   /* empty section state */
   .empty-sec{background:#F8F9FB;border:1px dashed var(--n300);border-radius:10px;padding:28px;text-align:center;color:var(--n700);font-size:14px}
@@ -251,6 +289,9 @@
   /* objetivos: valoración por área + selección de objetivos/perfiles */
   .objws{display:flex;gap:16px;align-items:flex-start}
   .areacol{background:var(--primary50);border-radius:12px;padding:16px;width:272px;flex:0 0 272px;display:flex;flex-direction:column;gap:12px}
+  .areacol-head{margin-bottom:2px}
+  .areacol-lbl{font-size:12px;color:#666;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+  .areacol-val{font-size:16px;font-weight:700;color:#333}
   .areacard{background:#fff;border:2px solid;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:12px}
   .areacard.at{border-color:#A52222}
   .areacard.mej{border-color:#AD941A}
@@ -283,6 +324,13 @@
   .objfield{flex:0 0 328px;max-width:340px;min-width:240px}
   .objfield .q{display:block;font-size:14px;font-weight:600;color:var(--n900);margin-bottom:8px}
   .objblock .selectbox select{background:#fff}
+  .objblock-title{font-size:16px;font-weight:600;color:var(--n900);margin:0 0 16px}
+  .perfiltags{display:flex;gap:10px;flex-wrap:wrap}
+  .perfilchip{display:inline-flex;align-items:center;height:44px;padding:0 16px;background:#fff;border:1px solid var(--n200);border-radius:8px;color:var(--green);font-size:14px}
+  .obj-ob{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:18px}
+  .planrow{display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start}
+  .planrow .objfield{flex:1 1 200px;min-width:180px;max-width:none}
+  .planval{display:flex;align-items:center;height:44px;font-size:14px;color:var(--n900)}
   .objcard-foot{display:flex;justify-content:flex-end;margin-top:20px}
   .act-empty{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:36px 20px}
   .act-emptyic{width:56px;height:56px;border-radius:50%;background:var(--primary50);display:flex;align-items:center;justify-content:center;margin-bottom:4px}
@@ -479,24 +527,10 @@ function goList(){ el('fab').classList.remove('show'); renderList(); }
 function startNuevo(){ startNuevoTipo('inicial'); }
 function startNuevoTipo(key){
   const now=new Date(); state=fresh(); const info=TIPO_INFO[key];
-  state.type=info.type; state.title=TIPO_BASE[key]; state.tCreacion=now; el('fab').classList.add('show');
+  state.type=info.type; state.key=key; state.title=TIPO_BASE[key]; state.tCreacion=now; el('fab').classList.add('show');
   if(info.analisis==='inicial') openAnalisis();
   else if(info.analisis==='anual') openSeguimiento();
-  else openAnalisisTBD(info.label);
-}
-function noop(){}
-function openAnalisisTBD(titulo){ useHeaderPortal();
-  el('view').innerHTML=`
-  <div class="page">
-    <div class="subhead"><button class="back" onclick="goInforme()">${I.back}</button><h1>Análisis</h1></div>
-    <div class="three">
-      ${sidecolHTML(SECCIONES,SECCIONES[0],SEC_ICON,'noop',{patient:true,toggle:false})}
-      <div class="panel"><div class="act-empty" style="padding:64px 20px"><div class="act-emptyic">${I.report}</div><b>Análisis pendiente de definir</b><p>Las lógicas de análisis del ${titulo.toLowerCase()} son diferentes a las del informe inicial y anual, y se definirán más adelante.</p></div></div>
-      ${rightNotes()}
-    </div>
-    <div class="subfoot"><button class="btn primary" onclick="saveAnalisis()">${state.wizard?'Guardar y continuar':'Guardar y volver atrás'}</button></div>
-  </div>`;
-  window.scrollTo(0,0);
+  else { resetSeg(); openSegPortal(); }
 }
 // Informe inicial ya generado (visto desde el histórico) — notas y fechas del histórico
 // Informe abierto desde el histórico: el estado depende de la label de la fila
@@ -504,10 +538,12 @@ function openAnalisisTBD(titulo){ useHeaderPortal();
 function openReport(type,name,row){
   const t=row?parseDMY(row.fecha):new Date();
   const fact = !row || row.estado==='fact';
-  state={type, title:name||(type==='seguimiento'?'Informe de seguimiento':'Informe inicial'),
+  state={type, key:row?row.key:(type==='seguimiento'?'seg1':'inicial'),
+    title:name||(type==='seguimiento'?'Informe de seguimiento':'Informe inicial'),
     done:{analisis:true,resumen:true,objetivos:true}, generated:fact,
     metodo: fact?'ambos':null, notas:DATA.notas,
     tCreacion:t, tActualizacion:t, tGeneracion: fact?t:null, wizard:false};
+  if(type==='seguimiento' && state.key!=='anual') resetSeg();
   el('fab').classList.add('show'); renderLanding();
 }
 function startInicial(name,row){ openReport('inicial',name,row); }
@@ -524,13 +560,10 @@ const TIPO_INFO={
 };
 const SCENARIOS=[
  {t:'Vacío · siguiente = informe inicial', reports:[], next:{key:'inicial',available:true}},
- {t:'Inicial creado · seguimiento 1 en 4 meses (bloqueado)', reports:[['inicial','15/01/2025']], next:{key:'seg1',available:false,fecha:'15/05/2025'}},
- {t:'Inicial creado · se puede hacer seguimiento 1', reports:[['inicial','15/01/2025']], next:{key:'seg1',available:true}},
- {t:'Inicial + Seg. 1 · seguimiento 2 en 4 meses (bloqueado)', reports:[['inicial','15/01/2025'],['seg1','15/05/2025']], next:{key:'seg2',available:false,fecha:'15/09/2025'}},
- {t:'Inicial + Seg. 1 · se puede hacer seguimiento 2', reports:[['inicial','15/01/2025'],['seg1','15/05/2025']], next:{key:'seg2',available:true}},
- {t:'Inicial + Seg. 1 + Seg. 2 · informe anual en 4 meses (bloqueado)', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025']], next:{key:'anual',available:false,fecha:'15/01/2026'}},
- {t:'Inicial + Seg. 1 + Seg. 2 · se puede hacer informe anual', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025']], next:{key:'anual',available:true}},
- {t:'Año 1 completo · seguimiento 1 del año siguiente en 4 meses (bloqueado)', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025'],['anual','15/01/2026']], next:{key:'seg1',available:false,fecha:'15/05/2026'}},
+ {t:'Inicial creado · seguimiento 1 en 4 meses', reports:[['inicial','15/01/2025']], next:{key:'seg1',available:false,fecha:'15/05/2025'}},
+ {t:'Inicial + Seg. 1 · seguimiento 2 en 4 meses', reports:[['inicial','15/01/2025'],['seg1','15/05/2025']], next:{key:'seg2',available:false,fecha:'15/09/2025'}},
+ {t:'Inicial + Seg. 1 + Seg. 2 · informe anual en 4 meses', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025']], next:{key:'anual',available:false,fecha:'15/01/2026'}},
+ {t:'Año 1 completo · seguimiento 1 del año siguiente en 4 meses', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025'],['anual','15/01/2026']], next:{key:'seg1',available:false,fecha:'15/05/2026'}},
 ];
 let scenario=0, CURRENT_ROWS=[], scenCollapsed=true;
 function setScenario(i){ scenario=i; renderList(); }
@@ -539,7 +572,7 @@ const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','
 const MES_ABR=['ene','feb','mar','abr','may','jun','jul','ago','sept','oct','nov','dic'];
 function mesAno(dmy){ const [d,m,y]=dmy.split('/').map(Number); return MESES[m-1]+' '+y; }
 function mesAnoAbr(dmy){ const [d,m,y]=dmy.split('/').map(Number); return MES_ABR[m-1]+' '+y; }
-const TIPO_BASE={inicial:'Plan de Prevención', anual:'Plan de Prevención', seg1:'1º seguimiento', seg2:'2º seguimiento'};
+const TIPO_BASE={inicial:'Plan de Prevención', anual:'Plan de Prevención anual', seg1:'1º seguimiento', seg2:'2º seguimiento'};
 function labelFor(key,fecha){ return TIPO_BASE[key]+' - '+mesAnoAbr(fecha); }
 const ESTADO_LABEL={fact:'Facturado', pdte:'Pendiente de facturar'};
 function openRow(i){ const r=CURRENT_ROWS[i]; r.type==='seguimiento' ? startSeguimiento(r.informe,r) : startInicial(r.informe,r); }
@@ -549,8 +582,12 @@ function renderList(){
   const nx=sc.next, ni=nx&&nx.key?TIPO_INFO[nx.key]:null;
   let headRight='';
   if(ni){
-    if(nx.available){ headRight=`<button class="btn primary" onclick="startNuevoTipo('${nx.key}')">${I.plus} Nuevo informe</button>`; }
-    else { headRight=`<div class="prox"><span class="prox-lbl">Próximo informe:</span><span class="prox-pill">${mesAno(nx.fecha)}</span></div><button class="btn primary disabled" disabled>${I.plus} Nuevo informe</button>`; }
+    // El botón "Nuevo informe" nunca está deshabilitado; si hay fecha prevista se muestra como contexto.
+    // La fecha prevista = fecha de finalización del plan (último informe + duración marcada en Objetivos).
+    const lastRep = sc.reports.length ? sc.reports[sc.reports.length-1][1] : null;
+    const proxFecha = (!nx.available && lastRep) ? addMonthsDMY(lastRep, PLAN_MESES) : nx.fecha;
+    const prox = nx.available ? '' : `<div class="prox"><span class="prox-lbl">Próximo informe:</span><span class="prox-pill">${mesAno(proxFecha)}</span></div>`;
+    headRight = `${prox}<button class="btn primary" onclick="startNuevoTipo('${nx.key}')">${I.plus} Nuevo informe</button>`;
   }
   const body = CURRENT_ROWS.length ? `<table class="tbl">
         <thead><tr><th>Fecha</th><th>Informe</th><th>Método de envío</th><th>Informe</th><th>Estado</th><th></th></tr></thead>
@@ -631,8 +668,8 @@ function renderLanding(){
 
     <div class="landing">
       <div class="side">
-        ${navCardHTML('analisis', I.chart, 'Análisis', (s.type==='seguimiento'?'openSeguimiento()':'openAnalisis()'), true, s)}
-        ${navCardHTML('resumen', I.doc, 'Resumen Ejecutivo', 'openResumen()', s.done.analisis, s)}
+        ${navCardHTML('analisis', I.chart, 'Análisis', (s.type!=='seguimiento'?'openAnalisis()':(s.key==='anual'?'openSeguimiento()':'openSegPortal()')), true, s)}
+        ${navCardHTML('resumen', I.doc, 'Resumen Ejecutivo', ((s.type==='seguimiento'&&s.key!=='anual')?'openResumenSeg()':'openResumen()'), s.done.analisis, s)}
         ${navCardHTML('objetivos', I.target, 'Objetivos', 'openObjetivos()', s.done.resumen, s)}
       </div>
 
@@ -829,7 +866,7 @@ function openAnalisis(active){
   window.scrollTo(0,0);
 }
 // Flujo lineal (informe nuevo): Análisis → Resumen → Objetivos → Informe
-function saveAnalisis(){ state.done.analisis=true; state.tActualizacion=new Date(); state.wizard ? openResumen() : renderLanding(); }
+function saveAnalisis(){ state.done.analisis=true; state.tActualizacion=new Date(); if(!state.wizard){ renderLanding(); return; } (state.type==='seguimiento'&&state.key!=='anual') ? openResumenSeg() : openResumen(); }
 
 /* ---------- Análisis de seguimiento (form) ---------- */
 function openSeguimiento(active){
@@ -851,6 +888,124 @@ function openSeguimiento(active){
   </div>`;
   window.scrollTo(0,0);
 }
+
+/* ---------- Análisis de seguimiento cuatrimestral (1º y 2º) — por objetivo ---------- */
+// En el análisis de los seguimientos cuatrimestrales se repasan los objetivos marcados en el
+// informe anterior: por cada uno se pregunta si se ha conseguido y por el feedback del cliente,
+// y se cierra con una pantalla de Conclusión (resumen por objetivo). Figma node 1310:12442.
+I.mic='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1.75a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0v-6a3 3 0 0 0-3-3Z"/><path d="M5 10.5v.5a7 7 0 0 0 14 0v-.5"/><path d="M12 18v4"/></svg>';
+I.m_concl='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 9h7M8.5 13h7M8.5 17h4"/></svg>';
+// Icono "Portal del Cliente": la marca "Q" de Qida (reutiliza el path del logotipo)
+I.m_portal='<svg viewBox="-1.9 0 33.86 33.86" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="'+QIDA_PATHS[3]+'" fill="currentColor"/></svg>';
+const SEG_OBJ=[
+ {area:'Actividad física', ic:'m_act', col:'#FEC646', lvl:'at',
+  objetivo:'Mejorar el nivel de actividad física, incorporando movimiento de forma progresiva',
+  beneficio:'Maximiza la movilidad articular global, previene la pérdida de rango asociada al envejecimiento y mejora la eficiencia motriz.'},
+ {area:'Nutrición', ic:'m_nutr', col:'#9EC938', lvl:'mej',
+  objetivo:'Incorporar progresivamente una alimentación más saludable',
+  beneficio:'Aporta los nutrientes esenciales para el adecuado funcionamiento del cerebro y el mantenimiento de las capacidades cognitivas.'},
+ {area:'Mente activa', ic:'m_cogn', col:'#16AA9C', lvl:'sig',
+  objetivo:'Mantener una estimulación cognitiva variada y constante',
+  beneficio:'Ayuda a mantener la mente activa y ágil, favorece la concentración y contribuye a preservar la autonomía y la confianza en el día a día.'},
+];
+const SEG_NAV=['Portal del Cliente','Actividad física','Nutrición','Mente activa','Conclusión'];
+const SEG_NAV_ICON={'Portal del Cliente':'m_portal','Actividad física':'m_act','Nutrición':'m_nutr','Mente activa':'m_cogn','Conclusión':'m_concl'};
+const SEG_LVL={at:{t:'ATENCIÓN',c:'seg-at'}, mej:{t:'MEJORA',c:'seg-mej'}, sig:{t:'SIGUE ASÍ',c:'seg-sig'}};
+// Preguntas condicionales según "¿Qué tal ha ido con el objetivo?"
+const CUMPL_HELP={
+ 'Cumplido':[{l:'¿Qué crees que te ha ayudado a conseguirlo?',o:['Tener una rutina','El apoyo de familiares o amigos','El seguimiento realizado','Empezar poco a poco','Haber notado beneficios','Las actividades pautadas','Recordatorios o señales (una alarma, una nota, dejarlo a la vista)','Que me resultaba agradable','Otro']}],
+ 'En proceso':[{l:'¿Qué te está ayudando?',o:['Tener una rutina','El apoyo de familiares o amigos','El seguimiento realizado','Empezar poco a poco','Haber notado beneficios','Las actividades pautadas']},{l:'¿Qué te está costando?',o:['Falta de tiempo','Falta de motivación','Estado de salud','Entorno','Falta de organización','Olvido','Otro']}],
+ 'No cumplido':[{l:'¿Qué te ha dificultado el cumplimiento de este hábito?',o:['Falta de tiempo','Falta de motivación','Estado de salud','Entorno','Falta de organización','Olvido','Otro']}],
+};
+const CIERRE_OPTS=['Mantenerlo','Aumentar el nivel','Sustituirlo por otro objetivo','Darlo por conseguido'];
+const NUEVO_OBJ_OPTS=['Sueño','Bienestar emocional','Social','Auditivo y ocular','Tabaco y alcohol'];
+const SEG_RESUMEN='¡Enhorabuena! Sigues una dieta mediterránea con buenos hábitos nutricionales. Tu consumo de pescado, frutos secos, legumbres y verduras es adecuado, y mantienes una ingesta moderada de carnes rojas y productos ultraprocesados. Tu índice de masa corporal (IMC) es de 23.4, que se encuentra dentro del rango normal y saludable. Continúa manteniendo estos excelentes hábitos alimentarios que contribuyen positivamente a tu bienestar general. ¡Sigue así!';
+// Estado del análisis de seguimiento (sembrado con el ejemplo del Figma)
+let segState={ans:[]};
+function resetSeg(){ segState={portal:{usado:'',imp:''}, ans:[
+  {cumpl:'Cumplido',   conf:'8', cierre:'Sustituirlo por otro objetivo', nuevo:'Sueño'},
+  {cumpl:'En proceso', conf:'6', cierre:'Mantenerlo',  nuevo:''},
+  {cumpl:'Cumplido',   conf:'9', cierre:'Darlo por conseguido', nuevo:''},
+]}; }
+const PORTAL_IMP=['No lo conocía','Dificultad técnica','Prefiero el papel','Otro'];
+resetSeg();
+function segSub(title, body){ return `<div class="q-sub"><div class="q-sub-head" onclick="this.parentNode.classList.toggle('collapsed')"><span>${title}</span>${I.chevdown}</div><div class="q-sub-body">${body}</div></div>`; }
+function segCheck(l,opts){ return `<div class="fieldgroup"><label class="q">${l} <span class="req">*</span></label>${opts.map(o=>`<label class="checkrow"><input type="checkbox"> ${o}</label>`).join('')}</div>`; }
+function segTextField(l){ return `<div class="fieldgroup"><label class="q">${l} <span class="req">*</span></label><input class="q-input" placeholder="Escribe aquí…"></div>`; }
+function segObjContent(i){
+  const o=SEG_OBJ[i], a=segState.ans[i], lvl=SEG_LVL[o.lvl];
+  const head=`<div class="seg-objcard">
+    <div class="seg-objtop" style="background:${o.col}22"><span class="seg-sw" style="background:${o.col}"></span><b>${o.area}</b><span class="seg-badge ${lvl.c}">${lvl.t}</span></div>
+    <div class="seg-objcols">
+      <div><div class="seg-k">Objetivo</div><div class="seg-v">${o.objetivo}</div></div>
+      <div><div class="seg-k">Beneficio</div><div class="seg-v">${o.beneficio}</div></div>
+    </div>
+  </div>`;
+  const cumplRadio=`<div class="fieldgroup"><label class="q">¿Qué tal ha ido con el objetivo ${i+1}? <span class="req">*</span></label><div class="radios">${['Cumplido','En proceso','No cumplido'].map(v=>`<label class="radio"><input type="radio" name="cumpl${i}" ${a.cumpl===v?'checked':''} onclick="setSegCumpl(${i},'${v}')"> ${v}</label>`).join('')}</div></div>`;
+  const cumplExtra=(CUMPL_HELP[a.cumpl]||[]).map(g=>segCheck(g.l,g.o)).join('');
+  const subCumpl=segSub('Cumplimiento del objetivo', cumplRadio+cumplExtra);
+  const adher=segTextField('De media, de los 7 días de la semana, ¿cuántos días has podido hacer las actividades?')
+    +`<div class="fieldgroup"><label class="q">En general, ¿cómo te han resultado las actividades? <span class="req">*</span></label><div class="radios">${['Fáciles','Correctas','Difíciles'].map(v=>`<label class="radio"><input type="radio" name="adher${i}"> ${v}</label>`).join('')}</div></div>`
+    +segTextField('¿Qué actividades te han gustado o funcionado mejor?')
+    +segTextField('¿Y cuáles menos o se te han hecho más cuesta arriba?');
+  const subAdher=segSub('Adherencia a las actividades propuestas', adher);
+  const confField=`<div class="fieldgroup"><label class="q">Del 0 al 10, ¿cuál es tu confianza en seguir manteniendo este nivel o este cambio positivo los próximos meses? <span class="req">*</span></label><input class="q-input" type="number" min="0" max="10" placeholder="Escribe aquí…" value="${a.conf}" onchange="setSegConf(${i},this.value)"></div>`;
+  const confExtra=(a.conf!=='' && Number(a.conf)<7) ? segTextField('¿Qué te ayudaría a tener un poco más de confianza en mantenerlo?') : '';
+  const subConf=segSub('Confianza', confField+confExtra);
+  const cierre=`<div class="fieldgroup"><label class="q">Cierre del objetivo <span class="req">*</span></label><div class="selectbox"><select onchange="setSegCierre(${i},this.value)"><option value="" ${a.cierre?'':'selected'} disabled>Selecciona…</option>${CIERRE_OPTS.map(c=>`<option ${a.cierre===c?'selected':''}>${c}</option>`).join('')}</select>${I.chevdown}</div></div>`;
+  const subCierre=segSub('Cierre del objetivo', cierre);
+  return `<h2>Objetivo ${i+1}</h2>${head}${subCumpl}${subAdher}${subConf}${subCierre}`;
+}
+function segConclContent(){
+  const cards=SEG_OBJ.map((o,i)=>{
+    const a=segState.ans[i];
+    const conseguido = a.cumpl==='Cumplido' || a.cierre==='Darlo por conseguido';
+    const badge = conseguido ? '<span class="seg-badge seg-conseguido">OBJETIVO CONSEGUIDO</span>' : '<span class="seg-badge seg-progreso">OBJETIVO EN PROGRESO</span>';
+    const nuevo = a.cierre==='Sustituirlo por otro objetivo'
+      ? `<div class="seg-nuevo"><label class="q">Selecciona nuevo objetivo</label><div class="selectbox"><select><option value="" ${a.nuevo?'':'selected'} disabled>Selecciona…</option>${NUEVO_OBJ_OPTS.map(x=>`<option ${x===a.nuevo?'selected':''}>${x}</option>`).join('')}</select>${I.chevdown}</div></div>` : '';
+    const body=`<div class="seg-restext">${SEG_RESUMEN}</div><div class="seg-adjust"><input class="q-input" placeholder="Ajustar resumen..."><span class="seg-mic">${I.mic}</span></div>${nuevo}`;
+    return `<div class="q-sub"><div class="q-sub-head" onclick="this.parentNode.classList.toggle('collapsed')"><span class="seg-resh-title">Resumen Objetivo ${i+1}${badge}</span>${I.chevdown}</div><div class="q-sub-body">${body}</div></div>`;
+  }).join('');
+  return `<h2>Conclusión</h2>${cards}`;
+}
+function segShell(active, content, footerFn, footerLabel){
+  useHeaderPortal();
+  el('view').innerHTML=`
+  <div class="page">
+    <div class="subhead"><button class="back" onclick="goInforme()">${I.back}</button><h1>Análisis</h1></div>
+    <div class="three">
+      ${sidecolHTML(SEG_NAV, active, SEG_NAV_ICON, 'openSegNav', {patient:true,toggle:false})}
+      <div class="panel">${content}</div>
+      ${rightNotes()}
+    </div>
+    <div class="subfoot"><button class="btn primary" onclick="${footerFn}">${footerLabel}</button></div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+function openSegObj(i){ segShell(SEG_OBJ[i].area, segObjContent(i), 'segNext('+i+')', 'Guardar y continuar'); }
+function openSegConcl(){ segShell('Conclusión', segConclContent(), 'saveAnalisis()', state.wizard?'Guardar y continuar':'Guardar y volver atrás'); }
+// Pantalla "Portal del Cliente": ¿ha usado el cliente el portal? con seguimiento condicional
+function segPortalContent(){
+  const p=segState.portal;
+  const base=`<div class="fieldgroup"><label class="q">¿Has usado el Portal del Cliente? <span class="req">*</span></label><div class="radios">${['Sí','No'].map(v=>`<label class="radio"><input type="radio" name="pdc" ${p.usado===v?'checked':''} onclick="setSegPortalUsado('${v}')"> ${v}</label>`).join('')}</div></div>`;
+  let extra='';
+  if(p.usado==='Sí'){
+    extra=segTextField('¿Qué es lo que más te ha gustado?')+segTextField('¿Qué mejorarías?');
+  } else if(p.usado==='No'){
+    extra=`<div class="fieldgroup"><label class="q">¿Qué te lo ha impedido? <span class="req">*</span></label><div class="selectbox"><select onchange="setSegPortalImp(this.value)"><option value="" ${p.imp?'':'selected'} disabled>Selecciona…</option>${PORTAL_IMP.map(o=>`<option ${p.imp===o?'selected':''}>${o}</option>`).join('')}</select>${I.chevdown}</div></div>`;
+    if(p.imp==='Dificultad técnica') extra+=segTextField('Dificultad técnica');
+    if(p.imp==='Otro') extra+=segTextField('Otro');
+  }
+  return `<h2>Portal del Cliente</h2>${base}${extra}`;
+}
+function openSegPortal(){ segShell('Portal del Cliente', segPortalContent(), 'openSegObj(0)', 'Guardar y continuar'); }
+function openSegNav(name){ if(name==='Portal del Cliente') openSegPortal(); else if(name==='Conclusión') openSegConcl(); else openSegObj(SEG_OBJ.findIndex(o=>o.area===name)); }
+function segNext(i){ i<SEG_OBJ.length-1 ? openSegObj(i+1) : openSegConcl(); }
+function setSegPortalUsado(v){ segState.portal.usado=v; openSegPortal(); }
+function setSegPortalImp(v){ segState.portal.imp=v; openSegPortal(); }
+function setSegCumpl(i,v){ segState.ans[i].cumpl=v; openSegObj(i); }
+function setSegConf(i,v){ segState.ans[i].conf=v; openSegObj(i); }
+function setSegCierre(i,v){ segState.ans[i].cierre=v; }
 
 /* ---------- Resumen Ejecutivo / Objetivos ---------- */
 const RES_MENU=['Nutricional','Cognitivo','Actividad Física','Emocional','Social','Auditivo y ocular','Tabaco y alcohol'];
@@ -934,6 +1089,51 @@ function undoResumen(){
 }
 function saveResumen(){ state.done.resumen=true; state.tActualizacion=new Date(); state.wizard ? openObjetivos() : renderLanding(); }
 
+/* ---------- Resumen Ejecutivo de seguimiento 1 y 2 (estático, solo lectura) ---------- */
+// Igual que el resumen por área del resto de informes, pero con un indicador extra: si el objetivo
+// relacionado con cada área marcada en el informe anterior se ha conseguido (o sigue en progreso).
+// Contenido estático, del Figma 1129:27907. Solo af/nu/ma llevaban objetivo en el informe previo.
+const SEG_RES_AREAS=[
+ {a:'Actividad física', col:'#FEC646', s:3, obj:'con', txt:'En relación con el resultado, María, queremos felicitarte por dar el paso hacia un estilo de vida más activo e introducir la actividad física en tu día a día. Aunque actualmente tu nivel de actividad física es bajo, has tomado una decisión importante para cuidar de tu bienestar. ¡Cada pequeño cambio cuenta y supone un avance!'},
+ {a:'Nutrición', col:'#9EC938', s:6, obj:'prog', txt:'Valoramos positivamente que estés trabajando para cuidar tu alimentación y alcanzar un peso saludable. En tu resultado observamos una baja adherencia a la dieta mediterránea, especialmente por un consumo reducido de frutas y verduras. Este resultado representa una oportunidad para seguir mejorando tus hábitos alimentarios y avanzar hacia un estilo de vida más saludable.'},
+ {a:'Mente activa', col:'#16AA9C', s:9, obj:'con', txt:'¡Excelente! Mantienes una actividad cognitiva muy activa con participación regular en múltiples actividades estimulantes. Realizas varias veces al año lectura de libros, escritura, juegos de mesa y entrenamiento cerebral. ¡Sigue así!'},
+ {a:'Bienestar Emocional', col:'#C763B0', s:8, obj:null, txt:'En relación con el bienestar emocional, no se evidencian signos compatibles con ansiedad, depresión u otras alteraciones emocionales significativas. Los resultados obtenidos reflejan un adecuado estado de bienestar emocional en el momento de la valoración.'},
+ {a:'Sueño', col:'#5E56B0', s:6, obj:null, txt:'En relación con el resultado, verbalizas problemas de sueño puntuales que han aparecido en los últimos días, principalmente relacionados con la dificultad para conciliar el sueño.'},
+ {a:'Participación Social', col:'#DF353F', s:9, obj:null, txt:'Mantienes una vida social activa y enriquecida, contando con una buena red de apoyo tanto familiar como social. Convives con tu marido y mantienes una buena relación con tus hijos. Asimismo, mantienes relaciones satisfactorias con tus amistades, con las que compartes momentos y actividades que contribuyen positivamente a tu bienestar.'},
+ {a:'Cuidado Ocular y Auditivo', col:'#EE5A20', s:9, obj:null, txt:'En relación con la salud auditiva y ocular, mantienes una buena funcionalidad de ambos sentidos. Además, realizas controles periódicos con tus profesionales de referencia, favoreciendo un adecuado seguimiento de tu salud visual y auditiva.'},
+ {a:'Tabaco y Alcohol', col:'#4BA8DF', s:10, obj:null, txt:'¡Enhorabuena! Llevas 20 años sin fumar, lo que supone un importante logro y un factor muy positivo para tu salud. La ausencia de consumo de tabaco y alcohol contribuye positivamente a la prevención de múltiples problemas de salud y favorece tu bienestar general. ¡Continúa manteniendo estos excelentes hábitos!'},
+];
+const RES_LVL={low:{t:'ATENCIÓN',c:'#A52222'}, mid:{t:'MEJORA',c:'#C7961F'}, high:{t:'SIGUE ASÍ',c:'#0E8343'}};
+const RES_OBJ={con:{t:'OBJETIVO CONSEGUIDO',bg:'#0E8343',fg:'#fff'}, prog:{t:'OBJETIVO EN PROGRESO',bg:'#F7E06D',fg:'#333333'}};
+function openResumenSeg(){
+  useHeaderPortal();
+  const cards=SEG_RES_AREAS.map(a=>{
+    const lv=RES_LVL[bandOf(a.s)];
+    const objTag=a.obj?`<span class="res-objtag" style="background:${RES_OBJ[a.obj].bg};color:${RES_OBJ[a.obj].fg}">${RES_OBJ[a.obj].t}</span>`:'';
+    return `<div class="resarea" style="border-left:8px solid ${a.col};background:${a.col}14">
+      <div class="resarea-top">
+        <div class="resarea-name"><b>${a.a}</b>${objTag}</div>
+        <div class="resarea-score"><span class="rs-num">${a.s}/10</span><span class="rs-bar"><i style="width:${a.s*10}%;background:${lv.c}"></i></span><span class="rs-lvl" style="background:${lv.c}">${lv.t}</span></div>
+      </div>
+      <div class="resarea-text">${a.txt}</div>
+    </div>`;
+  }).join('');
+  el('view').innerHTML=`
+  <div class="page">
+    <div class="subhead"><button class="back" onclick="goInforme()">${I.back}</button><h1>Resumen Ejecutivo</h1></div>
+    <div class="three">
+      <div class="panel panel-full">
+        <div class="res-areahead"><h2 style="margin:0">Resumen ejecutivo por área</h2><p class="res-areasub">Resultados de la valoración del Plan de Prevención</p></div>
+        ${cards}
+        ${notesCollap()}
+      </div>
+      ${rightKpi()}
+    </div>
+    <div class="subfoot"><button class="btn primary" onclick="saveResumen()">${state.wizard?'Guardar y continuar':'Guardar'}</button></div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
 /* ---------- Objetivos (valoración por área + selección de objetivos/perfiles) ---------- */
 // Valoración por área (viene del backend por los resultados de las secciones)
 const AREAS=[
@@ -954,6 +1154,25 @@ const PERFIL_MAP={
 };
 function hasPerfil(area){ return !!PERFIL_MAP[area]; }
 function perfilOpts(area){ return PERFIL_MAP[area] || []; }
+// Objetivo + beneficio por área (vienen del CMS al elegir área/perfil)
+const AREA_META={
+  'Actividad Física':{o:'Incorporar progresivamente la actividad física en tu rutina diaria.', b:'La actividad física regular mejora la capacidad cardiorrespiratoria y muscular, el equilibrio y la función física, y se asocia con beneficios para la salud mental y cognitiva.', tags:['General','Diversidad funcional']},
+  'Nutrición':{o:'Aumentar y mantener un hábito de alimentación saludable y ampliar la variedad.', b:'Una alimentación saludable ayuda a cubrir las necesidades de energía y nutrientes que el organismo necesita para funcionar correctamente y favorece el mantenimiento de un buen estado de salud.', tags:['Vegetariano']},
+  'Mente activa':{o:'Mantener una estimulación cognitiva variada y constante.', b:'Una mente activa contribuye a preservar la función cognitiva a lo largo del tiempo y puede ayudar a reducir el riesgo de deterioro cognitivo y demencia.', tags:['Alfabetización alta']},
+  'Bienestar emocional':{o:'Fortalecer el bienestar emocional y las estrategias de gestión del estrés', b:'Favorece un estado de ánimo estable, reduce la ansiedad y mejora la calidad de vida diaria.', tags:[]},
+  'Sueño':{o:'Mejorar la calidad y la regularidad del descanso', b:'Un sueño reparador refuerza la memoria, el ánimo y la salud cardiovascular.', tags:[]},
+  'Social':{o:'Mantener una vida social activa y una red de apoyo sólida', b:'La participación social protege frente al deterioro cognitivo y refuerza el bienestar emocional.', tags:[]},
+  'Auditivo y ocular':{o:'Cuidar la salud visual y auditiva con controles periódicos', b:'Una buena función sensorial preserva la autonomía y reduce el riesgo de aislamiento.', tags:[]},
+  'Tabaco y alcohol':{o:'Mantener la ausencia de consumo de tabaco y alcohol', b:'Reduce el riesgo cardiovascular y de múltiples enfermedades, favoreciendo el bienestar general.', tags:[]},
+};
+// De momento solo estas áreas tienen actividades definidas en el CMS
+function hasActividades(area){ return area==='Actividad Física' || area==='Nutrición' || area==='Mente activa'; }
+// Duración del plan → la fecha de finalización marca cuándo toca el siguiente informe (histórico)
+let PLAN_MESES=4;
+function dateToISO(d){ const p=n=>String(n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }
+function isoAddMonths(iso,m){ const [y,mo,d]=iso.split('-').map(Number); return new Date(y,mo-1+m,d); }
+function fmtFecha(d){ return d.getDate()+' de '+MESES[d.getMonth()].toLowerCase()+' de '+d.getFullYear(); }
+function addMonthsDMY(dmy,m){ const [d,mo,y]=dmy.split('/').map(Number); const dt=new Date(y,mo-1+m,d); const p=n=>String(n).padStart(2,'0'); return p(dt.getDate())+'/'+p(dt.getMonth()+1)+'/'+dt.getFullYear(); }
 // Actividades (una vez asignadas): parrilla semanal por meses, con "Acceder" en algunas
 const DIAS_SEM=['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
 const ACT_WEEK=[
@@ -966,37 +1185,61 @@ const ACT_WEEK=[
   {t:'Camina durante 25 minutos a paso ligero para activar tu cuerpo.'},
 ];
 // Objetivos preseleccionados por backend (editables). Cada objetivo: área + perfil (si aplica) + mes activo
-let objState={ obj:['Actividad Física','Nutrición','Mente activa'], perfil:['General','General',''], actTab:[0,0,0] };
+let objState={ obj:['Actividad Física','Nutrición','Mente activa'], perfil:['General','General',''], actTab:[0,0,0], planInicioISO:'', planMeses:PLAN_MESES };
 
-// Un bloque por objetivo: selectores arriba y, si está relleno, sus actividades (tabs de mes + parrilla semanal)
+// Un bloque por objetivo: título, área + tags de perfil, objetivo/beneficio y, si el área tiene actividades, la parrilla
 function objetivoBlock(i){
   const area=objState.obj[i];
-  const hp=hasPerfil(area);
-  const filled = area && (!hp || objState.perfil[i]);
+  const meta=AREA_META[area];
   const tab=objState.actTab[i]||0;
+  const tags=(meta&&meta.tags)||[];
+  const tagsField=`<div class="objfield">
+      <label class="q">Tags de perfil de cliente</label>
+      <div class="perfiltags">${tags.map(t=>`<span class="perfilchip">${t}</span>`).join('')}</div>
+    </div>`;
+  const obBox = (area&&meta) ? `<div class="obj-ob">
+      <div><div class="seg-k">Objetivo</div><div class="seg-v">${meta.o}</div></div>
+      <div><div class="seg-k">Beneficio</div><div class="seg-v">${meta.b}</div></div>
+    </div>` : '';
+  let acts='';
+  if(area && hasActividades(area)){
+    acts=`<div class="act-tabs month-tabs">${[0,1,2,3].map(m=>`<button class="act-tab ${m===tab?'on':''}" onclick="objState.actTab[${i}]=${m};openObjetivos()">Mes ${m+1}</button>`).join('')}</div>
+      <div class="act-grid">
+        <div class="act-grow act-ghead">${DIAS_SEM.map(d=>`<div class="act-hcell">${d}</div>`).join('')}</div>
+        <div class="act-grow">${ACT_WEEK.map(a=>`<div class="act-cell"><p>${a.t}</p>${a.btn?`<button class="btn primary act-acceder">Acceder</button>`:''}</div>`).join('')}</div>
+      </div>`;
+  }
   return `<div class="objblock">
+    <div class="objblock-title">Objetivo ${i+1}</div>
     <div class="objselrow">
       <div class="objfield">
         <label class="q">Área</label>
         <div class="selectbox"><select onchange="setObjArea(${i},this.value)"><option value="" ${area?'':'selected'} disabled>Selecciona...</option>${AREAS.map(x=>`<option ${x.a===area?'selected':''}>${x.a}</option>`).join('')}</select>${I.chevdown}</div>
       </div>
-      ${(area&&hp)?`<div class="objfield">
-        <label class="q">Perfil</label>
-        <div class="selectbox"><select onchange="setPerfil(${i},this.value)"><option value="" ${objState.perfil[i]?'':'selected'} disabled>Selecciona un perfil...</option>${perfilOpts(area).map(p=>`<option ${p===objState.perfil[i]?'selected':''}>${p}</option>`).join('')}</select>${I.chevdown}</div>
-      </div>`:''}
+      ${tagsField}
     </div>
-    ${filled?`
-      <div class="act-tabs month-tabs">${[0,1,2,3].map(m=>`<button class="act-tab ${m===tab?'on':''}" onclick="objState.actTab[${i}]=${m};openObjetivos()">Mes ${m+1}</button>`).join('')}</div>
-      <div class="act-grid">
-        <div class="act-grow act-ghead">${DIAS_SEM.map(d=>`<div class="act-hcell">${d}</div>`).join('')}</div>
-        <div class="act-grow">${ACT_WEEK.map(a=>`<div class="act-cell"><p>${a.t}</p>${a.btn?`<button class="btn primary act-acceder">Acceder</button>`:''}</div>`).join('')}</div>
-      </div>`:''}
+    ${obBox}
+    ${acts}
+  </div>`;
+}
+// Sección "Duración del plan": solo se elige la fecha de inicio; finalización y duración son de solo lectura
+function planDurBlock(){
+  if(!objState.planInicioISO) objState.planInicioISO=dateToISO(state.tCreacion||new Date());
+  const fin=isoAddMonths(objState.planInicioISO, PLAN_MESES);
+  const p=n=>String(n).padStart(2,'0'); const finDMY=p(fin.getDate())+'/'+p(fin.getMonth()+1)+'/'+fin.getFullYear();
+  return `<div class="objblock">
+    <div class="objblock-title">Duración del plan</div>
+    <div class="planrow">
+      <div class="objfield"><label class="q">Fecha de inicio</label><input type="date" class="q-input" value="${objState.planInicioISO}" onchange="setPlanInicio(this.value)"></div>
+      <div class="objfield"><label class="q">Fecha de finalización</label><div class="planval">${finDMY}</div></div>
+      <div class="objfield"><label class="q">Duración del plan</label><div class="planval">${PLAN_MESES} meses</div></div>
+    </div>
   </div>`;
 }
 
 function openObjetivos(){
   useHeaderPortal();
-  const allFilled = [0,1,2].every(i=>{ const a=objState.obj[i]; return a && (!hasPerfil(a) || objState.perfil[i]); });
+  const allFilled = [0,1,2].every(i=>!!objState.obj[i]);
   el('view').innerHTML=`
   <div class="page">
     <div class="subhead">
@@ -1005,6 +1248,7 @@ function openObjetivos(){
     </div>
     <div class="objws">
       <aside class="areacol">
+        <div class="areacol-head"><div class="areacol-lbl">Tipo de cliente</div><div class="areacol-val">Digital</div></div>
         ${AREAS.map(x=>`<div class="areacard ${x.lvl}">
           <div class="ac-head"><span class="ac-ic">${I[x.ic]}</span><span class="ac-name">${x.a}</span></div>
           <div class="ac-foot"><span class="ac-score">${x.s}/10</span><span class="ac-badge">${LVL_LABEL[x.lvl]}</span></div>
@@ -1013,6 +1257,7 @@ function openObjetivos(){
       <div class="objright">
         <div class="objcard">
           <h4 class="objtitle">Objetivos</h4>
+          ${planDurBlock()}
           ${[0,1,2].map(i=>objetivoBlock(i)).join('')}
         </div>
       </div>
@@ -1025,6 +1270,7 @@ function openObjetivos(){
 }
 function setObjArea(i,v){ objState.obj[i]=v; objState.perfil[i]=''; objState.actTab[i]=0; openObjetivos(); }
 function setPerfil(i,v){ objState.perfil[i]=v; openObjetivos(); }
+function setPlanInicio(v){ objState.planInicioISO=v; openObjetivos(); }
 function saveObjetivos(){ state.done.objetivos=true; state.tActualizacion=new Date(); state.wizard=false; renderLanding(); }
 
 /* ---------- Screen 5 : modal Generar informe ---------- */
