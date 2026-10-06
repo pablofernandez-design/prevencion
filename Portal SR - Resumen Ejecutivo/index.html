@@ -180,6 +180,7 @@
   .radio input{accent-color:var(--green);width:18px;height:18px}
   .checkrow{display:flex;align-items:center;gap:10px;font-size:14px;background:#fff;border:1px solid var(--n300);border-radius:8px;padding:11px 14px;margin-bottom:8px;cursor:pointer}
   .checkrow input{accent-color:var(--green);width:16px;height:16px}
+  .checkgrid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
   /* análisis: subencabezado desplegable + preguntas anidadas */
   .q-sub{background:#EEF1F4;border-radius:12px;padding:16px;margin-bottom:16px}
   .q-sub-head{display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-size:15px;font-weight:600;color:var(--n900)}
@@ -869,8 +870,23 @@ function openAnalisis(active){
 function saveAnalisis(){ state.done.analisis=true; state.tActualizacion=new Date(); if(!state.wizard){ renderLanding(); return; } (state.type==='seguimiento'&&state.key!=='anual') ? openResumenSeg() : openResumen(); }
 
 /* ---------- Análisis de seguimiento (form) ---------- */
+// Análisis anual: igual que el de seguimiento por secciones, pero con el feedback de la llamada
+// integrado como dos secciones nuevas en el menú: "Feedback" (al principio) y "Conclusión" (al final).
+const ANUAL_NAV=['Feedback'].concat(SECCIONES).concat(['Conclusión']);
+const ANUAL_ICON=Object.assign({'Feedback':'m_portal','Conclusión':'m_concl'}, SEC_ICON);
+const ANUAL_CONCL_AREAS=['Actividad física','Nutrición','Mente activa','Bienestar emocional','Sueño','Social','Auditivo y ocular','Tabaco y alcohol'];
+function anualFeedbackContent(){
+  return `<h2>Feedback</h2>
+    <div class="fieldgroup"><label class="q">¿Has seguido las recomendaciones del plan de prevención? <span class="req">*</span></label><div class="selectbox"><select>${['Sí, todas','Sí, la mayoría','Solo algunas','No, ninguna'].map(o=>`<option ${o==='Sí, la mayoría'?'selected':''}>${o}</option>`).join('')}</select>${I.chevdown}</div></div>
+    <div class="fieldgroup"><label class="q">¿Has tenido seguimientos con tu Orientador/a Personal durante este año? <span class="req">*</span></label><div class="radios">${['Sí','No'].map(v=>`<label class="radio"><input type="radio" name="anualOrient"> ${v}</label>`).join('')}</div></div>`;
+}
+function anualConclContent(){
+  return `<h2>Conclusión</h2>
+    <div class="fieldgroup"><label class="q">¿En cuáles de estas áreas sientes que los servicios de prevención de Qida (las recomendaciones del Plan, tu Orientador/a Personal, los contenidos del portal del cliente, el boletín informativo…) te han ayudado a adoptar o potenciar hábitos saludables? <span class="req">*</span></label><div class="checkgrid2">${ANUAL_CONCL_AREAS.map(a=>`<label class="checkrow"><input type="checkbox"> ${a}</label>`).join('')}</div></div>`;
+}
 function openSeguimiento(active){
-  active=active||SECCIONES[0]; useHeaderPortal();
+  active=active||'Feedback'; useHeaderPortal();
+  let content = active==='Feedback' ? anualFeedbackContent() : (active==='Conclusión' ? anualConclContent() : analisisContent(active,true));
   el('view').innerHTML=`
   <div class="page">
     <div class="subhead">
@@ -878,8 +894,8 @@ function openSeguimiento(active){
       <h1>Análisis</h1>
     </div>
     <div class="three">
-      ${sidecolHTML(SECCIONES,active,SEC_ICON,'openSeguimiento',{patient:true,toggle:false})}
-      <div class="panel">${analisisContent(active,true)}</div>
+      ${sidecolHTML(ANUAL_NAV,active,ANUAL_ICON,'openSeguimiento',{patient:true,toggle:false})}
+      <div class="panel">${content}</div>
       ${rightNotes()}
     </div>
     <div class="subfoot">
@@ -917,15 +933,16 @@ const CUMPL_HELP={
  'En proceso':[{l:'¿Qué te está ayudando?',o:['Tener una rutina','El apoyo de familiares o amigos','El seguimiento realizado','Empezar poco a poco','Haber notado beneficios','Las actividades pautadas']},{l:'¿Qué te está costando?',o:['Falta de tiempo','Falta de motivación','Estado de salud','Entorno','Falta de organización','Olvido','Otro']}],
  'No cumplido':[{l:'¿Qué te ha dificultado el cumplimiento de este hábito?',o:['Falta de tiempo','Falta de motivación','Estado de salud','Entorno','Falta de organización','Olvido','Otro']}],
 };
-const CIERRE_OPTS=['Mantenerlo','Aumentar el nivel','Sustituirlo por otro objetivo','Darlo por conseguido'];
-const NUEVO_OBJ_OPTS=['Sueño','Bienestar emocional','Social','Auditivo y ocular','Tabaco y alcohol'];
+const CIERRE_OPTS=['Mantener objetivo','Sustituir objetivo'];
+// Opciones del "nuevo objetivo": las mismas áreas del selector de Objetivos (AREAS, def. más abajo)
+function nuevoObjOpts(){ return AREAS.map(x=>x.a); }
 const SEG_RESUMEN='¡Enhorabuena! Sigues una dieta mediterránea con buenos hábitos nutricionales. Tu consumo de pescado, frutos secos, legumbres y verduras es adecuado, y mantienes una ingesta moderada de carnes rojas y productos ultraprocesados. Tu índice de masa corporal (IMC) es de 23.4, que se encuentra dentro del rango normal y saludable. Continúa manteniendo estos excelentes hábitos alimentarios que contribuyen positivamente a tu bienestar general. ¡Sigue así!';
 // Estado del análisis de seguimiento (sembrado con el ejemplo del Figma)
 let segState={ans:[]};
 function resetSeg(){ segState={portal:{usado:'',imp:''}, ans:[
-  {cumpl:'Cumplido',   conf:'8', cierre:'Sustituirlo por otro objetivo', nuevo:'Sueño'},
-  {cumpl:'En proceso', conf:'6', cierre:'Mantenerlo',  nuevo:''},
-  {cumpl:'Cumplido',   conf:'9', cierre:'Darlo por conseguido', nuevo:''},
+  {cumpl:'Cumplido',   conf:'8', cierre:'Sustituir objetivo', nuevo:'Sueño'},
+  {cumpl:'En proceso', conf:'6', cierre:'Mantener objetivo',  nuevo:''},
+  {cumpl:'Cumplido',   conf:'9', cierre:'Mantener objetivo',  nuevo:''},
 ]}; }
 const PORTAL_IMP=['No lo conocía','Dificultad técnica','Prefiero el papel','Otro'];
 resetSeg();
@@ -953,20 +970,22 @@ function segObjContent(i){
   const confExtra=(a.conf!=='' && Number(a.conf)<7) ? segTextField('¿Qué te ayudaría a tener un poco más de confianza en mantenerlo?') : '';
   const subConf=segSub('Confianza', confField+confExtra);
   const cierre=`<div class="fieldgroup"><label class="q">Cierre del objetivo <span class="req">*</span></label><div class="selectbox"><select onchange="setSegCierre(${i},this.value)"><option value="" ${a.cierre?'':'selected'} disabled>Selecciona…</option>${CIERRE_OPTS.map(c=>`<option ${a.cierre===c?'selected':''}>${c}</option>`).join('')}</select>${I.chevdown}</div></div>`;
-  const subCierre=segSub('Cierre del objetivo', cierre);
-  return `<h2>Objetivo ${i+1}</h2>${head}${subCumpl}${subAdher}${subConf}${subCierre}`;
+  return `<h2>Objetivo ${i+1}</h2>${head}${subCumpl}${subAdher}${subConf}${cierre}`;
 }
 function segConclContent(){
+  const opts=nuevoObjOpts();
   const cards=SEG_OBJ.map((o,i)=>{
     const a=segState.ans[i];
-    const conseguido = a.cumpl==='Cumplido' || a.cierre==='Darlo por conseguido';
+    const conseguido = a.cumpl==='Cumplido';
     const badge = conseguido ? '<span class="seg-badge seg-conseguido">OBJETIVO CONSEGUIDO</span>' : '<span class="seg-badge seg-progreso">OBJETIVO EN PROGRESO</span>';
-    const nuevo = a.cierre==='Sustituirlo por otro objetivo'
-      ? `<div class="seg-nuevo"><label class="q">Selecciona nuevo objetivo</label><div class="selectbox"><select><option value="" ${a.nuevo?'':'selected'} disabled>Selecciona…</option>${NUEVO_OBJ_OPTS.map(x=>`<option ${x===a.nuevo?'selected':''}>${x}</option>`).join('')}</select>${I.chevdown}</div></div>` : '';
+    const nuevo = a.cierre==='Sustituir objetivo'
+      ? `<div class="seg-nuevo"><label class="q">Selecciona nuevo objetivo</label><div class="selectbox"><select><option value="" ${a.nuevo?'':'selected'} disabled>Selecciona…</option>${opts.map(x=>`<option ${x===a.nuevo?'selected':''}>${x}</option>`).join('')}</select>${I.chevdown}</div></div>` : '';
     const body=`<div class="seg-restext">${SEG_RESUMEN}</div><div class="seg-adjust"><input class="q-input" placeholder="Ajustar resumen..."><span class="seg-mic">${I.mic}</span></div>${nuevo}`;
     return `<div class="q-sub"><div class="q-sub-head" onclick="this.parentNode.classList.toggle('collapsed')"><span class="seg-resh-title">Resumen Objetivo ${i+1}${badge}</span>${I.chevdown}</div><div class="q-sub-body">${body}</div></div>`;
   }).join('');
-  return `<h2>Conclusión</h2>${cards}`;
+  // Card "En conclusión": resumen global de la valoración (sin badge)
+  const enConcl=`<div class="q-sub"><div class="q-sub-head" onclick="this.parentNode.classList.toggle('collapsed')"><span class="seg-resh-title">En conclusión</span>${I.chevdown}</div><div class="q-sub-body"><div class="seg-restext">${SEG_RESUMEN}</div><div class="seg-adjust"><input class="q-input" placeholder="Ajustar resumen..."><span class="seg-mic">${I.mic}</span></div></div></div>`;
+  return `<h2>Conclusión</h2>${cards}${enConcl}`;
 }
 function segShell(active, content, footerFn, footerLabel){
   useHeaderPortal();
