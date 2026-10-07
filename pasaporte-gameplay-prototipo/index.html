@@ -23,18 +23,19 @@ body{font-family:var(--font);background:#0e1513;color:var(--n900);-webkit-font-s
 button{font-family:inherit}
 
 /* Toolbar */
-.toolbar{position:fixed;inset:0 0 auto 0;height:52px;z-index:100;display:flex;align-items:center;gap:16px;padding:0 18px;background:#0b1210;color:#cfe0dd;border-bottom:1px solid #1d2b28}
-.toolbar .tt{font-size:13px;color:#fff;font-weight:600}
-.toolbar .tt small{display:block;color:#7ea39d;font-weight:400;font-size:11px}
-.toolbar .grow{flex:1}
-.seg{display:flex;background:#16211f;border:1px solid #24332f;border-radius:9px;padding:3px}
-.seg button{background:none;border:none;color:#9fb8b3;font-size:12.5px;padding:6px 14px;border-radius:6px;cursor:pointer}
-.seg button.on{background:#fff;color:var(--primary);font-weight:600}
-.tbtn{background:#16211f;border:1px solid #24332f;color:#cfe0dd;font-size:12.5px;padding:7px 13px;border-radius:8px;cursor:pointer}
-.tbtn:hover{background:#1d2b28}
+/* FAB de dispositivos */
+.fab{position:fixed;right:20px;bottom:20px;z-index:200;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab-menu{display:flex;flex-direction:column;gap:4px;background:#16211f;border:1px solid #24332f;border-radius:14px;padding:8px;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .15s,transform .15s}
+.fab.open .fab-menu{opacity:1;transform:none;pointer-events:auto}
+.fab-menu button{display:flex;align-items:center;gap:10px;background:none;border:none;color:#cfe0dd;font-size:13px;padding:8px 14px;border-radius:9px;cursor:pointer;white-space:nowrap;font-family:inherit;text-align:left}
+.fab-menu button:hover{background:#1d2b28}
+.fab-menu button.on{background:#fff;color:var(--primary);font-weight:600}
+.fab-menu .sep{height:1px;background:#24332f;margin:4px 6px}
+.fab-toggle{width:52px;height:52px;border-radius:50%;background:var(--primary);color:#fff;border:none;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1}
+.fab-toggle:hover{filter:brightness(1.12)}
 
-/* Stage / device */
-.stage{position:fixed;inset:52px 0 0 0;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:34px 20px 60px;background:radial-gradient(120% 120% at 50% 0%,#1d2b28 0%,#0e1513 70%)}
+/* Stage / device — ocupa toda la pantalla */
+.stage{position:fixed;inset:0;overflow:auto;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(120% 120% at 50% 0%,#1d2b28 0%,#0e1513 70%)}
 .device{background:var(--bg);overflow:hidden;box-shadow:0 40px 120px rgba(0,0,0,.55);display:flex;flex-direction:column;position:relative;flex:0 0 auto}
 /* width/height incluyen el borde (border-box); interior = Figma (390/744/1440) */
 .device[data-device="mobile"]{width:408px;height:862px;border:9px solid #121b19;border-radius:40px}
@@ -88,8 +89,16 @@ button{font-family:inherit}
 .sec-title{font-size:20px;font-weight:500;color:var(--n900)}
 .cards{display:flex;gap:16px;margin-top:16px}
 .tag{display:inline-flex;align-items:center;font-size:14px;font-weight:500;color:var(--n900);padding:2px 8px;border-radius:4px;white-space:nowrap}
-.tag.new{background:var(--new-bg)}
-.tag.warn{background:var(--warn-bg)}
+.tag.new{background:var(--info-bg)}
+.tag.completado{background:var(--ok-100)}
+.tag.encurso{background:var(--warn-bg)}
+/* buscador de partidas */
+.partidas-head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--n200);border-radius:8px;padding:10px 14px;color:var(--n700);font-size:16px}
+.searchbar svg{width:20px;height:20px;flex:0 0 auto}
+[data-device="desktop"] .partidas-head .searchbar,[data-device="tablet"] .partidas-head .searchbar{width:320px}
+[data-device="mobile"] .partidas-head{flex-direction:column;align-items:stretch}
+[data-device="mobile"] .searchbar{width:100%}
 .gthumb{background:var(--n400) center/cover;border-radius:8px;flex:0 0 auto}
 .gcard{background:#fff;border:1px solid var(--n200);border-radius:var(--r);padding:16px;display:flex;gap:16px}
 .gcard .gbody{flex:1;min-width:0;display:flex;flex-direction:column}
@@ -238,18 +247,18 @@ button{font-family:inherit}
 </style>
 </head>
 <body>
-<div class="toolbar">
-  <div class="tt">Pasaporte de Memoria<small>Prototipo del juego · flujo jugable</small></div>
-  <div class="grow"></div>
-  <div class="seg" id="seg">
+<div class="stage">
+  <div class="device" data-device="desktop" id="device"></div>
+</div>
+<div class="fab" id="fab">
+  <div class="fab-menu">
     <button data-dev="mobile">📱 Mobile</button>
     <button data-dev="tablet">▭ Tablet</button>
     <button data-dev="desktop" class="on">🖥 Desktop</button>
+    <div class="sep"></div>
+    <button id="restart">↺ Reiniciar flujo</button>
   </div>
-  <button class="tbtn" id="restart">↺ Reiniciar flujo</button>
-</div>
-<div class="stage">
-  <div class="device" data-device="desktop" id="device"></div>
+  <button class="fab-toggle" id="fabToggle" title="Cambiar dispositivo">🖥</button>
 </div>
 
 <script>
@@ -272,15 +281,24 @@ const RESULTS={
   0:{bg:"var(--n200)",check:"var(--n700)",title:"¡Sigue practicando!",sub:"Inténtalo de nuevo."},
 };
 const PARTIDAS=[
-  {name:"3 ciudades",img:IMG.kioto,status:"new"},
-  {name:"Partida",img:null,status:"done"},
-  {name:"Partida",img:null,status:"incomplete"},
+  {name:"3 ciudades",img:IMG.kioto,date:"09/07/2026",status:"completado"},
+  {name:"3 ciudades",img:IMG.kioto,date:"09/07/2026",status:"normal"},
+  {name:"3 ciudades",img:IMG.kioto,date:"09/07/2026",status:"encurso"},
+  {name:"3 ciudades",img:IMG.kioto,date:"09/07/2026",status:"new"},
 ];
+/* Estados de la partida (según la definición de Figma) */
+const STATUS={
+  new:       {tag:"Nuevo",      cls:"new",        btn:"Jugar"},
+  normal:    {tag:null,         cls:null,         btn:"Jugar"},
+  encurso:   {tag:"En curso",   cls:"encurso",    btn:"Retomar partida"},
+  completado:{tag:"Completado", cls:"completado", btn:"Jugar de nuevo"},
+};
 const IC={
   back:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>`,
   arrowR:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
   arrowL:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>`,
   check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>`,
+  search:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>`,
 };
 
 let state={screen:"seleccion",mi:0,qi:0,answers:[null,null,null]};
@@ -289,12 +307,13 @@ let device="desktop";
 const header=(title,{back=true}={})=>`<div class="hdr">${back?`<div class="back" data-act="back">${IC.back}</div>`:""}<div class="htitle">${title}</div></div>`;
 const footer=()=>`<div class="ftr"><div class="brand"><span class="qida">Qida</span><span>© 2026 Qida</span></div><div class="links"><a href="#">Términos</a><a href="#">Privacidad</a><a href="#">Ayuda</a></div></div>`;
 const btn=(label,{cls="primary",icon=null,act="",disabled=false}={})=>`<button class="btn ${cls}" ${act?`data-act="${act}"`:""} ${disabled?"disabled":""}>${icon==="left"?IC.arrowL:""}<span>${label}</span>${icon==="right"?IC.arrowR:""}</button>`;
-const tagEl=(s)=> s==="new"?`<span class="tag new">Nuevo</span>`: s==="incomplete"?`<span class="tag warn">No completado</span>`:"";
+const tagEl=(s)=>{const st=STATUS[s];return st&&st.tag?`<span class="tag ${st.cls}">${st.tag}</span>`:"";};
 
 /* SELECCIÓN */
 function scr_seleccion(){
   const heroTxt=`<div class="hero-txt"><h1>Pasaporte de Memoria</h1><p>Entrena tu memoria y tu concentración con un reto diferente en cada partida.</p></div>`;
-  const partidas=`<div class="sel-partidas"><div class="sec-title">Partidas disponibles</div><div class="cards">${PARTIDAS.map(cardFor).join("")}</div></div>`;
+  const searchBar=`<div class="searchbar">${IC.search}<span>Buscar</span></div>`;
+  const partidas=`<div class="sel-partidas"><div class="partidas-head"><div class="sec-title">Partidas disponibles</div>${searchBar}</div><div class="cards">${PARTIDAS.map(cardFor).join("")}</div></div>`;
   let inner;
   if(device==="desktop"){
     inner=`<div class="sel-desktop">
@@ -312,17 +331,18 @@ function scr_seleccion(){
   return `<div class="screen seleccion">${header(device==="mobile"?"Pasaporte de Memoria":"Juegos / Pasaporte de Memoria",{back:false})}<div class="body">${inner}</div>${footer()}</div>`;
 }
 function cardFor(p){
+  const st=STATUS[p.status];
   const img=p.img?`background-image:url('${p.img}')`:"";
   if(device==="mobile"){
     return `<div class="gcard"><div class="gthumb" style="${img}"></div>
-      <div class="gbody"><div class="grow"><span class="gdate">09/07/2026</span>${tagEl(p.status)}</div>
-      <div class="gname">${p.name}</div>${btn("Jugar",{cls:"primary h36 cbtn",act:"start"})}</div></div>`;
+      <div class="gbody"><div class="grow"><span class="gdate">${p.date}</span>${tagEl(p.status)}</div>
+      <div class="gname">${p.name}</div>${btn(st.btn,{cls:"primary h36 cbtn",act:"start"})}</div></div>`;
   }
   return `<div class="gcard"><div class="gthumb" style="${img}"></div>
     <div class="gbody">
       <div class="gtag">${tagEl(p.status)}</div>
-      <div class="gtexts"><span class="gdate">09/07/2026</span><span class="gname">${p.name}</span></div>
-      ${btn("Jugar",{cls:"primary h36 cbtn",act:"start"})}
+      <div class="gtexts"><span class="gdate">${p.date}</span><span class="gname">${p.name}</span></div>
+      ${btn(st.btn,{cls:"primary h36 cbtn",act:"start"})}
     </div></div>`;
 }
 
@@ -458,14 +478,25 @@ function reset(){state={screen:"seleccion",mi:0,qi:0,answers:[null,null,null]};r
 function fitDevice(){
   const stage=document.querySelector(".stage");
   device_el.style.zoom="1";
-  const availH=stage.clientHeight-40, availW=stage.clientWidth-40;
-  const s=Math.min(1, availH/device_el.offsetHeight, availW/device_el.offsetWidth);
+  const availH=stage.clientHeight-32, availW=stage.clientWidth-32;
+  const s=Math.min(availH/device_el.offsetHeight, availW/device_el.offsetWidth);
   device_el.style.zoom=s>0?s:1;
 }
 window.addEventListener("resize",fitDevice);
 device_el.addEventListener("click",(e)=>{const t=e.target.closest("[data-act]");if(!t)return;go(t.dataset.act,t);});
-document.getElementById("seg").addEventListener("click",(e)=>{const btnEl=e.target.closest("button[data-dev]");if(!btnEl)return;device=btnEl.dataset.dev;document.querySelectorAll("#seg button").forEach(x=>x.classList.toggle("on",x===btnEl));device_el.dataset.device=device;render();});
-document.getElementById("restart").addEventListener("click",reset);
+/* FAB de dispositivos */
+const fab=document.getElementById("fab");
+const DEV_ICON={mobile:"📱",tablet:"▭",desktop:"🖥"};
+document.getElementById("fabToggle").addEventListener("click",()=>fab.classList.toggle("open"));
+document.querySelector(".fab-menu").addEventListener("click",(e)=>{
+  const b=e.target.closest("button[data-dev]");if(!b)return;
+  device=b.dataset.dev;
+  document.querySelectorAll(".fab-menu button[data-dev]").forEach(x=>x.classList.toggle("on",x===b));
+  document.getElementById("fabToggle").textContent=DEV_ICON[device];
+  device_el.dataset.device=device;render();fab.classList.remove("open");
+});
+document.getElementById("restart").addEventListener("click",()=>{reset();fab.classList.remove("open");});
+document.addEventListener("click",(e)=>{if(!fab.contains(e.target))fab.classList.remove("open");});
 render();
 </script>
 </body>
