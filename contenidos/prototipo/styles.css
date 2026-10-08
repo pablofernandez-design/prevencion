@@ -148,7 +148,7 @@ header{position:relative}
 .ccard .cta img{width:24px;height:24px}
 [data-view=desktop] .ccard:hover .cta{padding:0 8px}   /* State=Hover (solo desktop): el botón gana 8 px a los lados y «Saber más →» se desplaza 8 px */
 /* Novedades - Categorías · Tipo=Tag de novedades */
-.tag{display:inline-flex;align-items:center;gap:8px;padding:2px 8px 2px 2px;border-radius:8px;background:var(--tint);font-size:14px;line-height:20px;font-weight:500;font-feature-settings:"zero" 1;white-space:nowrap}
+.tag{display:inline-flex;align-items:center;gap:8px;padding:2px 8px 2px 2px;border-radius:8px;font-size:14px;line-height:20px;font-weight:500;font-feature-settings:"zero" 1;white-space:nowrap}
 .tag img{width:20px;height:20px;border-radius:6px}
 
 /* ---------- Selector de categorías ---------- */

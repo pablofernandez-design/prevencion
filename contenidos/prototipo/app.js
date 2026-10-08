@@ -6,21 +6,20 @@
 const A = "assets/";
 
 // ---------- Datos (los de Figma) ----------
-// tint = fondo de «Novedades - Categorías · Tag de novedades»
 const CATS = [
-  { n: "Actividad física", f: "actividad-fisica", tint: "#f8f4e8" },
-  { n: "Mente activa", f: "mente-activa", tint: "#dbeeec" },
-  { n: "Alcohol", f: "alcohol", tint: "#e7f0f5" },
-  { n: "Sueño", f: "sueno", tint: "#ebeaf3" },
-  { n: "Alimentación", f: "alimentacion", tint: "#ecf1e0" },
-  { n: "Tabaco", f: "tabaco", tint: "#e7f0f5" },
-  { n: "Detección precoz", f: "deteccion-precoz", tint: "#e3f4f6" },
-  { n: "Cuidado auditivo", f: "cuidado-auditivo", tint: "#f6e9e3" },
-  { n: "Bienestar emocional", f: "bienestar-emocional", tint: "#f0e5ee" },
-  { n: "Participación social", f: "participacion-social", tint: "#f5e6e6" },
-  { n: "Neuroinfo", f: "neuroinfo", tint: "#e8eaf6" },
-  { n: "Cuidado ocular", f: "cuidado-ocular", tint: "#f6e9e3" },
-  { n: "Nuevas líneas de investigación", f: "nuevas-lineas", tint: "#f8e7ec" },
+  { n: "Actividad física", f: "actividad-fisica" },
+  { n: "Mente activa", f: "mente-activa" },
+  { n: "Alcohol", f: "alcohol" },
+  { n: "Sueño", f: "sueno" },
+  { n: "Alimentación", f: "alimentacion" },
+  { n: "Tabaco", f: "tabaco" },
+  { n: "Detección precoz", f: "deteccion-precoz" },
+  { n: "Cuidado auditivo", f: "cuidado-auditivo" },
+  { n: "Bienestar emocional", f: "bienestar-emocional" },
+  { n: "Participación social", f: "participacion-social" },
+  { n: "Neuroinfo", f: "neuroinfo" },
+  { n: "Cuidado ocular", f: "cuidado-ocular" },
+  { n: "Nuevas líneas de investigación", f: "nuevas-lineas" },
 ];
 const CAT = Object.fromEntries(CATS.map(c => [c.n, c]));
 
@@ -111,7 +110,7 @@ function titleBlock(crumbs, title, sub, back) {
   return `<div class="wrap title-block">${nav}<div class="heading"><h1 class="t-h3">${b}${title}</h1>${sub ? `<p class="sub">${sub}</p>` : ""}</div></div>`;
 }
 
-const tag = cat => { const c = CAT[cat]; return `<span class="tag" style="--tint:${c.tint}"><img src="${A}cat/${c.f}.svg" alt="">${esc(cat)}</span>`; };
+const tag = cat => { const c = CAT[cat]; return `<span class="tag"><img src="${A}cat/${c.f}.svg" alt="">${esc(cat)}</span>`; };
 
 function contentCard(i) {
   const T = TYPES[i.type];
