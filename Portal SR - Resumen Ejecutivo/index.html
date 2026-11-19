@@ -267,6 +267,10 @@
 
   /* resumen specifics */
   .valoracion{display:flex;gap:8px;flex-wrap:wrap}
+  .valpanel{padding:0}
+  .valrow{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 24px;border-bottom:1px solid var(--n200)}
+  .valrow:last-child{border-bottom:none}
+  .valrow-name{font-size:16px;color:var(--n900)}
   .val{width:40px;height:40px;border-radius:8px;border:1px solid var(--green);background:#fff;font-size:20px;font-weight:500;color:var(--green);cursor:pointer;transition:transform .05s}
   .val:hover{transform:translateY(-1px)}
   .val.sel{color:#fff;border-color:transparent}
@@ -410,6 +414,43 @@
   .tbl .pdf{color:var(--green);text-decoration:underline}
   .tbl td.chev{text-align:right;color:var(--n700);width:56px}
   .tbl td.chev svg{width:18px;height:18px}
+  /* Histórico V2: planes anuales + estados + kebab */
+  .pagehead-row{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}
+  .pagehead-row h1{font-size:26px;font-weight:400;margin:0;color:var(--n900)}
+  .planc{background:var(--white);border:1px solid var(--n200);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+  .planc-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;cursor:pointer}
+  .planc-title{display:flex;align-items:baseline;gap:12px}
+  .planc-title b{font-size:17px;color:var(--n900)}
+  .planc-sub{font-size:14px;color:var(--n700)}
+  .planc-chev{color:var(--n700);display:flex;transition:transform .15s}
+  .planc-chev svg{width:20px;height:20px}
+  .planc-chev.col{transform:rotate(-90deg)}
+  .tbl.histv2{table-layout:fixed}
+  .tbl.histv2 .c-fecha{width:150px}
+  .tbl.histv2 .c-ver{width:100px}
+  .tbl.histv2 .c-est{width:300px}
+  .tbl.histv2 td.date{white-space:nowrap}
+  .tbl.histv2 tbody tr:last-child{border-bottom:none}
+  .tbl.histv2 tr.rowdis{cursor:default}
+  .tbl.histv2 tr.rowdis:hover{background:transparent}
+  .tbl.histv2 tr.rowdis td.date,.tbl.histv2 tr.rowdis td:nth-child(2),.tbl.histv2 tr.rowdis td.ver{color:var(--n400,#9BA1A7)}
+  .est-cell{text-align:right;white-space:nowrap;position:relative;width:260px}
+  .estado{display:inline-flex;align-items:center;font-size:14px;font-weight:500;line-height:20px;padding:3px 10px;border-radius:6px}
+  .est-realizar,.est-saltado{color:var(--n700);padding:0}
+  .est-facturar{background:var(--error-100);color:#7A1C1C}
+  .est-fact{background:var(--success-100);color:#0E4F39}
+  .kebab{border:none;background:transparent;color:var(--n700);width:30px;height:30px;border-radius:6px;margin-left:12px;vertical-align:middle;cursor:pointer}
+  .kebab:hover{background:#eef1f0}
+  .kebab svg{width:18px;height:18px}
+  .kmenu{position:absolute;right:24px;top:46px;z-index:40;background:#fff;border:1px solid var(--n200);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.16);padding:6px;min-width:150px;text-align:left}
+  .kmenu button{display:block;width:100%;text-align:left;border:none;background:transparent;padding:9px 12px;font-size:14px;color:var(--n900);border-radius:7px;cursor:pointer}
+  .kmenu button:hover{background:#f3f5f4}
+  .btn.danger{background:#B3261E;border-color:#B3261E;color:#fff}
+  .mfield{margin-bottom:14px}
+  .mfield .lbl{font-size:11px;letter-spacing:.4px;color:var(--n700);text-transform:uppercase;margin-bottom:4px}
+  .mfield .mval{font-size:15px;font-weight:600;color:var(--n900)}
+  .mwarn{display:flex;gap:10px;align-items:flex-start;background:#F6F7F9;border:1px solid var(--n200);border-radius:10px;padding:12px 14px;font-size:13.5px;color:var(--n700);line-height:1.5;margin-top:6px}
+  .mwarn svg{width:18px;height:18px;flex-shrink:0;color:var(--n700);margin-top:1px}
 
   /* prototype home fab */
   .fab{position:fixed;left:16px;bottom:16px;z-index:60;background:var(--green);color:#fff;border:none;border-radius:24px;height:40px;padding:0 16px;font-size:13px;font-weight:600;display:none;align-items:center;gap:8px;box-shadow:0 6px 18px rgba(0,0,0,.2)}
@@ -453,6 +494,7 @@ const I = {
   chart:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>',
   doc:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>',
   target:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>',
+  star:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.9l-5.8 3.05 1.1-6.47-4.7-4.58 6.5-.95z"/></svg>',
   refresh:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/></svg>',
   download:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>',
   file:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6z"/><path d="M15 2v4h4"/><path d="M9 13h6M9 17h6"/></svg>',
@@ -504,7 +546,7 @@ document.body.innerHTML = document.body.innerHTML
 
 /* ---------- State ---------- */
 let state = {};
-function fresh(){ return {type:'inicial', title:'Informe inicial', done:{analisis:false,resumen:false,objetivos:false}, generated:false, metodo:null, notas:'', pautas:[], tCreacion:null, tActualizacion:null, tGeneracion:null, wizard:true}; }
+function fresh(){ return {type:'inicial', title:'Informe inicial', done:{analisis:false,valoracion:false,resumen:false,objetivos:false}, generated:false, metodo:null, notas:'', pautas:[], tCreacion:null, tActualizacion:null, tGeneracion:null, wizard:true}; }
 
 const DATA = {
   resumenText:'¡Enhorabuena! Sigues una dieta mediterránea con buenos hábitos nutricionales. Tu consumo de pescado, frutos secos, legumbres y verduras es adecuado, y mantienes una ingesta moderada de carnes rojas y productos ultraprocesados. Tu índice de masa corporal (IMC) es de 23.4, que se encuentra dentro del rango normal y saludable. Continúa manteniendo estos excelentes hábitos alimentarios que contribuyen positivamente a tu bienestar general. ¡Sigue así!',
@@ -541,7 +583,7 @@ function openReport(type,name,row){
   const fact = !row || row.estado==='fact';
   state={type, key:row?row.key:(type==='seguimiento'?'seg1':'inicial'),
     title:name||(type==='seguimiento'?'Informe de seguimiento':'Informe inicial'),
-    done:{analisis:true,resumen:true,objetivos:true}, generated:fact,
+    done:{analisis:true,valoracion:true,resumen:true,objetivos:true}, generated:fact,
     metodo: fact?'ambos':null, notas:DATA.notas,
     tCreacion:t, tActualizacion:t, tGeneracion: fact?t:null, wizard:false};
   if(type==='seguimiento' && state.key!=='anual') resetSeg();
@@ -559,56 +601,124 @@ const TIPO_INFO={
   seg2:{label:'Informe de seguimiento 2', type:'seguimiento', analisis:'seg'},
   anual:{label:'Informe anual', type:'seguimiento', analisis:'anual'},
 };
-const SCENARIOS=[
- {t:'Vacío · siguiente = informe inicial', reports:[], next:{key:'inicial',available:true}},
- {t:'Inicial creado · seguimiento 1 en 4 meses', reports:[['inicial','15/01/2025']], next:{key:'seg1',available:false,fecha:'15/05/2025'}},
- {t:'Inicial + Seg. 1 · seguimiento 2 en 4 meses', reports:[['inicial','15/01/2025'],['seg1','15/05/2025']], next:{key:'seg2',available:false,fecha:'15/09/2025'}},
- {t:'Inicial + Seg. 1 + Seg. 2 · informe anual en 4 meses', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025']], next:{key:'anual',available:false,fecha:'15/01/2026'}},
- {t:'Año 1 completo · seguimiento 1 del año siguiente en 4 meses', reports:[['inicial','15/01/2025'],['seg1','15/05/2025'],['seg2','15/09/2025'],['anual','15/01/2026']], next:{key:'seg1',available:false,fecha:'15/05/2026'}},
-];
-let scenario=0, CURRENT_ROWS=[], scenCollapsed=true;
-function setScenario(i){ scenario=i; renderList(); }
-function toggleScen(){ scenCollapsed=!scenCollapsed; renderList(); }
 const MESES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const MES_ABR=['ene','feb','mar','abr','may','jun','jul','ago','sept','oct','nov','dic'];
 function mesAno(dmy){ const [d,m,y]=dmy.split('/').map(Number); return MESES[m-1]+' '+y; }
 function mesAnoAbr(dmy){ const [d,m,y]=dmy.split('/').map(Number); return MES_ABR[m-1]+' '+y; }
 const TIPO_BASE={inicial:'Plan de Prevención', anual:'Plan de Prevención anual', seg1:'1º seguimiento', seg2:'2º seguimiento'};
-function labelFor(key,fecha){ return TIPO_BASE[key]+' - '+mesAnoAbr(fecha); }
-const ESTADO_LABEL={fact:'Facturado', pdte:'Pendiente de facturar'};
-function openRow(i){ const r=CURRENT_ROWS[i]; r.type==='seguimiento' ? startSeguimiento(r.informe,r) : startInicial(r.informe,r); }
+
+/* ---------- Histórico de análisis V2: planes anuales agrupados ---------- */
+// Cada plan anual agrupa sus informes (inicial/anual + 2 seguimientos). Figma 1955:39774.
+const INF_NAME={inicial:'Plan de prevención', anual:'Plan de prevención anual', seg1:'1º seguimiento', seg2:'2º seguimiento'};
+const EST={ realizar:{t:'Pendiente de realizar',c:'est-realizar'}, facturar:{t:'Pendiente de facturar',c:'est-facturar'}, fact:{t:'Facturado',c:'est-fact'}, saltado:{t:'No realizado',c:'est-saltado'} };
+function mkPlan(year, digital, informes){ return {year, digital, informes}; }
+// Escenarios demo (estados del ciclo de vida del plan)
+const SCEN_PLANS=[
+ [ mkPlan('2024-2025', false, [ {tipo:'inicial',fecha:null,estado:'realizar'}, {tipo:'seg1',fecha:null,estado:'realizar'}, {tipo:'seg2',fecha:null,estado:'realizar'} ]) ],
+ [ mkPlan('2024-2025', false, [ {tipo:'inicial',fecha:'01/01/2025',estado:'facturar'}, {tipo:'seg1',fecha:null,estado:'realizar'}, {tipo:'seg2',fecha:null,estado:'realizar'} ]) ],
+ [ mkPlan('2024-2025', true,  [ {tipo:'inicial',fecha:'01/01/2025',estado:'fact'}, {tipo:'seg1',fecha:null,estado:'realizar'}, {tipo:'seg2',fecha:null,estado:'realizar'} ]) ],
+ [ mkPlan('2024-2025', true,  [ {tipo:'inicial',fecha:'01/01/2025',estado:'fact'}, {tipo:'seg1',fecha:'01/05/2025',estado:'fact'}, {tipo:'seg2',fecha:'01/09/2025',estado:'fact'} ]) ],
+ [ mkPlan('2024-2025', true,  [ {tipo:'inicial',fecha:'01/01/2025',estado:'fact'}, {tipo:'seg1',fecha:'01/05/2025',estado:'fact'}, {tipo:'seg2',fecha:'01/09/2025',estado:'fact'} ]),
+   mkPlan('2025-2026', false, [ {tipo:'anual',fecha:null,estado:'realizar'}, {tipo:'seg1',fecha:null,estado:'realizar'}, {tipo:'seg2',fecha:null,estado:'realizar'} ]) ],
+];
+const SCEN_DESC=['Inicial · pendiente de realizar','Inicial · pendiente de facturar','Inicial facturado · cliente digital','Año 1 completo · nuevo plan habilitado','Año 1 cerrado + Año 2 nuevo'];
+let scenario=0, PLANS=[], scenCollapsed=true, collapsedYears={}, kebabOpen=null, kebabTarget=null;
+function clonePlans(i){ return JSON.parse(JSON.stringify(SCEN_PLANS[i])); }
+function setScenario(i){ scenario=i; PLANS=clonePlans(i); collapsedYears={}; kebabOpen=null; renderList(); }
+function toggleScen(){ scenCollapsed=!scenCollapsed; renderList(); }
+function toggleYear(y){ collapsedYears[y]=!collapsedYears[y]; renderList(); }
+function planCerrado(p){ return p.informes.every(i=>i.estado==='fact'||i.estado==='saltado'); }
+function nuevoPlanEnabled(){ return PLANS.length>0 && planCerrado(PLANS[PLANS.length-1]); }
+function nextPeriod(){ if(!PLANS.length) return '2024 - 2025'; const [a,b]=PLANS[PLANS.length-1].year.split('-').map(s=>parseInt(s)); return (a+1)+' - '+(b+1); }
+function skippable(inf){ return (inf.tipo==='seg1'||inf.tipo==='seg2') && inf.estado==='realizar'; }
+// Un informe solo se puede realizar si todos los anteriores del plan están resueltos (no 'realizar')
+function canDo(p,ii){ return p.informes.slice(0,ii).every(x=>x.estado!=='realizar'); }
+// Abrir un informe desde la fila
+function openInforme(pi,ii){ kebabOpen=null; const p=PLANS[pi], inf=p.informes[ii]; if(inf.estado==='saltado') return;
+  if(inf.estado==='realizar' && !canDo(p,ii)) return; // bloqueado hasta completar los anteriores
+  const type = inf.tipo==='inicial'?'inicial':'seguimiento';
+  if(inf.estado==='realizar'){ startNuevoTipo(inf.tipo); }
+  else { openReport(type, TIPO_BASE[inf.tipo], {fecha:inf.fecha, key:inf.tipo, estado: inf.estado==='fact'?'fact':'pdte', type}); }
+}
+function toggleKebab(pi,ii){ const k=pi+'-'+ii; kebabOpen = kebabOpen===k?null:k; renderList(); }
+function kebabAction(fn,pi,ii){ kebabOpen=null; fn(pi,ii); }
+function rowName(inf){ return INF_NAME[inf.tipo]; }
 function renderList(){
-  const sc=SCENARIOS[scenario];
-  CURRENT_ROWS = sc.reports.slice().reverse().map(([key,fecha])=>({fecha, informe:labelFor(key,fecha), metodo:'Correo electrónico y postal', type:TIPO_INFO[key].type, estado:'fact', key}));
-  const nx=sc.next, ni=nx&&nx.key?TIPO_INFO[nx.key]:null;
-  let headRight='';
-  if(ni){
-    // El botón "Nuevo informe" nunca está deshabilitado; si hay fecha prevista se muestra como contexto.
-    // La fecha prevista = fecha de finalización del plan (último informe + duración marcada en Objetivos).
-    const lastRep = sc.reports.length ? sc.reports[sc.reports.length-1][1] : null;
-    const proxFecha = (!nx.available && lastRep) ? addMonthsDMY(lastRep, PLAN_MESES) : nx.fecha;
-    const prox = nx.available ? '' : `<div class="prox"><span class="prox-lbl">Próximo informe:</span><span class="prox-pill">${proxFecha}</span></div>`;
-    headRight = `${prox}<button class="btn primary" onclick="startNuevoTipo('${nx.key}')">${I.plus} Nuevo informe</button>`;
-  }
-  const body = CURRENT_ROWS.length ? `<table class="tbl">
-        <thead><tr><th>Fecha</th><th>Informe</th><th>Método de envío</th><th>Informe</th><th>Estado</th><th></th></tr></thead>
-        <tbody>${CURRENT_ROWS.map((r,i)=>`<tr onclick="openRow(${i})"><td class="date">${r.fecha}</td><td>${r.informe}</td><td>${r.metodo}</td><td><a class="pdf" onclick="event.stopPropagation();previewInforme(${i})">informe.pdf</a></td><td><span class="rowtag ${r.estado}">${ESTADO_LABEL[r.estado]}</span></td><td class="chev">${I.chev}</td></tr>`).join('')}</tbody>
-      </table>` : `<div class="act-empty" style="padding:48px 20px"><div class="act-emptyic">${I.report}</div><b>Aún no hay informes</b><p>Crea el primer informe (inicial) para empezar el seguimiento del cliente.</p></div>`;
+  el('fab').classList.remove('show');
+  const groups = PLANS.slice().reverse().map((p,ri)=>{
+    const pi = PLANS.length-1-ri; // índice real en PLANS
+    const collapsed = !!collapsedYears[p.year];
+    const rows = p.informes.map((inf,ii)=>{
+      const est=EST[inf.estado];
+      const doable = inf.estado==='realizar' && canDo(p,ii);
+      const viewable = inf.estado==='fact' || inf.estado==='facturar';
+      const actionable = doable || viewable;
+      const dis = inf.estado==='realizar' && !doable; // seguimiento bloqueado por informes anteriores
+      const menu = kebabOpen===(pi+'-'+ii) ? `<div class="kmenu">
+          ${actionable?`<button onclick="event.stopPropagation();kebabAction(openInforme,${pi},${ii})">Ver</button>`:''}
+          ${skippable(inf)?`<button onclick="event.stopPropagation();kebabAction(openSaltarModal,${pi},${ii})">Saltar</button>`:''}
+          <button onclick="event.stopPropagation();kebabAction(openEliminarModal,${pi},${ii})">Eliminar</button>
+        </div>`:'';
+      return `<tr class="${dis?'rowdis':''}" ${actionable?`onclick="openInforme(${pi},${ii})"`:''}>
+        <td class="date">${inf.fecha||'-'}</td>
+        <td>${rowName(inf)}</td>
+        <td class="ver">V1</td>
+        <td class="est-cell"><span class="estado ${est.c}">${est.t}</span><button class="kebab" onclick="event.stopPropagation();toggleKebab(${pi},${ii})">${I.dots}</button>${menu}</td>
+      </tr>`;
+    }).reverse().join('');
+    return `<div class="planc">
+      <div class="planc-head" onclick="toggleYear('${p.year}')">
+        <div class="planc-title"><b>${p.year}</b>${p.digital?'<span class="planc-sub">Cliente digital</span>':''}</div>
+        <span class="planc-chev ${collapsed?'col':''}">${I.chevdown}</span>
+      </div>
+      ${collapsed?'':`<table class="tbl histv2">
+        <colgroup><col class="c-fecha"><col><col class="c-ver"><col class="c-est"></colgroup>
+        <thead><tr><th>Fecha</th><th>Informe</th><th>Versión</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`}
+    </div>`;
+  }).join('');
+  const npEnabled=nuevoPlanEnabled();
+  const headRight = `<button class="btn primary ${npEnabled?'':'disabled'}" ${npEnabled?'onclick="openNuevoPlanModal()"':'disabled'}>${I.plus} Nuevo plan anual</button>`;
   const scenSel=`<div class="scen-fab">${scenCollapsed
     ? `<button class="scen-fab-btn" onclick="toggleScen()" title="Escenarios demo">${I.dots}<span>Escenario ${scenario+1}</span></button>`
-    : `<div class="scen-panel"><span class="scen-lbl">Escenario</span><div class="scen-opts">${SCENARIOS.map((s,i)=>`<button class="scen ${i===scenario?'on':''}" title="${s.t}" onclick="setScenario(${i})">${i+1}</button>`).join('')}</div><span class="scen-desc">${sc.t}</span><button class="scen-x" onclick="toggleScen()" title="Ocultar">${I.chevdown}</button></div>`
+    : `<div class="scen-panel"><span class="scen-lbl">Escenario</span><div class="scen-opts">${SCEN_DESC.map((s,i)=>`<button class="scen ${i===scenario?'on':''}" title="${s}" onclick="setScenario(${i})">${i+1}</button>`).join('')}</div><span class="scen-desc">${SCEN_DESC[scenario]}</span><button class="scen-x" onclick="toggleScen()" title="Ocultar">${I.chevdown}</button></div>`
   }</div>`;
   el('view').innerHTML=`
-  <div class="page">
+  <div class="page" onclick="if(kebabOpen){kebabOpen=null;renderList();}">
     <div class="crumbs"><span>Clientes</span> ${I.chev} <span>Pablo Fernández</span> ${I.chev} <span class="cur">Histórico de análisis</span></div>
-    <div class="pagehead"><h1>Histórico de análisis</h1></div>
-    <div class="card listcard">
-      <div class="list-head"><h2>Histórico de análisis</h2><div class="list-head-right">${headRight}</div></div>
-      ${body}
-    </div>
+    <div class="pagehead-row"><h1>Histórico de análisis</h1><div class="list-head-right">${headRight}</div></div>
+    ${groups || `<div class="card listcard"><div class="act-empty" style="padding:48px 20px"><div class="act-emptyic">${I.report}</div><b>Aún no hay planes</b><p>Crea el primer plan de prevención para empezar.</p></div></div>`}
   </div>${scenSel}`;
   window.scrollTo(0,0);
 }
+// ---- Modales del histórico V2 ----
+function modalShell(inner){ const ov=document.createElement('div'); ov.className='overlay open'; ov.id='overlay'; ov.onclick=(e)=>{ if(e.target===ov) closeModal(); }; ov.innerHTML=inner; document.body.appendChild(ov); }
+function openNuevoPlanModal(){ modalShell(`
+    <div class="modal">
+      <div class="mh"><h3>Nuevo plan anual</h3><button class="x" onclick="closeModal()">${I.x}</button></div>
+      <p>¿Quieres crear un nuevo plan anual?</p>
+      <div class="mfield"><div class="lbl">Año</div><div class="mval">${nextPeriod()}</div></div>
+      <div class="mfoot"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn primary" onclick="crearPlanAnual()">Crear</button></div>
+    </div>`); }
+function crearPlanAnual(){ const y=nextPeriod().replace(/ /g,''); PLANS.push(mkPlan(y, false, [ {tipo:'anual',fecha:null,estado:'realizar'}, {tipo:'seg1',fecha:null,estado:'realizar'}, {tipo:'seg2',fecha:null,estado:'realizar'} ])); closeModal(); renderList(); }
+function openSaltarModal(pi,ii){ kebabTarget={pi,ii}; const inf=PLANS[pi].informes[ii]; modalShell(`
+    <div class="modal">
+      <div class="mh"><h3>Saltar seguimiento</h3><button class="x" onclick="closeModal()">${I.x}</button></div>
+      <p>¿Estás seguro de que quieres saltar este seguimiento?</p>
+      <div class="mfield"><div class="lbl">Año</div><div class="mval">${PLANS[pi].year.replace('-',' - ')}</div></div>
+      <div class="mfield"><div class="lbl">Informe</div><div class="mval">${INF_NAME[inf.tipo]}</div></div>
+      <div class="mwarn">${I.alertCircle}<span>Esta acción es irreversible. Una vez el seguimiento se marca como no realizado, no se puede hacer.</span></div>
+      <div class="mfoot"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn danger" onclick="doSaltar()">Saltar</button></div>
+    </div>`); }
+function doSaltar(){ const {pi,ii}=kebabTarget; PLANS[pi].informes[ii].estado='saltado'; PLANS[pi].informes[ii].fecha=null; closeModal(); renderList(); }
+function openEliminarModal(pi,ii){ kebabTarget={pi,ii}; modalShell(`
+    <div class="modal">
+      <div class="mh"><h3>Eliminar informe</h3><button class="x" onclick="closeModal()">${I.x}</button></div>
+      <p>¿Estás seguro de que quieres eliminar este informe?</p>
+      <div class="mfoot"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn danger" onclick="doEliminar()">Eliminar</button></div>
+    </div>`); }
+function doEliminar(){ const {pi,ii}=kebabTarget; PLANS[pi].informes.splice(ii,1); if(!PLANS[pi].informes.length) PLANS.splice(pi,1); closeModal(); renderList(); }
 
 // Alerta "pendiente de facturar" (estilo componente Alert del DS)
 function alertHTML(inModal){
@@ -627,14 +737,15 @@ function navCardHTML(key, icon, label, onclick, enabled, s){
 /* ---------- Landing render (screens 1,2,3,4,6,7) ---------- */
 function renderLanding(){
   const s=state;
-  const allDone = s.done.analisis && s.done.resumen && s.done.objetivos;
+  const needVal = s.type==='inicial';
+  const allDone = s.done.analisis && (!needVal || s.done.valoracion) && s.done.resumen && s.done.objetivos;
   const facturado = s.generated; // "facturado" = informe facturado
   const showCover = allDone || facturado;
   const dateCreate=fmtDate(s.tCreacion);
   const dateUpd = fmtDate(s.tActualizacion);
   let metodoCell='-';
   if(facturado){
-    const label = s.metodo==='ambos' ? 'Correo electrónico y postal' : 'Correo electrónico';
+    const label = s.metodo==='postal' ? 'Correo postal' : 'Portal del Cliente';
     metodoCell = `<span class="chip">${I.mail} ${label}</span>`;
   }
   const badge = (k)=> s.done[k] ? '<span class="badge">Completado</span>' : '';
@@ -669,9 +780,16 @@ function renderLanding(){
 
     <div class="landing">
       <div class="side">
-        ${navCardHTML('analisis', I.chart, 'Análisis', (s.type!=='seguimiento'?'openAnalisis()':(s.key==='anual'?'openSeguimiento()':'openSegPortal()')), true, s)}
-        ${navCardHTML('resumen', I.doc, 'Resumen Ejecutivo', ((s.type==='seguimiento'&&s.key!=='anual')?'openResumenSeg()':'openResumen()'), s.done.analisis, s)}
-        ${navCardHTML('objetivos', I.target, 'Objetivos', 'openObjetivos()', s.done.resumen, s)}
+        ${ s.type==='inicial' ? `
+        ${navCardHTML('analisis', I.chart, 'Análisis', 'openAnalisis()', true, s)}
+        ${navCardHTML('valoracion', I.star, 'Valoración', 'openValoracion()', s.done.analisis, s)}
+        ${navCardHTML('objetivos', I.target, 'Objetivos', 'openObjetivos()', s.done.valoracion, s)}
+        ${navCardHTML('resumen', I.doc, 'Resumen Ejecutivo', 'openResumen()', s.done.objetivos, s)}
+        ` : `
+        ${navCardHTML('analisis', I.chart, 'Análisis', (s.key==='anual'?'openSeguimiento()':'openSegPortal()'), true, s)}
+        ${navCardHTML('objetivos', I.target, 'Objetivos', 'openObjetivos()', s.done.analisis, s)}
+        ${navCardHTML('resumen', I.doc, 'Resumen Ejecutivo', ((s.key!=='anual')?'openResumenSeg()':'openResumen()'), s.done.objetivos, s)}
+        `}
       </div>
 
       <div class="main">
@@ -740,10 +858,12 @@ function sidecolHTML(items, active, iconMap, fn, opts){
   return `<aside class="sidecol ${coll?'collapsed':''}">${patient}<div class="vmenu">${menu}</div>${toggle}</aside>`;
 }
 function rightNotes(){
-  return `<aside class="rightcol"><div class="notespanel">
-      <h4>Notas globales de la llamada</h4>
-      <textarea placeholder="Escribe aquí..." oninput="state.notas=this.value">${esc(state.notas)}</textarea>
-    </div></aside>`;
+  return `<aside class="rightcol">
+      <div class="patient"><div class="pa">PF</div><div><b>Pablo Fernández</b><span>Póliza #VRMC018619GB19</span></div></div>
+      <div class="notespanel">
+        <h4>Notas globales de la llamada</h4>
+        <textarea placeholder="Escribe aquí..." oninput="state.notas=this.value">${esc(state.notas)}</textarea>
+      </div></aside>`;
 }
 function rightKpi(){
   return `<aside class="rightcol">
@@ -856,7 +976,7 @@ function openAnalisis(active){
       <h1>Análisis</h1>
     </div>
     <div class="three">
-      ${sidecolHTML(SECCIONES,active,SEC_ICON,'openAnalisis',{patient:true,toggle:false})}
+      ${sidecolHTML(SECCIONES,active,SEC_ICON,'openAnalisis',{patient:false,toggle:false})}
       <div class="panel">${analisisContent(active,false)}</div>
       ${rightNotes()}
     </div>
@@ -867,7 +987,7 @@ function openAnalisis(active){
   window.scrollTo(0,0);
 }
 // Flujo lineal (informe nuevo): Análisis → Resumen → Objetivos → Informe
-function saveAnalisis(){ state.done.analisis=true; state.tActualizacion=new Date(); if(!state.wizard){ renderLanding(); return; } (state.type==='seguimiento'&&state.key!=='anual') ? openResumenSeg() : openResumen(); }
+function saveAnalisis(){ state.done.analisis=true; state.tActualizacion=new Date(); if(!state.wizard){ renderLanding(); return; } state.type==='inicial' ? openValoracion() : openObjetivos(); }
 
 /* ---------- Análisis de seguimiento (form) ---------- */
 // Análisis anual: igual que el de seguimiento por secciones, pero con el feedback de la llamada
@@ -894,7 +1014,7 @@ function openSeguimiento(active){
       <h1>Análisis</h1>
     </div>
     <div class="three">
-      ${sidecolHTML(ANUAL_NAV,active,ANUAL_ICON,'openSeguimiento',{patient:true,toggle:false})}
+      ${sidecolHTML(ANUAL_NAV,active,ANUAL_ICON,'openSeguimiento',{patient:false,toggle:false})}
       <div class="panel">${content}</div>
       ${rightNotes()}
     </div>
@@ -993,7 +1113,7 @@ function segShell(active, content, footerFn, footerLabel){
   <div class="page">
     <div class="subhead"><button class="back" onclick="goInforme()">${I.back}</button><h1>Análisis</h1></div>
     <div class="three">
-      ${sidecolHTML(SEG_NAV, active, SEG_NAV_ICON, 'openSegNav', {patient:true,toggle:false})}
+      ${sidecolHTML(SEG_NAV, active, SEG_NAV_ICON, 'openSegNav', {patient:false,toggle:false})}
       <div class="panel">${content}</div>
       ${rightNotes()}
     </div>
@@ -1041,9 +1161,44 @@ function notesCollap(){
 /* ---------- Screen 2.1 : Resumen Ejecutivo (editor) ---------- */
 // resumenUI: estado del componente de texto  1=normal 2=escribiendo 3=procesando 4=editado IA
 let resumenUI = { status:1, text:DATA.resumenText, rating:8 };
+// Valoración (paso 2 del informe inicial, V2): puntuación 0–10 de TODAS las áreas en una pantalla
+const VAL_AREAS=['Nutrición','Mente activa','Actividad Física','Sueño','Bienestar emocional','Social','Auditivo y ocular','Tabaco y alcohol'];
+let valState={};
+function valRating(a){ return valState[a]!==undefined?valState[a]:8; }
+function setVal(a,n){ valState[a]=n; document.querySelectorAll('.valrow[data-a="'+a+'"] .val').forEach((b,i)=>b.classList.toggle('sel',i===n)); }
+function openValoracion(){
+  useHeaderPortal();
+  const rows=VAL_AREAS.map(a=>`<div class="valrow" data-a="${a}">
+      <span class="valrow-name">${a}</span>
+      <div class="valoracion">${Array.from({length:11},(_,i)=>`<button class="val ${bandOf(i)} ${i===valRating(a)?'sel':''}" onclick="setVal('${a}',${i})">${i}</button>`).join('')}</div>
+    </div>`).join('');
+  el('view').innerHTML=`
+  <div class="page">
+    <div class="subhead">
+      <button class="back" onclick="goInforme()">${I.back}</button>
+      <h1>Valoración</h1>
+    </div>
+    <div class="three">
+      <div class="panel panel-full valpanel">${rows}</div>
+      ${rightKpi()}
+    </div>
+    <div class="subfoot">
+      <button class="btn primary" onclick="saveValoracion()">${state.wizard?'Guardar y continuar':'Guardar'}</button>
+    </div>
+  </div>`;
+  window.scrollTo(0,0);
+}
+function saveValoracion(){ state.done.valoracion=true; state.tActualizacion=new Date(); state.wizard ? openObjetivos() : renderLanding(); }
+
 function openResumen(active){
   active=active||'Nutricional'; useHeaderPortal();
+  const isInicial = state.type==='inicial';
   resumenUI={status:1, text:DATA.resumenText, rating:resumenUI.rating||8};
+  const valBlock = isInicial ? '' : `
+        <div class="subcard">
+          <h4>Valoración</h4>
+          <div class="valoracion">${Array.from({length:11},(_,i)=>`<button class="val ${bandOf(i)} ${i===resumenUI.rating?'sel':''}" onclick="setRating(${i})">${i}</button>`).join('')}</div>
+        </div>`;
   el('view').innerHTML=`
   <div class="page">
     <div class="subhead">
@@ -1053,11 +1208,7 @@ function openResumen(active){
     <div class="three">
       ${sidecolHTML(RES_MENU,active,RES_ICON,'openResumen',{toggle:true})}
       <div class="panel">
-        <h2>${active}</h2>
-        <div class="subcard">
-          <h4>Valoración</h4>
-          <div class="valoracion">${Array.from({length:11},(_,i)=>`<button class="val ${bandOf(i)} ${i===resumenUI.rating?'sel':''}" onclick="setRating(${i})">${i}</button>`).join('')}</div>
-        </div>
+        <h2>${active}</h2>${valBlock}
         <div class="subcard" id="resumenCard">
           <div class="res-head"><h4 style="margin:0">Resumen Ejecutivo</h4><span id="resHeadRight"></span></div>
           <div class="resumen-text" id="resumenText">${DATA.resumenText}</div>
@@ -1106,7 +1257,7 @@ function undoResumen(){
   const inp=el('adjustInput'); inp.value=''; inp.disabled=false;
   el('sendBtn').classList.remove('active');
 }
-function saveResumen(){ state.done.resumen=true; state.tActualizacion=new Date(); state.wizard ? openObjetivos() : renderLanding(); }
+function saveResumen(){ state.done.resumen=true; state.tActualizacion=new Date(); state.wizard=false; renderLanding(); }
 
 /* ---------- Resumen Ejecutivo de seguimiento 1 y 2 (estático, solo lectura) ---------- */
 // Igual que el resumen por área del resto de informes, pero con un indicador extra: si el objetivo
@@ -1290,19 +1441,22 @@ function openObjetivos(){
 function setObjArea(i,v){ objState.obj[i]=v; objState.perfil[i]=''; objState.actTab[i]=0; openObjetivos(); }
 function setPerfil(i,v){ objState.perfil[i]=v; openObjetivos(); }
 function setPlanInicio(v){ objState.planInicioISO=v; openObjetivos(); }
-function saveObjetivos(){ state.done.objetivos=true; state.tActualizacion=new Date(); state.wizard=false; renderLanding(); }
+function saveObjetivos(){ state.done.objetivos=true; state.tActualizacion=new Date(); PLAN_MESES=objState.planMeses; if(!state.wizard){ renderLanding(); return; } (state.type==='seguimiento'&&state.key!=='anual') ? openResumenSeg() : openResumen(); }
 
 /* ---------- Screen 5 : modal Generar informe ---------- */
+// Facturar informe (V2): el método depende del tipo de cliente (Digital → Portal del Cliente; No digital → correo postal)
 function openModal(){
+  const digital = state.digital!==false;
   const ov=document.createElement('div');
   ov.className='overlay open'; ov.id='overlay';
+  ov.onclick=(e)=>{ if(e.target===ov) closeModal(); };
   ov.innerHTML=`
     <div class="modal">
       <div class="mh"><h3>Facturar informe</h3><button class="x" onclick="closeModal()">${I.x}</button></div>
       <p>El informe queda registrado una vez facturado. Es necesario indicar el método de envío del informe.</p>
-      <div class="lbl">Método de envío</div>
-      <label class="opt"><input type="radio" name="metodo" value="email"> Enviar por correo electrónico</label>
-      <label class="opt"><input type="radio" name="metodo" value="ambos"> Enviar por correo electrónico y correo postal</label>
+      <div class="mfield"><div class="lbl">Tipo de cliente</div><div class="mval">${digital?'Digital':'No digital'}</div></div>
+      <p style="margin:0 0 18px">${digital?'El cliente puede acceder al informe a través del Portal del Cliente.':'Al cliente se le enviará el informe por correo postal.'}</p>
+      <div class="mwarn">${I.alertCircle}<span>Una vez el informe está facturado, no se puede editar. Revisa que todo esté correcto.</span></div>
       <div class="mfoot">
         <button class="btn" onclick="closeModal()">Cancelar</button>
         <button class="btn primary" onclick="sendReport()">Facturar y enviar</button>
@@ -1333,25 +1487,8 @@ function confirmSalir(){
   document.body.appendChild(ov);
 }
 
-/* ---------- Vista previa del informe (columna INFORME del histórico) ---------- */
-function previewInforme(i){
-  const r=CURRENT_ROWS[i];
-  const ov=document.createElement('div');
-  ov.className='overlay open'; ov.id='overlay';
-  ov.onclick=(e)=>{ if(e.target===ov) closeModal(); };
-  ov.innerHTML=`
-    <div class="preview-modal">
-      <div class="pm-head">
-        <div><b>${r.informe}</b><span>${r.fecha} · ${r.metodo}</span></div>
-        <button class="x" onclick="closeModal()">${I.x}</button>
-      </div>
-      <div class="pm-body">${coverHTML()}</div>
-    </div>`;
-  document.body.appendChild(ov);
-}
 function sendReport(){
-  const sel=document.querySelector('input[name="metodo"]:checked');
-  state.metodo = sel ? sel.value : 'email';
+  state.metodo = (state.digital!==false) ? 'portal' : 'postal';
   state.generated=true;
   const now=new Date(); state.tGeneracion=now; state.tActualizacion=now;
   closeModal();
@@ -1359,5 +1496,5 @@ function sendReport(){
 }
 
 /* boot */
-renderList();
+setScenario(0);
 </script>
